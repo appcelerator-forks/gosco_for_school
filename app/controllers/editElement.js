@@ -7,6 +7,7 @@ var details;
 var postElementModel;
 var element1;
 var element2;
+var element3a;
 COMMON.construct($); 
 
 init();
@@ -28,8 +29,7 @@ function init(){
 	
 }
 
-function newList(){
-	$.deleteBtn.visible= false;
+function newList(){ 
 	var view0 = $.UI.create('View',{
 		classes: ['vert', 'wfill', 'hsize','padding', 'box']
 	});
@@ -42,12 +42,12 @@ function newList(){
 	});
 	
 	if(eleType == 1){
-		element1 = $.UI.create('TextField',{
+		element2 = $.UI.create('TextField',{
 			value: "",
 			classes: ['hsize','wfill','padding'],
 		}); 
 		view0.add(lbl1);
-		view0.add(element1);
+		view0.add(element2);
 	}
 	
 	if(eleType == 2){
@@ -63,23 +63,117 @@ function newList(){
 	}
 	
 	if( eleType == 3){
-		var element3 = $.UI.create('ImageView',{
-			image: "",
+		element2 = $.UI.create('ImageView',{
+			image: "/images/icon_take_photo.png",
 			classes: ['hsize','padding' ],
 		});
 	 	
-	 	var element3a = $.UI.create('TextField',{
+	 	element3a = $.UI.create('TextField',{
 			hintText: "Photo Caption",
 			classes: ['hsize','wfill','padding'],
 		}); 
 		view0.add(lbl1);
-		view0.add(element3);
+		view0.add(element2);
 		view0.add(element3a);
-		 
+		element2.addEventListener('click',takePhoto); 
 	}
 			 
 	$.editForm.add(view0);
 }
+
+function takePhoto(){
+	var dialog = Titanium.UI.createOptionDialog({ 
+	    title: 'Choose an image source...', 
+	    options: ['Camera','Photo Gallery', 'Cancel'], 
+	    cancel:2 //index of cancel button
+	});
+	  
+	dialog.addEventListener('click', function(e) { 
+	     
+	    if(e.index == 0) { //if first option was selected
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({ 
+	            success:function(event) { 
+	                var image = event.media; 
+	                
+	                if(image.width > image.height){
+	        			var newWidth = 320;
+	        			var ratio =   320 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 320;
+	        			var ratio =   320 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		}
+	        		
+	        		image = image.imageAsResized(newWidth, newHeight);
+
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+	                   //var nativePath = event.media.nativePath; 
+		            	element2.image = image;
+			           // blobContainer = image;
+			             
+			            
+			            //mainView.undoPhoto.visible = true;
+	                }
+	            },
+	            cancel:function(){
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error) {
+	                //error happend, create alert
+	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA){
+	                    a.setMessage('Device does not have camera');
+	                }else{
+	                    a.setMessage('Unexpected error: ' + error.code);
+	                }
+	 
+	                // show alert
+	                a.show();
+	            },
+	            allowImageEditing:true,
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	            saveToPhotoGallery:true
+	        });
+	    } else if(e.index == 1){
+	    	 
+	    	//obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event){
+	            	// set image view
+	            	var image = event.media;  
+	            	if(image.width > image.height){
+	        			var newWidth = 320;
+	        			var ratio =   320 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 320;
+	        			var ratio =   320 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		}
+	        		
+					image = image.imageAsResized(newWidth, newHeight);
+	            	element2.image = image;
+		           // blobContainer = image; 
+		            	 
+	            },
+	            cancel:function() {
+	               
+	            },
+	            
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	        });
+	    } else {
+	        
+	    }
+	});
+	 
+	//show dialog
+	dialog.show();
+}
+
 
 function showList(){
 	details = postElementModel.getRecordsById(id);
@@ -98,12 +192,12 @@ function showList(){
 	});
 	
 	if(details.type == 1){
-		element1 = $.UI.create('TextField',{
+		element2 = $.UI.create('TextField',{
 			value: msg,
 			classes: ['hsize','wfill','padding'],
 		}); 
 		view0.add(lbl1);
-		view0.add(element1);
+		view0.add(element2);
 	}
 	
 	if(details.type == 2){
@@ -118,18 +212,18 @@ function showList(){
 	}
 	
 	if(details.type == 3){
-		var element3 = $.UI.create('ImageView',{
+		element2 = $.UI.create('ImageView',{
 			image: details.element,
-			classes: ['hsize' ],
+			classes: ['wfill' ],
 		});
 	 	
-	 	var element3a = $.UI.create('TextField',{
+	 	element3a = $.UI.create('TextField',{
 			value: details.caption,
 			hintText: "Photo Caption",
 			classes: ['hsize','wfill','padding-bottom'],
 		}); 
 		view0.add(lbl1);
-		view0.add(element3);
+		view0.add(element2);
 		view0.add(element3a);
 		 
 	}
@@ -139,26 +233,39 @@ function showList(){
 
 function save(){
 	var id = details || "";
-	
-	if(id == ""){
-		var param = {
-			a_id    : p_id, 
-			type    : eleType,
-			element : element2.value,
-			session : Ti.App.Properties.getString('session')
-		};
+	COMMON.showLoading();
+	if(id == ""){ 
+		if(eleType == 3){//image
+			var param = {
+				a_id    : p_id, 
+				type    : eleType,
+				Filedata : element2.toImage(),
+				caption : element3a.value,
+				session : Ti.App.Properties.getString('session')
+			}; 
+		}else{
+			var param = {
+				a_id    : p_id, 
+				type    : eleType,
+				element : element2.value,
+				session : Ti.App.Properties.getString('session')
+			};
+		}
+		
 		API.callByPost({url:"addElementUrl", params: param}, function(responseText){
 			var res = JSON.parse(responseText);  
 			if(res.status == "success"){ 
 				var post_element_model = Alloy.createCollection('post_element');  
 				post_element_model.addElement(res.data);  
 				COMMON.createAlert("Saved", "Element successfully added"); 
+				$.saveBtn.visible = false;
 			}else{
 				$.win.close();
 				COMMON.hideLoading();
 				Alloy.Globals.Navigator.open("login");
 				COMMON.createAlert("Session Expired", res.data); 
 			}
+			COMMON.hideLoading();
 		});
 		
 	}else{
@@ -172,7 +279,7 @@ function save(){
 			var res = JSON.parse(responseText);  
 			if(res.status == "success"){ 
 				var post_element_model = Alloy.createCollection('post_element');  
-				post_element_model.addElement(res.data);  
+				post_element_model.updateElement(details.id,element2.value);  
 				COMMON.createAlert("Saved", "Element successfully updated"); 
 			}else{
 				$.win.close();
@@ -181,47 +288,11 @@ function save(){
 				COMMON.createAlert("Session Expired", res.data); 
 			}
 		});
+		COMMON.hideLoading();
 	}
 	 
 }
 
-function deleteElement(){
-	var dialog = Ti.UI.createAlertDialog({
-	    cancel: 0,
-	    buttonNames: ['Cancel','Confirm'],
-	    message: 'Are you sure want to delete this element?',
-	    title: 'Delete Element'
-	});
-	dialog.addEventListener('click', function(e){  
-		if (e.index === e.source.cancel){
-	      //Do nothing
-	    }
-	    if (e.index === 1){
-	    	//delete element
-	    	var param = {
-				id  	: details.id,
-			 	c_type  : details.type,
-				session : Ti.App.Properties.getString('session')
-			};
-			API.callByPost({url:"deleteElementUrl", params: param}, function(responseText){
-				var res = JSON.parse(responseText);  
-				if(res.status == "success"){ 
-					var post_element_model = Alloy.createCollection('post_element');  
-					post_element_model.deletePostElement(details.id);  
-					COMMON.createAlert("Delete Element", "Element successfully deleted"); 
-					closeWindow();
-				}else{
-					$.win.close();
-					COMMON.hideLoading();
-					Alloy.Globals.Navigator.open("login");
-					COMMON.createAlert("Session Expired", res.data); 
-				}
-			});  
-			 
-	    }
-	});
-	dialog.show(); 
-}
 
 function closeWindow(){
 	Ti.App.fireEvent('refreshElement');  

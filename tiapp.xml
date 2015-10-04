@@ -2,9 +2,9 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <url>http://</url>
     <id>com.geonn.goscoTeacher</id>
-    <name>gosco_teacher</name>
+    <name>Gosco For School</name>
     <version>1.0</version>
-    <publisher>geomilano</publisher>
+    <publisher>Gosco</publisher>
     <description>undefined</description>
     <copyright>2015 by geomilano</copyright>
     <icon>appicon.png</icon>
@@ -48,7 +48,6 @@
                     <category android:name="android.intent.category.DEFAULT"/>
                     <data android:mimeType="image/*" android:scheme="http"/>
                 </intent-filter>
-                 
             </application>
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23"/>
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>

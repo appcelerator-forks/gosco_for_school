@@ -13,7 +13,7 @@
 				<Label top="5" class="center" text="Loading" color="#ffffff" />
 			</View>   
 	  
-		<ScrollView id="myContentView" class="wfill hfill vert" top="10"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />	
+		<ScrollView id="myContentView" class="wfill hfill vert" top="10" bottom="60"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />	
 			<!--<Button onClick="save" class="button" title="Save" top="10"></Button> -->
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
 	    	<View width="25%" height="60" class="vert">

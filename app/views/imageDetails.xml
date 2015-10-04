@@ -1,0 +1,10 @@
+<Alloy>
+	<Window  id="win" title="" fullscreen="true" navBarHidden="true"  backgroundColor="#000000" >
+		<View  id="closeView" width="50" height="50" right="2" top="2" zIndex="99">
+			<ImageView right="15" top="15" image="/images/icon_remove.png" width="30" height="30" />
+		</View>
+		<View layout="vertical" class="container" id="galleryView">
+		 <ScrollView id="imageDetailsView" zoomScale="0.6" maxZoomScale="10"  />
+		</View>
+	</Window>
+</Alloy>

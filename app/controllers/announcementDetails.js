@@ -90,7 +90,7 @@ function showList(){
 			 imageVw.addEventListener('click', function(e) {
 		     
 				var win = Alloy.createController("imageDetails",{element_id:entry.id, isCurriculum: isCurriculum}).getView(); 
-			  	Alloy.Globals.schooltabgroup.activeTab.open(win);  
+			  	openModal(win);  
 		    });
 			
 			//caption

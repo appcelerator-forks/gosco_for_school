@@ -19,8 +19,7 @@ function init(){
 }
 
 function showList(){
-	details = postElementModel.getListByPost(id); 
-	console.log(details);
+	details = postElementModel.getListByPost(id);  
 	var count =1;
 	details.forEach(function(entry) { 
 		var view0 = $.UI.create('View',{
@@ -29,19 +28,36 @@ function showList(){
 		});
 		var elementType = Alloy.Globals.ElementType[parseInt(entry.type) - 1];
 		var msg = escapeSpecialCharacter(entry.element); 
+		
+		var view1 = $.UI.create('View',{
+			classes: ['horz', 'wfill', 'hsize'],
+			source :entry.id
+		});
+		
 		var lbl1 = $.UI.create('Label',{
 			text: "Type : " + elementType,
 			source :entry.id,
+			width:"80%",
 			classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
 		});
-	 	
+	 	var deleteImg = $.UI.create('ImageView',{
+			image: "/images/cross.png",
+			source :entry.id,
+			type :entry.type,
+			width: 15,
+			height: 15
+		});
+		view1.add(lbl1);
+		view1.add(deleteImg);
+		view0.add(view1);
+		deleteImg.addEventListener('click', deleteElement);
 		if(entry.type == 1){
 			var element1 = $.UI.create('Label',{
 				text: msg,
 				classes: ['hsize','wfill','padding','h6'],
 				source :entry.id,
 			}); 
-			view0.add(lbl1);
+			
 			view0.add(element1);
 		}
 		
@@ -51,8 +67,7 @@ function showList(){
 				classes: ['hsize','wfill','padding','h6'],
 				source :entry.id,
 			}); 
-			 
-			view0.add(lbl1);
+			  
 			view0.add(element2);
 		}
 		
@@ -60,10 +75,9 @@ function showList(){
 			var element3 = $.UI.create('ImageView',{
 				image: entry.element,
 				source :entry.id,
-				classes: ['wfill','vert']
+				classes: ['wsize','vert']
 			});
-		 	 
-			view0.add(lbl1);
+		 	  
 			view0.add(element3); 
 			if(details.length != count){ 
 				var viewLine = $.UI.create('View',{
@@ -93,9 +107,47 @@ function closeWindow(){
 	$.win.close();
 }
 
-function refreshElement(){  
-	COMMON.removeAllChildren($.myContentView);
-	showList();	
+
+function deleteElement(e){
+	var elbl = JSON.stringify(e.source); 
+	var result = JSON.parse(elbl);    
+	
+	var dialog = Ti.UI.createAlertDialog({
+	    cancel: 0,
+	    buttonNames: ['Cancel','Confirm'],
+	    message: 'Are you sure want to delete this element?',
+	    title: 'Delete Element'
+	});
+	dialog.addEventListener('click', function(e){  
+		if (e.index === e.source.cancel){
+	      //Do nothing
+	    }
+	    if (e.index === 1){
+	    	//delete element
+	    	var param = {
+				id  	: result.source,
+			 	c_type  : result.type,
+				session : Ti.App.Properties.getString('session')
+			};
+		 
+			API.callByPost({url:"deleteElementUrl", params: param}, function(responseText){
+				var res = JSON.parse(responseText);  
+				if(res.status == "success"){ 
+					var post_element_model = Alloy.createCollection('post_element');  
+					post_element_model.deletePostElement(result.source);  
+					COMMON.createAlert("Delete Element", "Element successfully deleted");  
+					refreshElement();
+				}else{
+					$.win.close();
+					COMMON.hideLoading();
+					Alloy.Globals.Navigator.open("login");
+					COMMON.createAlert("Session Expired", res.data); 
+				}
+			});  
+			 
+	    }
+	});
+	dialog.show(); 
 }
 
 $.add.addEventListener('click', function(){
@@ -119,5 +171,12 @@ $.add.addEventListener('click', function(){
 	
 	
 });
+
+function refreshElement(){  
+	COMMON.removeAllChildren($.myContentView);
+	showList();	
+}
+
+$.refresh.addEventListener('click', refreshElement);
 
 Ti.App.addEventListener('refreshElement', refreshElement); 

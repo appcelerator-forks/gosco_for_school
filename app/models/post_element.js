@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "id": "INTEGER",
+		    "id": "INTEGER PRIMARY KEY",
 		    "post_id" : "INTEGER",
 		    "type": "TEXT",
 		    "element": "TEXT",  
@@ -10,7 +10,8 @@ exports.definition = {
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "post_element"
+			collection_name: "post_element",
+			idAttribute: "id"
 		}
 	},
 	extendModel: function(Model) {
@@ -90,7 +91,7 @@ exports.definition = {
 					//remove the previous records
 					var delete_sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE post_id="+entry.id; 
 		           
-		           // console.log(delete_sql);
+		             console.log(delete_sql);
 		            db.execute(delete_sql);
 					ele_arr.forEach(function(ele) { 
 						 
@@ -98,13 +99,13 @@ exports.definition = {
 						var element = ele.element;
 						element = element.replace(/["']/g, "&quot;"); 
 						
-						var caption = ele.caption;
+						var caption = ele.caption || "";
 						if(caption != "" &&  caption != null){
 							caption = caption.replace(/["']/g, "&quot;"); 
 						}
 						
 			       		sql_query = "INSERT INTO "+ collection.config.adapter.collection_name + "(id, post_id, element,caption, type,position) VALUES ("+ele.id+", '"+ele.p_id+"', '"+element+"', '"+caption+"', '"+ele.type+"' , '"+ele.position+"')";
-						 
+						  console.log(sql_query);
 					    db.execute(sql_query); 
 					 });
 				});
@@ -113,9 +114,17 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');
             },
+            updateElement : function(id, element){
+            	var collection = this; 
+                var sql = "UPDATE " + collection.config.adapter.collection_name + " SET element='"+element+"' WHERE id="+ id; 
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                db.execute(sql);
+            	db.close();
+	            collection.trigger('sync');
+            },
             deletePostElement : function(id){
 				var collection = this;
-                var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE post_id="+entry.id; 
+                var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE id="+ id; 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 db.execute(sql);
                 db.close();

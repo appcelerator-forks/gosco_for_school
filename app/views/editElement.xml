@@ -14,13 +14,10 @@
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View>
 		
-		<ScrollView   class="wfill hsize vert" top="60"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" >		 
-			<ScrollView id="editForm" class="vert wfill hsize"  />  
-			<View class="horz wfill hsize"  top="10">
-				<Button onClick="deleteElement" id="deleteBtn" width="40%" class="button" title="Delete" />
-				<Button onClick="save"  width="40%"  class="button" title="Save"  />
-			</View>
-		</ScrollView>
+		<ScrollView class="wfill hfill vert" top="60"    contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" scrollType="vertical"  >		 
+			<View id="editForm" class="wfill hsize vert" />
+			<Button onClick="save" id="saveBtn"  class="button" title="Save"    />
+		 </ScrollView> 
 		
 	</Window> 
 </Alloy>
