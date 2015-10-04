@@ -1,0 +1,90 @@
+<Alloy>
+	<Window title="My Profile" backgroundImage="/images/home_background.jpg" id="win"  > 
+		 <ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 <LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View> 
+		 <ScrollView class="wfill hsize vert" top="0">
+		  	<Label class="padding whiteColor h5" top="10">Your personal information</Label>
+		  	<Label class="padding whiteColor right-align h6" id="last_updated"></Label>
+				<View id="table" height="270"  backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrUsername"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Username" top="12" width="35%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="username" top="5" bottom='5' right='5' editable="false" textAlign="right" hintText="Username" /> 
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+					<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Name" top="12" width="15%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff"  id="fullname" top="5" bottom='5' right='5' textAlign="right" hintText="Full Name" /> 
+						</View>
+					</View> 
+					<View class="gray-line" />
+					<View id="tvrEmail" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Email" top="12" width="25%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="email" value="" top="5" bottom='5' right='5' textAlign="right" hintText="Email Address" /> 
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrContact" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Contact" top="12" width="25%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="contact" top="5" bottom='5' right='5' textAlign="right" keyboardType="Titanium.UI.KEYBOARD_PHONE_PAD" hintText="Parent Contact No." /> 
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrPosition" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Position" top="12" width="25%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="position" value="" top="5" bottom='5' right='5' textAlign="right" hintText="Position" /> 
+						</View>
+					</View>  
+					<View class="gray-line" />
+					<View id="tvrRoles" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Roles" top="12" width="25%" class="title_Label padding-left"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="roles" top="5" bottom='5' right='5' textAlign="right" editable="false" hintText="Roles" /> 
+						</View>
+					</View>   
+				</View>
+				
+				<View id="table2" height="45" top="10" backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrPassword" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Change Password" top="12" width="Ti.UI.SIZE" class="title_Label padding-left"  /> 
+							<ImageView image="/images/btn-forward.png" width="20" height="20" right="10" /> 
+						</View>
+					</View>  
+				</View>
+				
+				<View id="table3" height="45" top="10" backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrSchool" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="My School" top="12" width="Ti.UI.SIZE" class="title_Label padding-left"  /> 
+							<ImageView image="/images/btn-forward.png" width="20" height="20" right="10" /> 
+						</View>
+					</View>  
+				</View>
+				
+				<View id="table4" height="45" top="10" backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrSubject" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="My Subject" top="12" width="Ti.UI.SIZE" class="title_Label padding-left"  /> 
+							<ImageView image="/images/btn-forward.png" width="20" height="20" right="10" /> 
+						</View>
+					</View>  
+				</View>
+			<Button onClick="save" class="button" title="Save Profile" top="10"></Button> 
+			
+		</ScrollView>
+	</Window> 
+</Alloy>

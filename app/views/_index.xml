@@ -1,0 +1,8 @@
+<Alloy>
+	<Window id="wrapper" title="GOSCO For School" backgroundImage="/images/home_background.jpg" fullscreen="true" navBarHidden="true">
+		 <View class="wfill hsize vert"  >
+		 	<ImageView image="/images/full_logo.png" opacity="0.8" class="wsize hsize" />
+		 	<Label textAlign="center" class="hsize wfill h4 whiteColor" >Load Gosco Data...</Label>
+		 </View> 
+    </Window>
+</Alloy>

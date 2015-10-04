@@ -1,0 +1,109 @@
+<Alloy>
+	<Window title="School Information" backgroundImage="/images/home_background.jpg" id="win"  > 
+		 <ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 <LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View> 
+		 <ScrollView class="wfill hsize vert" top="0">
+		 	<View width="100" height="100" borderRadius="50"  backgroundColor="#f5f5f5"   top="20">
+				<ImageView width="100" height="100" image="/images/avatar.jpg" borderRadius="50" id="thumbPreview" />
+			</View>
+		  	<Label class="padding whiteColor h4"   id="schoolName"></Label> 
+		  	    
+		  	    <View id="table1" height="Ti.UI.SIZE" top="10" backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrPosition" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="School Type" top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="schoolType" value="" top="5" bottom='5' right='5' editable="false" textAlign="right" hintText="School Type" /> 
+						</View>
+					</View>  
+					<View class="gray-line" />
+					<View id="tvrRoles" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="School Level" top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="schoolLevel" top="5" bottom='5' right='5' textAlign="right" editable="false" hintText="School Level" /> 
+						</View>
+					</View>   
+				</View>
+				
+				<View id="table" height="Ti.UI.SIZE" top="10"  backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrUsername"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Contact No." top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" backgroundColor="#ffffff" id="contact_no" top="5" bottom='5' right='5'   textAlign="right" hintText="Contact Number" /> 
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+					<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Fax Number" top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff"  id="fax_no" top="5" bottom='5' right='5' textAlign="right" hintText="Fax Number" /> 
+						</View>
+					</View> 
+					<View class="gray-line" />
+					<View id="tvrEmail" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Email" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="email" value="" top="5" bottom='5' right='5' textAlign="right" hintText="Email Address" /> 
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrWebsite" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Website" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="website" top="5" bottom='5' right='5' textAlign="right" hintText="Website Address" /> 
+						</View>
+					</View>   
+					  
+				</View>
+				
+				<View id="table2" height="Ti.UI.SIZE" top="10" backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrAddress" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Address" top="12" width="25%" class="title_Label padding-left themeColor"  />  
+							<TextArea  horizontalWrap="true" id="address" class="padding left-align h5 font_dark_grey" width="100%"   hintText="School Address" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="50"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-bottom.png" textAlign="right" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View>
+					</View>  
+					<View class="gray-line" />
+					<View id="tvrPostcode" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Postcode" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="postcode" top="5" bottom='5' right='5' textAlign="right"  hintText="Postcode" /> 
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrLongitude" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Longitude" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="longitude" top="5" bottom='5' right='5' textAlign="right"  hintText="School Longitude" /> 
+						</View>
+					</View>  
+					<View class="gray-line" />
+					<View id="tvrLatitude" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Latitude" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<TextField class="h5" borderColor="#ffffff" id="latitude" top="5" bottom='5' right='5' textAlign="right"  hintText="School Latitude" /> 
+						</View>
+					</View>  
+				</View>
+				 
+			<Button onClick="save" class="button" title="Update Information" top="10"></Button> 
+			
+		</ScrollView>
+	</Window> 
+</Alloy>

@@ -1,0 +1,16 @@
+<Alloy> 
+		<Window title="" backgroundImage="/images/home_background.jpg" id="win" fullscreen="true" theme="Theme.NoActionBar"  navBarHidden="true" > 
+			<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+		        <ActivityIndicator id="activityIndicator" />
+		    	<Label top="5" class="center" text="Loading" color="#ffffff" />
+			</View> 
+			<View class="wfill hfill vert" top="50" >
+				<Label textAlign="center" class="hsize wfill whiteColor h3 bold" bottom="20">GOSCO For School</Label>
+				<ImageView image="/images/full_logo.png"  top="10" width="50%" />
+				<TextField id="username" hintText="Username"></TextField>
+				<TextField id="password" hintText="Password" passwordMask="true"></TextField>
+				<Button onClick="do_login" class="button" title="Login"></Button> 
+				
+			</View>
+		</Window> 
+</Alloy>

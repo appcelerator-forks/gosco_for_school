@@ -1,0 +1,29 @@
+<Alloy>
+	<Window title="My Subjects" backgroundImage="/images/home_background.jpg" id="win"  > 
+		 <ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 <LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<Menu id="menu" platform="android"> 
+            <MenuItem onClick="addNew" title="Add" icon="/images/add.png" showAsAction="Ti.Android.SHOW_AS_ACTION_IF_ROOM"/>
+        </Menu>
+		<RightNavButton platform="ios">
+			<View onClick="addNew" left="0"  width="30" height="35">
+				<ImageView   image="/images/add.png" width="30" height="25" />
+			</View>
+		</RightNavButton>
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View> 
+		<View class="wfill hsize horz" backgroundColor="#f4f4f4" top="0" zIndex="99" id="addForm" visible="false">
+			<TextField class="h5" borderColor="#f8f8f8" id="newSubjects" top="5" bottom='5' width="70%"  hintText="Add subject" /> 
+			<Button class="wsize"  onClick="save">Add</Button>
+		</View>
+		<Label class="padding whiteColor h5" top="10">My taught subject(s)</Label>
+		<ScrollView id="table"  class="wfill hsize vert padding" top="40" backgroundColor="#ffffff" scrollType="vertical" class="vert hsize" />   
+	 
+	</Window> 
+</Alloy>

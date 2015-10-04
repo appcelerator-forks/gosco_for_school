@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <url>http://</url>
+    <id>com.geonn.goscoTeacher</id>
+    <name>gosco_teacher</name>
+    <version>1.0</version>
+    <publisher>geomilano</publisher>
+    <description>undefined</description>
+    <copyright>2015 by geomilano</copyright>
+    <icon>appicon.png</icon>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>a5583ec3-df4e-4ad0-9666-98e09d6d0f4b</guid>
+    <property name="ti.ui.defaultunit" type="string">dp</property>
+    <ios>
+        <plist>
+            <dict>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+            </dict>
+        </plist>
+    </ios>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest>
+            <application android:debuggable="false" android:theme="@style/Theme.Gosco">
+                <meta-data
+                    android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCB_mRDVKoRKpN7i6JpgfpU8vnKRbr86CU"/>
+                <intent-filter>
+                    <action android:name="android.intent.action.SEND"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                    <data android:mimeType="image/*" android:scheme="http"/>
+                </intent-filter>
+                 
+            </application>
+            <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+        </manifest>
+    </android>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs" version="3.2.8">ti.cloud</module>
+        <module platform="android" version="3.3.8">ti.cloudpush</module>
+    </modules>
+    <deployment-targets>
+        <target device="android">true</target>
+        <target device="ipad">true</target>
+        <target device="iphone">true</target>
+        <target device="mobileweb">false</target>
+        <target device="windows">false</target>
+    </deployment-targets>
+    <sdk-version>5.0.1.GA</sdk-version>
+    <plugins>
+        <plugin version="1.0">ti.alloy</plugin>
+    </plugins>
+    <property name="appc-app-id" type="string">560cf054c120a0eb300f89d3</property>
+    <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-development" type="string">T0pinChB6Zhz3D3tVRmA0smSAk381uHM</property>
+    <property name="acs-oauth-key-development" type="string">LxvZy8xo4qzvkveOV6DnTGrbzqXhx3tI</property>
+    <property name="acs-api-key-development" type="string">UoW2AY8rEIF8BfiSPSHVyGJHRP7V4Zmv</property>
+    <property name="acs-username-development" type="string">appc_app_user_dev</property>
+    <property name="acs-password-development" type="string">bnQ7AZ2QVKX2EyH55n</property>
+    <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-production" type="string">luGEI79V4ShMxZYtHG1MvMsIDLtE6WHa</property>
+    <property name="acs-oauth-key-production" type="string">qB7uocFEkghS6PHIzetyYxsMD1RhYbMl</property>
+    <property name="acs-api-key-production" type="string">VjrswOR5mLTjXlBq1Ba5tn0u6p7YAMiW</property>
+    <property name="acs-username-production" type="string">appc_app_user</property>
+    <property name="acs-password-production" type="string">pIp3HzcwVD1jjauhxS</property>
+    <property name="appc-org-id" type="string">100016072</property>
+    <property name="appc-creator-user-id" type="string">974ebc0c-0865-4ea6-b748-9098dc431587</property>
+</ti:app>

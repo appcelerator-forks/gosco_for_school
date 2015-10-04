@@ -1,0 +1,25 @@
+<Alloy>
+	<Window title="" backgroundImage="/images/home_background.jpg" id="win"  > 
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		<Menu id="menu" platform="android"> 
+            <MenuItem onClick="editPost" title="Edit" icon="/images/edit.png" showAsAction="Ti.Android.SHOW_AS_ACTION_IF_ROOM"/>
+        </Menu>
+		<LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<RightNavButton platform="ios">
+			<View onClick="editPost" right="0"  width="Ti.UI.SIZE" height="Ti.UI.SIZE">
+				<ImageView right='10'  width="30"   image="/images/edit.png" />
+			</View>
+		</RightNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View>   
+		<ScrollView class="news_item" id="myContentView"  backgroundColor="#FFFFFF" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />	
+		 
+	</Window> 
+</Alloy>
+ 

@@ -1,0 +1,52 @@
+<Alloy>
+	<Window id="win" title="Dashboard" backgroundImage="/images/home_background.jpg">
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="logoutAction" />
+		<LeftNavButton platform="ios">
+			<View onClick="logoutAction" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/logout.png" />
+			</View>
+		</LeftNavButton> 
+		
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View> 
+		<ScrollView class="hfill vert">
+			<Label class="hsize wfill whiteColor padding h5 " id="welcomeUser" /> 
+			 <View class="wfill horz box padding grey-background" onClick="navWindow" height="50" mod="announcement" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/announcement.png" width="40" mod="announcement" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 "  mod="announcement" >Announcement</Label>
+			 </View> 
+			 
+			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="events" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/events.png" width="40" mod="events" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="events" >Events</Label>
+			 </View> 
+			 
+			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow"  mod="homework" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/work.png" width="40" mod="homework" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="homework" >Homework</Label>
+			 </View> 
+			 
+			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="curriculum" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/koku.png" width="40" mod="curriculum" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="curriculum" >Curriculum</Label>
+			 </View> 
+			 
+			  <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="award" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/award.png" width="40" mod="award" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="award" >Award</Label>
+			 </View> 
+			 
+			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="information" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/information.png" width="40" mod="information" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="information" >School Information</Label>
+			 </View> 
+			 
+			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow"  mod="profile" >
+			 	<ImageView left="10" class="hsize " image="/images/person.png" width="40" mod="profile" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="profile" >Profile</Label>
+			 </View> 
+		 </ScrollView> 
+    </Window>
+</Alloy>

@@ -1,0 +1,21 @@
+<Alloy>
+	<Window title="My School" backgroundImage="/images/home_background.jpg" id="win"  > 
+		 <ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		 <LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View> 
+		 <View class="wfill hsize vert" top="0">
+		  	<Label class="padding whiteColor h5" top="10">Your school and year managed</Label>
+				<View id="table"  top="10" backgroundColor="#ffffff" class="vert hsize" />  
+			<!--<Button onClick="save" class="button" title="Save Profile" top="10"></Button> -->
+			
+		</View>
+	</Window> 
+</Alloy>

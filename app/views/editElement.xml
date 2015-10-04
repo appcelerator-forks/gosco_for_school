@@ -1,0 +1,26 @@
+<Alloy>  
+	<Window title="Edit Element" id="win" fullscreen="true"> 
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+		<View platform="ios" top="0" height="50" backgroundColor="#F4F4F4"> 
+			<View left="0" zIndex="9" width="20%" onClick="closeWindow">
+				<ImageView left='10'  width="25" height="25" image="/images/cross.png" />
+			</View> 
+			<View >
+				<Label id="titleLbl"  class='hsize themeColor' textAlign="center">Edit Element</Label>
+		   </View>
+		</View>
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View>
+		
+		<ScrollView   class="wfill hsize vert" top="60"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" >		 
+			<ScrollView id="editForm" class="vert wfill hsize"  />  
+			<View class="horz wfill hsize"  top="10">
+				<Button onClick="deleteElement" id="deleteBtn" width="40%" class="button" title="Delete" />
+				<Button onClick="save"  width="40%"  class="button" title="Save"  />
+			</View>
+		</ScrollView>
+		
+	</Window> 
+</Alloy>
