@@ -44,6 +44,7 @@ function showList(){
 			image: "/images/cross.png",
 			source :entry.id,
 			type :entry.type,
+			id : "deleteBtn",
 			width: 15,
 			height: 15
 		});
@@ -97,6 +98,11 @@ function showList(){
 function editElement(e){
 	var elbl = JSON.stringify(e.source); 
 	var res = JSON.parse(elbl);    
+	console.log(res);
+	var isDel = res.id || "";
+	if(isDel == "deleteBtn"){
+		return false;
+	}
 	var win = Alloy.createController('editElement',{id: res.source, p_id: id,isCurriculum : isCurriculum}).getView();
 	openModal(win);
 }
@@ -147,7 +153,7 @@ function deleteElement(e){
 			 
 	    }
 	});
-	dialog.show(); 
+	dialog.show();  
 }
 
 $.add.addEventListener('click', function(){
@@ -161,8 +167,7 @@ $.add.addEventListener('click', function(){
 		
 	dialog.show();	 
 	dialog.addEventListener("click", function(e){   
-		if(cancelBtn != e.index){  
-			console.log( e.index); 
+		if(cancelBtn != e.index){ 
 			var eleType = parseInt(e.index) + 1;
 			var win = Alloy.createController('editElement',{id: "", p_id: id,  elementType : eleType,isCurriculum : isCurriculum}).getView();
 			openModal(win);

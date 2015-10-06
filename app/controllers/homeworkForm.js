@@ -2,6 +2,7 @@ var args = arguments[0] || {};
 COMMON.construct($); 
 var h_id = args.id || "";
 var homeworkModel = Alloy.createCollection('homework'); 
+var homeworkAttachmentModel = Alloy.createCollection('homeworkAttachment'); 
 var subjectModel = Alloy.createCollection('subjects');
 var educationClassModel = Alloy.createCollection('education_class');
 var subject;
@@ -13,13 +14,17 @@ function init(){
 	
 	if(h_id != ""){
 		var details = homeworkModel.getHomeworkById(h_id);
+		
 		classId =details.ec_id;
 		var eduClass= educationClassModel.getEducationClassById(details.ec_id);
 		$.class_value.text = eduClass.className;
 		$.subject.value = details.subject;
 		$.remark.value  = details.remark;
 		$.expired_date.text = convertFromDBDateFormat(details.deadline);
-		$.saveBtn.title= "Update Homework";
+		$.saveBtn.title= "Update Homework"; 
+		loadAttachment();
+	}else{
+		$.attView.visible = false;
 	}
 }
 
@@ -75,6 +80,7 @@ $.addSubject.addEventListener('click', function(){
 					subject : subject.trim()
 				};
 				subjectModel.saveArray(param);
+				
 				COMMON.createAlert("Add Subject", "Added "+subject+" to my favourite list");
 			} 
 		});
@@ -83,6 +89,7 @@ $.addSubject.addEventListener('click', function(){
 });
 
 $.getSubject.addEventListener('click', function(){ 
+	subject = subjectModel.getSubjectByUser(Ti.App.Properties.getString('u_id'), "");
 	var subjectArr = []; 
 	subject.forEach(function(entry) {
 		if(entry.state != ""){
@@ -167,9 +174,147 @@ function showExpiredPicker(){
 	$.dateToolbar.visible = true;
 	$.selectorView.height = Ti.UI.SIZE;
 }
-
-
-function closeWindow(){ 
-	
+ 
+function closeWindow(){  
+	Ti.App.removeEventListener('refreshAttachment', init); 
 	$.win.close();
 }
+
+/*** Homework attachment***/
+function uploadAttachment(){
+	var dialog = Titanium.UI.createOptionDialog({ 
+	    title: 'Choose an image source...', 
+	    options: ['Camera','Photo Gallery', 'Cancel'], 
+	    cancel:2 //index of cancel button
+	});
+ 
+	dialog.addEventListener('click', function(e) { 
+	    
+	    if(e.index == 0) { //if first option was selected
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({ 
+	            success:function(event) { 
+	               var image = event.media;
+        		    
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+	                   //var nativePath = event.media.nativePath;  
+			           uploadAttachmentToServer(image); 
+	                }
+	            },
+	            cancel:function(){
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error) {
+	                //error happend, create alert
+	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA){
+	                    a.setMessage('Device does not have camera');
+	                }else{
+	                    a.setMessage('Unexpected error: ' + error.code);
+	                }
+	 
+	                // show alert
+	                a.show();
+	            },
+	            allowImageEditing:true,
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	            saveToPhotoGallery:true
+	        });
+	    } else if(e.index == 1){
+	    	 
+	    	//obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event){
+	            	// set image view
+	            	var image = event.media; 
+		           	uploadAttachmentToServer(image);
+		           	loadAttachment(); 
+	            },
+	            cancel:function() {
+	               
+	            },
+	            
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	        });
+	    } else {
+	        
+	    }
+	});
+	 
+	//show dialog
+	dialog.show();
+}
+
+function loadAttachment(){
+	var attList = homeworkAttachmentModel.getRecordByHomework(h_id); 
+	var counter = 0;
+	 
+	COMMON.removeAllChildren($.attachment);
+	if(attList.length > 0){ 
+	 	attList.forEach(function(att){  
+	 		$.attachment.add(attachedPhoto(att.img_thumb, counter));
+	 		counter++;  
+	 	}); 
+	 }
+}
+
+function uploadAttachmentToServer(attachment){
+	COMMON.showLoading(); 
+	var param = {
+		h_id    : h_id,  
+		Filedata : attachment, 
+		session : Ti.App.Properties.getString('session')
+	};  
+
+	API.callByPostImage({url:"uploadHomeworkAttachmentUrl", params: param}, function(responseText){
+		var res = JSON.parse(responseText);  
+		if(res.status == "success"){   
+			homeworkAttachmentModel.addAttachment(res.data);
+		 	init();
+		 	COMMON.hideLoading();
+			COMMON.createAlert("Create success","Successfully added homework attachment!"); 
+		}else{
+			$.win.close();
+			COMMON.hideLoading();
+			Alloy.Globals.Navigator.open("login");
+			COMMON.createAlert("Session Expired", res.data); 
+		}
+	});
+}
+
+function attachedPhoto(image,position){ 
+	var iView = $.UI.create('View', {
+		backgroundColor: "#D5D5D5",
+		height : 50,
+		position : position,
+		width: 50,
+		left:5,
+		right: 5,
+		bottom:0
+	});
+		            
+	var iImage = Ti.UI.createImageView({
+		image : image,
+		position :position,
+		width: Ti.UI.FILL
+	}); 
+	iView.add(iImage);
+	
+	iView.addEventListener('click',function(e){
+		 
+	    console.log("position : "+position);
+	    
+		var page = Alloy.createController("attachmentDetails",{h_id:h_id,position:position}).getView(); 
+	  	page.open();
+	  	page.animate({
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN,
+			opacity: 1,
+			duration: 300
+		});
+		 
+	});
+	return iView;	            
+}
+
+Ti.App.addEventListener('refreshAttachment', init); 

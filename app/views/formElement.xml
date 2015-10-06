@@ -24,8 +24,7 @@
 				<!--<ImageView id="favorite" height="Ti.UI.FILL" image="/images/icon-favorites.png" />-->
 			</View>
 	        <View width="25%" height="60" class="vert">
-	        	<ImageView id="search"  top="10"  height="30" image="/images/search.png" />
-	        	<Label class="h6 font_dark_grey center">Search</Label>
+	         
 	        </View>
 	        <View width="auto" height="60" class="vert">
 				<ImageView id="add"  top="10" height="30"  image="/images/add.png" />

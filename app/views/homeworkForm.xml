@@ -56,6 +56,12 @@
 						</View>
 					</View> 
 				</View> 
+				<View id="attView" top="10" class="hsize horz wfill" backgroundColor="#ffffff"  >
+					<ScrollView id="attachment" scrollType="horizontal" class="hsize horz" width="80%" /> 
+					<View width="auto"class="hsize" onClick="uploadAttachment" >
+						<View class="themeBg wfill" height="50" right="0" ><ImageView id="addLbl" height="25" width="30" image="/images/add_white.png" /></View>
+					</View> 
+				</View>
 				<Button onClick="save" id="saveBtn" class="button" title="Create Homework" top="10"></Button> 
 			</ScrollView>
 			

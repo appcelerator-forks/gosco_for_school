@@ -1,6 +1,8 @@
 var args = arguments[0] || {};
 COMMON.construct($); 
 var homeworkModel = Alloy.createCollection('homework'); 
+var homeworkAttachmentModel = Alloy.createCollection('homeworkAttachment'); 
+
 var searchKey = "";
 init();
 
@@ -29,7 +31,8 @@ function syncData(){
 		
 		if(res.status == "success"){  
 			var arr = res.data;  
-			homeworkModel.saveArray(arr); 
+			homeworkModel.saveArray(arr);  
+			homeworkAttachmentModel.saveArray(arr);
 			checker.updateModule(3,"homeworkList", COMMON.now(), Ti.App.Properties.getString('u_id'));
 			showList();  
 		}else{

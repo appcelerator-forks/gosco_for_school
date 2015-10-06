@@ -16,10 +16,11 @@ var getCurriculumList  	= "http://"+API_DOMAIN+"/gosco/api/getCurriculumList?use
 var getHomeworkList 	= "http://"+API_DOMAIN+"/gosco/api/getAdminHomeworkList?user="+USER+"&key="+KEY+"&auth";
 var getSchoolClassList  = "http://"+API_DOMAIN+"/gosco/api/getSchoolClassList?user="+USER+"&key="+KEY+"&auth";
 var addHomeworkUrl   	= "http://"+API_DOMAIN+"/gosco/api/addHomework?user="+USER+"&key="+KEY+"&auth";
+var uploadHomeworkAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/uploadHomeworkAttachment?user="+USER+"&key="+KEY+"&auth";
 var getEventsList       = "http://"+API_DOMAIN+"/gosco/api/getEventsList?user="+USER+"&key="+KEY+"&auth";
 //var getTuitionList   	= "http://"+API_DOMAIN+"/gosco/api/getTuitionList?user="+USER+"&key="+KEY;  
 var deviceInfoUrl       = "http://"+API_DOMAIN+"/gosco/api/getDeviceInfo?user="+USER+"&key="+KEY;
-var doSignUpUrl  		= "http://"+API_DOMAIN+"/gosco/api/doSignUp?user="+USER+"&key="+KEY; 
+ 
 
 var doLoginUrl  		= "http://"+API_DOMAIN+"/gosco/api/loginAdmin?user="+USER+"&key="+KEY;
 var doLogoutUrl			= "http://"+API_DOMAIN+"/gosco/api/logoutAdmin?user="+USER+"&key="+KEY;
@@ -32,6 +33,8 @@ var updateSchoolUrl     = "http://"+API_DOMAIN+"/gosco/api/editSchoolInformation
 var addElementUrl		= "http://"+API_DOMAIN+"/gosco/api/addElement?user="+USER+"&key="+KEY+"&auth";
 var updateElementUrl    = "http://"+API_DOMAIN+"/gosco/api/updateElement?user="+USER+"&key="+KEY+"&auth";
 var deleteElementUrl    = "http://"+API_DOMAIN+"/gosco/api/deleteElement?user="+USER+"&key="+KEY+"&auth";
+var deleteAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/deleteAttachment?user="+USER+"&key="+KEY+"&auth";
+
 //API that call in sequence 
 var APILoadingList = [
 	{url: getSchoolList, model: "education", checkId: "1"},
@@ -41,7 +44,19 @@ var APILoadingList = [
 /*********************
 **** API FUNCTION*****
 **********************/ 
-
+exports.callByPostImage = function(e, onload, getParam){
+	var url =  eval(e.url);
+	var _result = contactServerByPostImage(url, e.params || {});   
+	_result.onload = function(e) {   
+		onload && onload(this.responseText); 
+	};
+		
+	_result.onerror = function(e) { 
+		onerror && onerror(); 
+	};	
+};
+ 
+ 
 exports.callByPost = function(e, onload, onerror){
 	var url =  eval(e.url);
 	console.log(url);
@@ -82,10 +97,25 @@ function contactServerByPost(url,records) {
 	});
   	if(OS_ANDROID){
 	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+	 //	client.setRequestHeader('Content-Type','multipart/form-data'); 
 	 }
+    
 	client.open("POST", url); 
+	
 	//client.setRequestHeader('Content-Type', 'application/json');   
 	client.send(records);
+	return client;
+};
+
+function contactServerByPostImage(url,records) {  
+	var client = Ti.Network.createHTTPClient({
+		timeout : 50000
+	});
+  	 
+    
+	client.open("POST", url);     
+	console.log(records);
+	client.send( records);
 	return client;
 };
 

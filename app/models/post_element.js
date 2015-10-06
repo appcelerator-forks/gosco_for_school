@@ -90,8 +90,7 @@ exports.definition = {
 					var ele_arr = entry.element;
 					//remove the previous records
 					var delete_sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE post_id="+entry.id; 
-		           
-		             console.log(delete_sql);
+		            
 		            db.execute(delete_sql);
 					ele_arr.forEach(function(ele) { 
 						 

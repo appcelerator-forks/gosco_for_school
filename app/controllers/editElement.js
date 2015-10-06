@@ -8,6 +8,7 @@ var postElementModel;
 var element1;
 var element2;
 var element3a;
+var attachment;
 COMMON.construct($); 
 
 init();
@@ -18,20 +19,21 @@ function init(){
 	}else{
 		postElementModel = Alloy.createCollection('post_element');  
 	}
-	console.log("elementType : "+eleType);
-	if(eleType != ""){
-		console.log("a");
+	 
+	if(eleType != ""){ 
 		newList();
-	}else{
-		console.log("b");
+	}else{ 
 		showList();
 	}
 	
+	if(OS_IOS){
+		$.elementView.top = 60;
+	}
 }
 
 function newList(){ 
 	var view0 = $.UI.create('View',{
-		classes: ['vert', 'wfill', 'hsize','padding', 'box']
+		classes: ['vert', 'wfill', 'hsize','padding']
 	});
 		
 	var elementType = Alloy.Globals.ElementType[parseInt(eleType) -1];
@@ -65,7 +67,9 @@ function newList(){
 	if( eleType == 3){
 		element2 = $.UI.create('ImageView',{
 			image: "/images/icon_take_photo.png",
-			classes: ['hsize','padding' ],
+			width:320,
+			height:320,
+			classes: [ 'padding' ],
 		});
 	 	
 	 	element3a = $.UI.create('TextField',{
@@ -96,25 +100,14 @@ function takePhoto(){
 	            success:function(event) { 
 	                var image = event.media; 
 	                
-	                if(image.width > image.height){
-	        			var newWidth = 320;
-	        			var ratio =   320 / image.width;
-	        			var newHeight = image.height * ratio;
-	        		}else{
-	        			var newHeight = 320;
-	        			var ratio =   320 / image.height;
-	        			var newWidth = image.width * ratio;
-	        		}
-	        		
-	        		image = image.imageAsResized(newWidth, newHeight);
+	                
+	        	//	image = image.imageAsResized(newWidth, newHeight);
 
 	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 	                   //var nativePath = event.media.nativePath; 
 		            	element2.image = image;
-			           // blobContainer = image;
-			             
-			            
-			            //mainView.undoPhoto.visible = true;
+		            	attachment = image;
+			           // blobContainer = image; 
 	                }
 	            },
 	            cancel:function(){
@@ -144,6 +137,7 @@ function takePhoto(){
 	            success:function(event){
 	            	// set image view
 	            	var image = event.media;  
+	            	/**
 	            	if(image.width > image.height){
 	        			var newWidth = 320;
 	        			var ratio =   320 / image.width;
@@ -155,7 +149,9 @@ function takePhoto(){
 	        		}
 	        		
 					image = image.imageAsResized(newWidth, newHeight);
+					**/
 	            	element2.image = image;
+	            	attachment = image;
 		           // blobContainer = image; 
 		            	 
 	            },
@@ -180,7 +176,7 @@ function showList(){
 	//console.log(details);
 	
 	var view0 = $.UI.create('View',{
-		classes: ['vert', 'wfill', 'hsize','padding', 'box'],
+		classes: ['vert', 'wfill', 'hsize','padding'],
 		source :details.id
 	});
 		
@@ -236,13 +232,33 @@ function save(){
 	COMMON.showLoading();
 	if(id == ""){ 
 		if(eleType == 3){//image
+			if(OS_ANDROID){
+				attachment = attachment;
+			}else{
+				attachment = element2.toImage();
+			}      
 			var param = {
 				a_id    : p_id, 
 				type    : eleType,
-				Filedata : element2.toImage(),
+				Filedata : attachment,//element2.toImage(),
 				caption : element3a.value,
 				session : Ti.App.Properties.getString('session')
 			}; 
+			API.callByPostImage({url:"addElementUrl", params: param}, function(responseText){
+				var res = JSON.parse(responseText);  
+				if(res.status == "success"){ 
+					var post_element_model = Alloy.createCollection('post_element');  
+					post_element_model.addElement(res.data);  
+					COMMON.createAlert("Saved", "Element successfully added"); 
+					$.saveBtn.visible = false;
+				}else{
+					$.win.close();
+					COMMON.hideLoading();
+					Alloy.Globals.Navigator.open("login");
+					COMMON.createAlert("Session Expired", res.data); 
+				}
+				COMMON.hideLoading();
+			});
 		}else{
 			var param = {
 				a_id    : p_id, 
@@ -250,23 +266,24 @@ function save(){
 				element : element2.value,
 				session : Ti.App.Properties.getString('session')
 			};
-		}
-		
-		API.callByPost({url:"addElementUrl", params: param}, function(responseText){
-			var res = JSON.parse(responseText);  
-			if(res.status == "success"){ 
-				var post_element_model = Alloy.createCollection('post_element');  
-				post_element_model.addElement(res.data);  
-				COMMON.createAlert("Saved", "Element successfully added"); 
-				$.saveBtn.visible = false;
-			}else{
-				$.win.close();
+			API.callByPost({url:"addElementUrl", params: param}, function(responseText){
+				var res = JSON.parse(responseText);  
+				if(res.status == "success"){ 
+					var post_element_model = Alloy.createCollection('post_element');  
+					post_element_model.addElement(res.data);  
+					COMMON.createAlert("Saved", "Element successfully added"); 
+					$.saveBtn.visible = false;
+				}else{
+					$.win.close();
+					COMMON.hideLoading();
+					Alloy.Globals.Navigator.open("login");
+					COMMON.createAlert("Session Expired", res.data); 
+				}
 				COMMON.hideLoading();
-				Alloy.Globals.Navigator.open("login");
-				COMMON.createAlert("Session Expired", res.data); 
-			}
-			COMMON.hideLoading();
-		});
+			});
+		}
+	 
+		
 		
 	}else{
 		var param = {

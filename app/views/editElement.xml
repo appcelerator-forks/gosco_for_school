@@ -14,7 +14,7 @@
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View>
 		
-		<ScrollView class="wfill hfill vert" top="60"    contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" scrollType="vertical"  >		 
+		<ScrollView class="wfill hfill vert" top="10"  id="elementView"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" scrollType="vertical"  >		 
 			<View id="editForm" class="wfill hsize vert" />
 			<Button onClick="save" id="saveBtn"  class="button" title="Save"    />
 		 </ScrollView> 

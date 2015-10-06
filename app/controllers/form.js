@@ -3,6 +3,7 @@ var args = arguments[0] || {};
 var isCurriculum = args.isCurriculum || "";
 var id = args.id || "";
 var formType;
+var postDetails;
 COMMON.construct($); 
 
 init();
@@ -14,20 +15,24 @@ function init(){
 		postModel = Alloy.createCollection('post');  
 	}
 	
-	postDetails = postModel.getRecordsById(id); 
-	formType	= postDetails.type;
-	if(postDetails.type == 2){
-		$.win.title = "Award Form";
-		$.saveBtn.title = "Award Details";
+	if(id != ""){
+		postDetails = postModel.getRecordsById(id); 
+		formType	= postDetails.type;
+		if(postDetails.type == 2){
+			$.win.title = "Award Form";
+			$.saveBtn.title = "Award Details";
+		}
+		$.title.value   = postDetails.title;
+		$.message.value = postDetails.message;
+		
+		$.publish_date.text = timeFormat(postDetails.publish_date);
+		$.expired_date.text = timeFormat(postDetails.expired_date); 
+		if(postDetails.status == 1){ 
+			$.statusSwitch.value = true;
+		}
 	}
-	$.title.value   = postDetails.title;
-	$.message.value = postDetails.message;
 	
-	$.publish_date.text = timeFormat(postDetails.publish_date);
-	$.expired_date.text = timeFormat(postDetails.expired_date); 
-	if(postDetails.status == 1){ 
-		$.statusSwitch.value = true;
-	}
+	
 }
 
 function save(){
@@ -42,7 +47,9 @@ function save(){
 	}else{
 		status = 1;
 	}
-	if( (title != postDetails.title) || (message != postDetails.message) || (publish_date != postDetails.publish_date) || 
+	
+	 
+	if((id == "") || (title != postDetails.title) || (message != postDetails.message) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
 		var param = {
 			id    : id,
