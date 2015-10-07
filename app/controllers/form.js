@@ -68,12 +68,12 @@ function save(){
 			if(res.status == "success"){   
 				postModel.addPost(res.data);  
 				//Ti.App.fireEvent('refreshPostList');   
-				COMMON.createAlert("Saved", "Information successfully updated"); 
+				COMMON.resultPopUp("Saved", "Information successfully updated"); 
 			}else{
 				$.win.close();
 				COMMON.hideLoading();
 				Alloy.Globals.Navigator.open("login");
-				COMMON.createAlert("Session Expired", res.data); 
+				COMMON.resultPopUp("Session Expired", res.data); 
 			}
 		});
 	} 

@@ -57,7 +57,7 @@ function save(){
 		 	/**load new set of category from API**/
 		 	var arr = res.data; 
 		    educationModel.saveArray(arr);  
-		    COMMON.createAlert("Saved", "Information successfully updated"); 
+		    COMMON.resultPopUp("Saved", "Information successfully updated"); 
 		} 
 	});
 }

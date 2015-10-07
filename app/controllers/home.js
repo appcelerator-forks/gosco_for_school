@@ -42,7 +42,7 @@ function doLogout(){
 		var res = JSON.parse(responseText);
 		 
 		if(res.status == "error"){ 
-			COMMON.createAlert("Error",res.data);
+			COMMON.resultPopUp("Error",res.data[0]);
 			return false;
 		}else{  
 			//set session 

@@ -2,7 +2,7 @@ var args = arguments[0] || {};
 COMMON.construct($); 
 var homeworkModel = Alloy.createCollection('homework'); 
 var homeworkAttachmentModel = Alloy.createCollection('homeworkAttachment'); 
-
+var educationClassModel = Alloy.createCollection('education_class');
 var searchKey = "";
 init();
 
@@ -39,7 +39,7 @@ function syncData(){
 			$.win.close();
 			COMMON.hideLoading();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 }
@@ -66,9 +66,58 @@ function showList(){
 				currentDate = cre;
 				$.list.add(view11);
 			} 
+			
+			var statusColor = "#8A6500";
+			if(entry.status == "1"){ //publish
+				statusColor = "#2C8A00";
+			} 
+			if(entry.deadline < currentDateTime() ){  
+				statusColor = "#CE1D1C";
+			}
+			
+			var horzView = $.UI.create('View',{
+				classes: ['horz','wfill'], 
+				source: entry.id,  
+				height: 60 
+			});
+			
+			var statustView = $.UI.create('View',{
+				classes: ['hfill'],
+				source: entry.id,
+				width: 10,
+				backgroundColor: statusColor
+			});
+			horzView.add(statustView);
+			
+			
+			//Class room
+			var eduClass= educationClassModel.getEducationClassById(entry.ec_id);
+			var classView = $.UI.create('View',{
+				classes: ['hfill'],
+				source: entry.id,
+				width: 40 
+			});
+			
+			var classLabel  = $.UI.create('Label',{
+				classes :['h4', 'hsize' ,'font_light_grey','wsize' ],  
+				source :entry.id,
+				text: eduClass.className
+			});
+			classView.add(classLabel);
+			horzView.add(classView);
+			
+			var statustView = $.UI.create('View',{
+				classes: ['hfill'],
+				source: entry.id,
+				width: 1,
+				backgroundColor: "#ececec"
+			});
+			horzView.add(statustView);
+			
     		var view0 = $.UI.create('View',{
 				classes :['hsize' ],
 				source :entry.id,
+				width: "auto",
 				selectedBackgroundColor : "#ffffff", 
 			});
 			
@@ -86,11 +135,19 @@ function showList(){
 			});
 			 
 			var label2 = $.UI.create('Label',{
-				classes :['h6', 'hsize' ,'font_light_grey', 'padding-left','padding-bottom' ], 
+				classes :['h6', 'hsize' ,'font_light_grey', 'padding-left' ], 
 				top:5,
 				width: "80%",
 				source :entry.id,
-				text: entry.remark  
+				text: "Deadline : "+ convertFromDBDateFormat(entry.deadline)
+			});
+			
+			var attList = homeworkAttachmentModel.getRecordByHomework(entry.id); 
+			var label3 = $.UI.create('Label',{
+				classes :['h6', 'hsize' ,'font_light_grey', 'padding-left','padding-bottom' ],  
+				width: "80%",
+				source :entry.id,
+				text:  attList.length  + " Attachment(s)"
 			});
 			
 			var imgView1 = $.UI.create('ImageView',{
@@ -103,10 +160,12 @@ function showList(){
 		 	
 			view1.add(label1);
 			view1.add(label2); 
+			view1.add(label3);
 			view0.add(view1);
 			view0.add(imgView1);
 			view0.addEventListener('click', goDetails);
-			$.list.add(view0);
+			horzView.add(view0);
+			$.list.add(horzView);
 			
 			if(details.length != count){
 				var viewLine = $.UI.create('View',{

@@ -18,9 +18,11 @@ function init(){
 		classId =details.ec_id;
 		var eduClass= educationClassModel.getEducationClassById(details.ec_id);
 		$.class_value.text = eduClass.className;
+		$.class_value.color= "#000000";
 		$.subject.value = details.subject;
 		$.remark.value  = details.remark;
 		$.expired_date.text = convertFromDBDateFormat(details.deadline);
+		$.expired_date.color= "#000000";
 		$.saveBtn.title= "Update Homework"; 
 		loadAttachment();
 	}else{
@@ -55,6 +57,7 @@ $.tvrClass.addEventListener('click', function(){
 	dialog.addEventListener("click", function(e){   
 		if(cancelBtn != e.index){ 
 			$.class_value.text = classArr[e.index];
+			$.class_value.color= "#000000";
 			classId  = classIdArr[e.index]; 
 		}
 	});
@@ -81,7 +84,7 @@ $.addSubject.addEventListener('click', function(){
 				};
 				subjectModel.saveArray(param);
 				
-				COMMON.createAlert("Add Subject", "Added "+subject+" to my favourite list");
+				COMMON.resultPopUp("Add Subject", "Added "+subject+" to my favourite list");
 			} 
 		});
 		dialog.show();  
@@ -109,6 +112,7 @@ $.getSubject.addEventListener('click', function(){
 	dialog.addEventListener("click", function(e){   
 		if(cancelBtn != e.index){ 
 			$.subject.value = subjectArr[e.index];
+			$.subject.color= "#000000";
 		}
 	});
 });
@@ -120,12 +124,12 @@ function save(){
 	var expired_date = $.expired_date.text;
 	 
 	if(subject.trim() == "" ){
-		COMMON.createAlert("Add Fail","Please fill in subject");
+		COMMON.resultPopUp("Add Fail","Please fill in subject");
 		return false;
 	}
 	
 	if(classId  == "" ){
-		COMMON.createAlert("Add Fail","Please select a class");
+		COMMON.resultPopUp("Add Fail","Please select a class");
 		return false;
 	}
 	
@@ -148,19 +152,20 @@ function save(){
 		
 		if(res.status == "success"){   
 			Ti.App.fireEvent('refreshShowList');  
-			COMMON.createAlert("Create success","Successfully create homework!");
+			COMMON.resultPopUp("Create success","Successfully create homework!");
 			closeWindow();  
 		}else{
 			$.win.close();
 			COMMON.hideLoading();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 }
 
 function changeExpiredDate(e){ 
 	$.expired_date.text = dateConvert(e.value); 
+	$.expired_date.color= "#000000";
 }
 
 function hideDatePicker(){
@@ -273,12 +278,12 @@ function uploadAttachmentToServer(attachment){
 			homeworkAttachmentModel.addAttachment(res.data);
 		 	init();
 		 	COMMON.hideLoading();
-			COMMON.createAlert("Create success","Successfully added homework attachment!"); 
+			COMMON.resultPopUp("Create success","Successfully added homework attachment!"); 
 		}else{
 			$.win.close();
 			COMMON.hideLoading();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 }
@@ -293,7 +298,7 @@ function attachedPhoto(image,position){
 		right: 5,
 		bottom:0
 	});
-		            
+	        
 	var iImage = Ti.UI.createImageView({
 		image : image,
 		position :position,
@@ -301,10 +306,7 @@ function attachedPhoto(image,position){
 	}); 
 	iView.add(iImage);
 	
-	iView.addEventListener('click',function(e){
-		 
-	    console.log("position : "+position);
-	    
+	iView.addEventListener('click',function(e){ 
 		var page = Alloy.createController("attachmentDetails",{h_id:h_id,position:position}).getView(); 
 	  	page.open();
 	  	page.animate({

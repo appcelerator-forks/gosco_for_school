@@ -12,10 +12,10 @@
 		</View>  
 		<SearchBar barColor="#FFFFFF" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false" top="0" zIndex="99" hintText="Search Homework" />
 		 
-		<View class="vert wfill hsize" top="10">
+		<View class="vert wfill hsize" top="5">
 			<Label class="padding whiteColor h5">Your assigned homework</Label> 
 		</View> 
-		<ScrollView id="list" class="wfill hsize vert" bottom="60" top= "40" backgroundColor="#ffffff" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
+		<ScrollView id="list" class="wfill hfill vert" bottom="60" top="50" backgroundColor="#ffffff" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
 		<View class="gray-line" bottom="60" />
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
 	    	<View width="25%" height="60" class="vert">

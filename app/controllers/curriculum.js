@@ -27,7 +27,7 @@ function syncData(){
 			$.win.close();
 			COMMON.hideLoading();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 }

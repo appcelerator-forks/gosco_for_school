@@ -1,0 +1,94 @@
+<Alloy>
+	<Window title="Post Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	 
+		<LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View>   
+		<View class="vert wfill hsize" top="5">
+			<Label class="padding whiteColor h5">Please fill in event informaiton</Label> 
+		</View> 
+		<ScrollView class="wfill hsize vert" top="40">
+			<View id="table" class="hsize wfill vert"  backgroundColor="#ffffff" >
+					<View id="tvrUsername" class="hsize wfill">
+						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Title" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
+							<TextField class="h5 wfill" borderColor="#ffffff"  backgroundColor="#ffffff" id="title" top="5" bottom='5'  hintText="Event title" /> 
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+					<View id="tvrMessage" class="hsize wfill" >
+						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Message" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
+							
+							<TextArea  horizontalWrap="true" id="message" class="padding left-align h5 font_dark_grey"    hintText="Please fill in event message" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="50"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-bottom.png" textAlign="right" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View>
+					</View>  
+					<View class="gray-line" />
+					<View id="tvrStatus"  class="hsize wfill">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Status" top="12" width="75%" class="title_Label padding-left themeColor"  />  
+							<Switch id="statusSwitch" value="false" class="right-align hsize" right="5" top="10" bottom="10" />   
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrPublishDate" class="hsize wfill"  onClick="showPublishPicker">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Publish Date"   top="12" width="60%" class="title_Label padding themeColor"  /> 
+							<Label text="" class="padding padding-right font_dark_grey" top="12"  id="publish_date"  width="auto"  />
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrExpiredDate" class="hsize wfill" onClick="showExpiredPicker">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="End Date"  top="10" width="60%" class="title_Label padding themeColor"  /> 
+							<Label text="" class="padding padding-right font_dark_grey" id="expired_date"  width="auto"  />
+						</View>
+					</View> 
+				</View> 
+				<Button onClick="save" class="button" id="saveBtn" title="Save" top="10"></Button>  
+			</ScrollView>
+			
+			<Toolbar platform="ios" bottom="200" extendBackground="true" borderTop="true" borderBottom="false" id="dateToolbar" visible="false">
+				<Items>  
+					<Button onClick="hideDatePicker" title="DONE" style="Titanium.UI.iPhone.SystemButtonStyle.DONE"   />
+				</Items>
+			</Toolbar>
+			<View height="0" bottom="200" id="selectorView" bottom="0"  zIndex="99">
+				
+				<Picker id="datePublishPicker"
+				          onChange="changePublishDate" 
+				          type="Ti.UI.PICKER_TYPE_DATE"  
+				          height="200"
+				           visible="false">
+				          
+				 </Picker>
+				 <Picker id="dateExpiredPicker"
+				          onChange="changeExpiredDate" 
+				          type="Ti.UI.PICKER_TYPE_DATE" 
+				           height="200"
+				           visible="false"> 
+					
+							 
+				 </Picker>
+			</View>	 
+			
+			
+	</Window> 
+</Alloy>
+ 

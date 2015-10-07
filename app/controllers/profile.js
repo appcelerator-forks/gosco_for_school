@@ -38,12 +38,12 @@ function save(){
 		
 		if(res.status == "error"){
 			COMMON.hideLoading(); 
-			COMMON.createAlert("Error",res.data[0]);
+			COMMON.resultPopUp("Error",res.data[0]);
 			return false;
 		}else{ 
 			var userModel = Alloy.createCollection('user'); 
 			userModel.saveArray(res.data);
-			COMMON.createAlert("Success","Profile updated successfully"); 
+			COMMON.resultPopUp("Success","Profile updated successfully"); 
 		}
 		
 	});

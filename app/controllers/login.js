@@ -7,12 +7,12 @@ function do_login(){
 	var password = $.password.value;
 	
 	if(username.trim() == "" ){
-		COMMON.createAlert("Login Fail","Please fill in your username or email");
+		COMMON.resultPopUp("Login Fail","Please fill in your username or email");
 		return false;
 	}
 	
 	if(password.trim() == "" ){
-		COMMON.createAlert("Login Fail","Please fill in your password");
+		COMMON.resultPopUp("Login Fail","Please fill in your password");
 		return false;
 	}
 	
@@ -23,11 +23,10 @@ function do_login(){
 	};
 	API.callByPost({url:"doLoginUrl", params: param}, function(responseText){
 		
-		var res = JSON.parse(responseText);
-		 
+		var res = JSON.parse(responseText); 
 		if(res.status == "error"){
 			COMMON.hideLoading(); 
-			COMMON.createAlert("Login Fail",res.data);
+			COMMON.resultPopUp("Login Fail",res.data[0]);
 			return false;
 		}else{ 
 			COMMON.hideLoading(); 
@@ -49,7 +48,7 @@ function do_login(){
 		 
 	}, function(){
 		COMMON.hideLoading();
-		COMMON.createAlert("Connection Fail","Something wrong with internet connection interact with server. Please try again later.");
+		COMMON.resultPopUp("Connection Fail","Something wrong with internet connection interact with server. Please try again later.");
 	});
 	
 }

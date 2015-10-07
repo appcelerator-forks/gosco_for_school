@@ -34,6 +34,7 @@ var addElementUrl		= "http://"+API_DOMAIN+"/gosco/api/addElement?user="+USER+"&k
 var updateElementUrl    = "http://"+API_DOMAIN+"/gosco/api/updateElement?user="+USER+"&key="+KEY+"&auth";
 var deleteElementUrl    = "http://"+API_DOMAIN+"/gosco/api/deleteElement?user="+USER+"&key="+KEY+"&auth";
 var deleteAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/deleteAttachment?user="+USER+"&key="+KEY+"&auth";
+var addUpdateEventUrl   = "http://"+API_DOMAIN+"/gosco/api/updateEvent?user="+USER+"&key="+KEY+"&auth"; 
 
 //API that call in sequence 
 var APILoadingList = [

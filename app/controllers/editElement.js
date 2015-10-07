@@ -249,13 +249,13 @@ function save(){
 				if(res.status == "success"){ 
 					var post_element_model = Alloy.createCollection('post_element');  
 					post_element_model.addElement(res.data);  
-					COMMON.createAlert("Saved", "Element successfully added"); 
+					COMMON.resultPopUp("Saved", "Element successfully added"); 
 					$.saveBtn.visible = false;
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
 					Alloy.Globals.Navigator.open("login");
-					COMMON.createAlert("Session Expired", res.data); 
+					COMMON.resultPopUp("Session Expired", res.data); 
 				}
 				COMMON.hideLoading();
 			});
@@ -271,13 +271,13 @@ function save(){
 				if(res.status == "success"){ 
 					var post_element_model = Alloy.createCollection('post_element');  
 					post_element_model.addElement(res.data);  
-					COMMON.createAlert("Saved", "Element successfully added"); 
+					COMMON.resultPopUp("Saved", "Element successfully added"); 
 					$.saveBtn.visible = false;
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
 					Alloy.Globals.Navigator.open("login");
-					COMMON.createAlert("Session Expired", res.data); 
+					COMMON.resultPopUp("Session Expired", res.data); 
 				}
 				COMMON.hideLoading();
 			});
@@ -297,12 +297,12 @@ function save(){
 			if(res.status == "success"){ 
 				var post_element_model = Alloy.createCollection('post_element');  
 				post_element_model.updateElement(details.id,element2.value);  
-				COMMON.createAlert("Saved", "Element successfully updated"); 
+				COMMON.resultPopUp("Saved", "Element successfully updated"); 
 			}else{
 				$.win.close();
 				COMMON.hideLoading();
 				Alloy.Globals.Navigator.open("login");
-				COMMON.createAlert("Session Expired", res.data); 
+				COMMON.resultPopUp("Session Expired", res.data); 
 			}
 		});
 		COMMON.hideLoading();

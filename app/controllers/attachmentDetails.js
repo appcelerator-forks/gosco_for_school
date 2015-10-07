@@ -13,8 +13,12 @@ function init(){
 	var the_view = [];
 	
 	for (var i=0; i< items.length; i++) {  
+		var attachmentImg = items[i].img_path;
+		if(OS_ANDROID){
+			attachmentImg = items[i].img_thumb;
+		} 
 		adImage = Ti.UI.createImageView({
-			image: items[i].img_path,
+			image: attachmentImg,
 			defaultImage :  "/images/loading_image.png",
 			width:"100%",
 			top: 50,
@@ -113,7 +117,7 @@ function init(){
 						$.win.close();
 						COMMON.hideLoading();
 						Alloy.Globals.Navigator.open("login");
-						COMMON.createAlert("Session Expired", res.data); 
+						COMMON.resultPopUp("Session Expired", res.data); 
 					}
 				});
 				

@@ -141,13 +141,13 @@ function deleteElement(e){
 				if(res.status == "success"){ 
 					var post_element_model = Alloy.createCollection('post_element');  
 					post_element_model.deletePostElement(result.source);  
-					COMMON.createAlert("Delete Element", "Element successfully deleted");  
+					COMMON.resultPopUp("Delete Element", "Element successfully deleted");  
 					refreshElement();
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
 					Alloy.Globals.Navigator.open("login");
-					COMMON.createAlert("Session Expired", res.data); 
+					COMMON.resultPopUp("Session Expired", res.data); 
 				}
 			});  
 			 

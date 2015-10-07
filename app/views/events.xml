@@ -12,10 +12,10 @@
 		</View>   
 		<SearchBar barColor="#FFFFFF" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false" top="0" bottom="60" zIndex="99" hintText="Search Events" />
 		
-		<View class="vert wfill hsize" top="10">
+		<View class="vert wfill hsize" top="5">
 			<Label class="padding whiteColor h5">Available events</Label> 
 		</View> 
-		<ScrollView id="list" backgroundColor="#ffffff" class="vert wfill hsize"  top= "50" bottom="60" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
+		<ScrollView id="list" backgroundColor="#ffffff" class="vert wfill hsize"  top= "50" bottom="60" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" scrollingEnabled="false" />
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
 	    	<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />

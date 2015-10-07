@@ -29,7 +29,7 @@ function syncData(){
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 	

@@ -71,9 +71,9 @@ overrode the settings with other TSS, XML, or JS settings:
 
 '.button': {
 	height: 40,
-	borderColor: "#C6C8CA",
+	borderColor: "#722800",
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	backgroundColor: "#ED1C24",
+	backgroundColor: "#A35428",
 	borderRadius: 6,
 	color: "#ffffff",
 	width: Titanium.UI.FILL,

@@ -5,7 +5,7 @@ var searchKey = "";
 init();
 
 function init(){
-	//showList();
+	showList();
 	syncData();
 }
 
@@ -26,7 +26,7 @@ function syncData(){
 			$.win.close();
 			COMMON.hideLoading();
 			Alloy.Globals.Navigator.open("login");
-			COMMON.createAlert("Session Expired", res.data); 
+			COMMON.resultPopUp("Session Expired", res.data); 
 		}
 	});
 }
@@ -44,37 +44,57 @@ function showList(){
  	COMMON.removeAllChildren($.list);
 	if(details.length > 0){ 
 		var count = 0;
-		details.forEach(function(entry) {
+		details.forEach(function(entry) { 
+			var statusColor = "#8A6500";
+			if(entry.status == "1"){ //publish
+				statusColor = "#2C8A00";
+			} 
+			if(entry.ended < currentDateTime() ){  
+				statusColor = "#CE1D1C";
+			}
+			
+			var horzView = $.UI.create('View',{
+				classes: ['horz','wfill'], 
+				source: entry.id,  
+				height: 70 
+			});
+			
+			var statustView = $.UI.create('View',{
+				classes: ['hfill'],
+				source: entry.id,
+				width: 10,
+				backgroundColor: statusColor
+			});
+			horzView.add(statustView);
+			
     		var view0 = $.UI.create('View',{
 				classes :['hsize' ],
 				source :entry.id,
-				selectedBackgroundColor : "#ffffff", 
-			});
-			
+				width: "auto",
+				backgroundColor : "#ffffff", 
+			}); 
 			var view1 = $.UI.create('View',{
 				classes :['hsize', 'vert'],
 				source :entry.id,
-				selectedBackgroundColor : "#ffffff", 
+				backgroundColor : "#ffffff", 
 			});
 			
 			var label1 = $.UI.create('Label',{
-				classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
-				top:10,
-				width: "80%",
+				classes :['h6','hsize' ,'themeColor', 'padding-left','bold' ],  
+				width: "90%",
 				source :entry.id,
-				text: entry.title
+				text: textLimit(entry.title,80)
 			});
 			 
 			var label2 = $.UI.create('Label',{
-				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ],  
+				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left' ],  
 				source :entry.id,
 				text:  "From "+ timeFormat(entry.started) + " - "+ timeFormat(entry.ended)
 			});
 			
 			var label3 = $.UI.create('Label',{
-				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ],  
-				source :entry.id,
-				top:0,
+				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left' ],  
+				source :entry.id, 
 				text:  entry.published_by
 			});
 			 
@@ -92,7 +112,9 @@ function showList(){
 			view0.add(view1);
 			view0.add(imgView1);
 			view0.addEventListener('click', goDetails);
-			$.list.add(view0);
+			horzView.add(view0);
+			
+			$.list.add(horzView);
 			
 			if(details.length != count){
 				var viewLine = $.UI.create('View',{
@@ -109,11 +131,8 @@ function showList(){
 
 function goDetails(e){
 	var elbl = JSON.stringify(e.source); 
-	var res = JSON.parse(elbl);     
-	console.log(res.source);
-	//Alloy.Globals.Navigator.open('curriculumDetails',{id: res.id});
-	//var win = Alloy.createController("school/curriculum_post_list", {c_id: res.c_id}).getView(); 
- 	//Alloy.Globals.schooltabgroup.activeTab.open(win);
+	var res = JSON.parse(elbl);  
+	Alloy.Globals.Navigator.open('eventsForm',{id: res.source}); 
 }
 
 function separateHozLine(){
@@ -123,10 +142,9 @@ function separateHozLine(){
 		top:5,
 		width:Ti.UI.FILL
 	});
-} 
- 
-
+}  
 function closeWindow(){
+	Ti.App.removeEventListener('refreshPost', refreshPost); 
 	$.win.close();
 }
 
@@ -155,6 +173,10 @@ $.searchItem.addEventListener('blur', function(e){
 	 
 }); 
 
+$.add.addEventListener('click', function(){
+	Alloy.Globals.Navigator.open('eventsForm',{id: ""}); 
+});
+
 $.refresh.addEventListener('click', function(){    
 	syncData();
 }); 
@@ -170,3 +192,10 @@ $.search.addEventListener('click', function(){
 		$.searchItem.height = 50;
 	}
 }); 
+
+function refreshPost(){  
+	COMMON.removeAllChildren($.list);
+	syncData();	
+}
+
+Ti.App.addEventListener('refreshPost', refreshPost); 

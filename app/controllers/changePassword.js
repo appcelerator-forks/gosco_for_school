@@ -5,17 +5,17 @@ function save(){
 	var newPassword = $.newPassword.value;
 	var confirmPassword = $.confirmPassword.value;
 	if(currentPassword.trim() == "" ){
-		COMMON.createAlert("Error","Please fill in your current password");
+		COMMON.resultPopUp("Error","Please fill in your current password");
 		return false;
 	}
 	
 	if(newPassword.trim() == "" ){
-		COMMON.createAlert("Error","Please fill in new password");
+		COMMON.resultPopUp("Error","Please fill in new password");
 		return false;
 	}
 	
 	if(newPassword.trim() != confirmPassword.trim() ){
-		COMMON.createAlert("Error","New password mismatch with confirm password");
+		COMMON.resultPopUp("Error","New password mismatch with confirm password");
 		return false;
 	}
 	
@@ -30,10 +30,10 @@ function save(){
 		COMMON.hideLoading();
 		var res = JSON.parse(responseText);
 		if(res.status == "error"){ 
-			COMMON.createAlert("Error",res.data);
+			COMMON.resultPopUp("Error",res.data);
 			return false;
 		}else{ 
-			COMMON.createAlert("Success","Password updated successfully");
+			COMMON.resultPopUp("Success","Password updated successfully");
 			closeWindow();
 		}
 		
