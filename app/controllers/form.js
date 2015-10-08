@@ -2,8 +2,9 @@ var args = arguments[0] || {};
 
 var isCurriculum = args.isCurriculum || "";
 var id = args.id || "";
-var formType;
+var formType = args.formType || "1";
 var postDetails;
+var curDate = currentDateTime();  
 COMMON.construct($); 
 
 init();
@@ -20,7 +21,7 @@ function init(){
 		formType	= postDetails.type;
 		if(postDetails.type == 2){
 			$.win.title = "Award Form";
-			$.saveBtn.title = "Award Details";
+			$.postDetailsBtn.title = "Award Details";
 		}
 		$.title.value   = postDetails.title;
 		$.message.value = postDetails.message;
@@ -30,6 +31,12 @@ function init(){
 		if(postDetails.status == 1){ 
 			$.statusSwitch.value = true;
 		}
+	}else{
+		if(formType== 2){
+			$.win.title = "Award Form";
+			$.postDetailsBtn.title = "Award Details";
+		}
+		$.postDetailsBtn.visible =false;
 	}
 	
 	
@@ -102,7 +109,7 @@ function changeStatus(e){
 } 
 
 function changeDate(e){ 
-	 
+	  
 	var pickerdate = e.value; 
     var day = pickerdate.getDate();
     day = day.toString();
@@ -138,15 +145,80 @@ function hideDatePicker(){
 }
 
 function showPublishPicker(){ 
-	$.dateExpiredPicker.visible = false;
-	$.datePublishPicker.visible = true;
-	$.selectorView.height = Ti.UI.SIZE;
-	$.dateToolbar.visible = true;
+	if(OS_ANDROID){ 
+		var pd = curDate.substr(0, 10); 
+		if(id != ""){
+			pd =  postDetails.publish_date;
+		}
+		var res_pd = pd.split('-'); 
+		var datePicker = Ti.UI.createPicker({
+			  type: Ti.UI.PICKER_TYPE_DATE,
+			 // minDate: new Date(1930,0,1),
+			  id: "datePicker",
+			  visible: false
+		});
+		
+		if(res_pd[1] == "08"){
+			res_pd[1] = "8";
+		}
+		if(res_pd[1] == "09"){
+			res_pd[1] = "9";
+		}
+		
+		datePicker.showDatePickerDialog({
+			value: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
+			callback: function(e) {
+			if (e.cancel) { 
+				} else {
+					changePublishDate(e);
+				}
+			}
+		});
+	}else{  
+		$.dateExpiredPicker.visible = false;
+		$.datePublishPicker.visible = true;
+		$.selectorView.height = Ti.UI.SIZE;
+		$.dateToolbar.visible = true;
+	} 
+	
+	hideKeyboard();
 }
-
+ 
+ 
 function showExpiredPicker(){ 
-	$.datePublishPicker.visible = false;
-	$.dateExpiredPicker.visible = true;
-	$.dateToolbar.visible = true;
-	$.selectorView.height = Ti.UI.SIZE;
+	if(OS_ANDROID){  
+		var ed = curDate.substr(0, 10); 
+		if(id != ""){
+			ed =  postDetails.expired_date;
+		}
+		var res_ed = ed.split('-');
+		if(res_ed[1] == "08"){
+			res_ed[1] = "8";
+		}
+		if(res_ed[1] == "09"){
+			res_ed[1] = "9";
+		}
+		var datePicker = Ti.UI.createPicker({
+			  type: Ti.UI.PICKER_TYPE_DATE,
+			 // minDate: new Date(1930,0,1),
+			  id: "datePicker",
+			  visible: false
+		});
+		datePicker.showDatePickerDialog({
+			value: new Date(res_ed[0],parseInt(res_ed[1])-1,res_ed[2]),
+			callback: function(e) {
+			if (e.cancel) { 
+				} else {
+					changeExpiredDate(e);
+				}
+			}
+		});
+	}else{  
+		$.datePublishPicker.visible = false;
+		$.dateExpiredPicker.visible = true;
+		$.dateToolbar.visible = true;
+		$.selectorView.height = Ti.UI.SIZE;
+	} 
+	
+	hideKeyboard();
 }

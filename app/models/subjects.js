@@ -80,7 +80,7 @@ exports.definition = {
 			 removeSubject : function(e){
             	var collection = this;
                 var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE id='"+e.id+"' ";
-                console.log(sql);
+        
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);

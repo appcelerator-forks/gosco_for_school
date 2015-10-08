@@ -24,8 +24,9 @@ function syncData(){
 				 postModel.addPost(post); 
 				 var post_element_model = Alloy.createCollection('post_element');  
 				 post_element_model.addElement(post);  
+				 showList();  
 			 } 
-			showList();  
+			
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
@@ -145,6 +146,10 @@ $.searchItem.addEventListener('blur', function(e){
 $.refresh.addEventListener('click', function(){    
 	syncData();
 }); 
+
+$.add.addEventListener('click', function(){
+	Alloy.Globals.Navigator.open('form',{id: "", isCurriculum : "", formType: "2"});
+});
 
 $.search.addEventListener('click', function(){    
 	var isVis=  $.searchItem.getVisible(); 

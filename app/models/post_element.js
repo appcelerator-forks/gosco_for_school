@@ -104,7 +104,7 @@ exports.definition = {
 						}
 						
 			       		sql_query = "INSERT INTO "+ collection.config.adapter.collection_name + "(id, post_id, element,caption, type,position) VALUES ("+ele.id+", '"+ele.p_id+"', '"+element+"', '"+caption+"', '"+ele.type+"' , '"+ele.position+"')";
-						  console.log(sql_query);
+						 
 					    db.execute(sql_query); 
 					 });
 				});

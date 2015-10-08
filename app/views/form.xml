@@ -67,8 +67,8 @@
 					</View> 
 				</View> 
 				<View class="wfill hsize horz">
-					<Button onClick="save" class="button" width="30%" id="saveBtn" title="Save" top="10"></Button> 
-					<Button onClick="goToDetails" class="button" width="55%" id="saveBtn" title="Post Details" top="10"></Button> 
+					<Button onClick="goToDetails" class="button" width="55%" id="postDetailsBtn" title="Post Details" top="10"></Button> 
+					<Button onClick="save" class="button" width="30%" id="saveBtn" title="Save" top="10"></Button>  
 				</View> 
 			</ScrollView>
 			

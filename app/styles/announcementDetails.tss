@@ -38,7 +38,7 @@
 	width: Titanium.UI.SIZE,
 	height: Titanium.UI.SIZE,
 	left: "8dp",
-	top: "8dp"
+	bottom: "5dp"
 },
 ".news_paragraph" :{
 	width: Titanium.UI.FILL,

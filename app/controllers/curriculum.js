@@ -22,7 +22,10 @@ function syncData(){
 			var curriculumModel = Alloy.createCollection('curriculum'); 
 			var arr = res.data;  
 			curriculumModel.saveArray(arr); 
-			showList();  
+			if(arr.length > 0){
+				showList();  
+			}
+			
 		}else{
 			$.win.close();
 			COMMON.hideLoading();

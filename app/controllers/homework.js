@@ -34,7 +34,10 @@ function syncData(){
 			homeworkModel.saveArray(arr);  
 			homeworkAttachmentModel.saveArray(arr);
 			checker.updateModule(3,"homeworkList", COMMON.now(), Ti.App.Properties.getString('u_id'));
-			showList();  
+			if(arr.length > 0){
+				showList();  
+			}
+			
 		}else{
 			$.win.close();
 			COMMON.hideLoading();

@@ -3,13 +3,12 @@ var id = args.id || "";
 var eventsModel = Alloy.createCollection('events'); 
 var details;
 COMMON.construct($); 
-
+var curDate = currentDateTime();   
 init();
 
 function init(){
 	if(id != ""){
-		details = eventsModel.getRecordsById(id);
-		console.log(details);
+		details = eventsModel.getRecordsById(id); 
 		$.title.value = details.title;
 		$.message.value = details.message;
 		$.publish_date.text = timeFormat(details.started);
@@ -85,17 +84,83 @@ function hideDatePicker(){
 }
 
 function showPublishPicker(){ 
-	$.dateExpiredPicker.visible = false;
-	$.datePublishPicker.visible = true;
-	$.selectorView.height = Ti.UI.SIZE;
-	$.dateToolbar.visible = true;
+	
+	if(OS_ANDROID){  
+		var ed = curDate.substr(0, 10); 
+		if(id != ""){
+			ed = details.started;
+		}
+		
+		var res_ed = ed.split('-'); 
+		if(res_ed[1] == "08"){
+			res_ed[1] = "8";
+		}
+		if(res_ed[1] == "09"){
+			res_ed[1] = "9";
+		}
+		var datePicker = Ti.UI.createPicker({
+			  type: Ti.UI.PICKER_TYPE_DATE,
+			 // minDate: new Date(1930,0,1),
+			  id: "datePicker",
+			  visible: false
+		});
+		datePicker.showDatePickerDialog({
+			value: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
+			callback: function(e) {
+			if (e.cancel) { 
+				} else {
+					changePublishDate(e);
+				}
+			}
+		});
+	}else{  
+		$.dateExpiredPicker.visible = false;
+		$.datePublishPicker.visible = true;
+		$.selectorView.height = Ti.UI.SIZE;
+		$.dateToolbar.visible = true;
+	} 
+	
+	hideKeyboard();
 }
 
-function showExpiredPicker(){ 
-	$.datePublishPicker.visible = false;
-	$.dateExpiredPicker.visible = true;
-	$.dateToolbar.visible = true;
-	$.selectorView.height = Ti.UI.SIZE;
+function showExpiredPicker(){
+	
+	if(OS_ANDROID){ 
+		
+		var ed = curDate.substr(0, 10); 
+		if(id != ""){
+			ed = details.ended;
+		}
+		var res_ed = ed.split('-'); 
+		if(res_ed[1] == "08"){
+			res_ed[1] = "8";
+		}
+		if(res_ed[1] == "09"){
+			res_ed[1] = "9";
+		}
+		var datePicker = Ti.UI.createPicker({
+			  type: Ti.UI.PICKER_TYPE_DATE,
+			 // minDate: new Date(1930,0,1),
+			  id: "datePicker",
+			  visible: false
+		});
+		datePicker.showDatePickerDialog({
+			value: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
+			callback: function(e) {
+			if (e.cancel) { 
+				} else {
+					changeExpiredDate(e);
+				}
+			}
+		});
+	}else{  
+		$.datePublishPicker.visible = false;
+		$.dateExpiredPicker.visible = true;
+		$.dateToolbar.visible = true;
+		$.selectorView.height = Ti.UI.SIZE;
+	} 
+	 
+	hideKeyboard();
 }
 
 function closeWindow(){ 

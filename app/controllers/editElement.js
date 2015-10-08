@@ -99,9 +99,16 @@ function takePhoto(){
 	        Titanium.Media.showCamera({ 
 	            success:function(event) { 
 	                var image = event.media; 
-	                
-	                
-	        	//	image = image.imageAsResized(newWidth, newHeight);
+	                if(image.width > image.height){
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		} 
+					image = image.imageAsResized(newWidth, newHeight);  
 
 	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 	                   //var nativePath = event.media.nativePath; 

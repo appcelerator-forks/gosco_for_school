@@ -45,7 +45,7 @@ exports.definition = {
 			getRecordByHomework: function(h_id){
 				var collection = this;
                 var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE  h_id='"+h_id+"' ";
-                console.log(sql);
+                 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
@@ -104,8 +104,7 @@ exports.definition = {
                 }
                 db.execute("BEGIN");
         		arr.forEach(function(hw) {
-        			var attList = hw.attachment;
-        			console.log(attList);
+        			var attList = hw.attachment; 
 					attList = attList || "";
 					if(attList == ""){
 						return false;
@@ -115,7 +114,7 @@ exports.definition = {
 						db.execute(sql_query, entry.id, entry.h_id,  entry.img_path,entry.img_thumb,entry.created,entry.updated);
 						var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET h_id=?,img_path=?,img_thumb=? ,updated=? WHERE id=?";
 						db.execute(sql_query, entry.h_id,entry.img_path,  entry.img_thumb ,entry.updated, entry.id);
-				 		console.log(sql_query);
+				 
 				 	});
 			 	});
 				db.execute("COMMIT");

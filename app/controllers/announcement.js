@@ -24,8 +24,9 @@ function syncData(){
 				 postModel.addPost(post); 
 				 var post_element_model = Alloy.createCollection('post_element');  
 				 post_element_model.addElement(post);  
+				 showList();  
 			 } 
-			showList();  
+			
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
@@ -147,7 +148,7 @@ $.refresh.addEventListener('click', function(){
 }); 
 
 $.add.addEventListener('click', function(){
-	Alloy.Globals.Navigator.open('form',{id: "", isCurriculum : ""});
+	Alloy.Globals.Navigator.open('form',{id: "", isCurriculum : "", formType: "1"});
 });
 
 $.search.addEventListener('click', function(){    

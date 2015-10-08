@@ -25,7 +25,7 @@ function showList(){
 	$.win.title = postDetails.title;
 	var titleLabel = $.UI.create('Label',{
 		text: postDetails.title,
-		classes : ["news_title"]
+		classes : ["news_title","themeColor"]
 	});
 	$.myContentView.add(titleLabel);
 	var authorDateView = Ti.UI.createView({

@@ -10,8 +10,7 @@ function init(){
 	if(result.length > 0){
 		var count = 1; 
 		result.forEach(function(entry) {
-			var school = educationModel.getSchoolById(entry.e_id);
-			
+			var school = educationModel.getSchoolById(entry.e_id); 
 			var view1 = $.UI.create('View',{
 				classes :['hsize', 'vert'],
 				selectedBackgroundColor : "#ffffff", 
@@ -23,15 +22,12 @@ function init(){
 				text: school.name
 			});
 			
-			var schoolLevel = Alloy.Globals.SchoolLevel[parseInt(school.level) - 1];
-			
+			var schoolLevel = Alloy.Globals.SchoolLevel[parseInt(school.level) - 1]; 
 			var label2 = $.UI.create('Label',{
 				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ], 
 				top:5,
 				text: schoolLevel + " on year "+ entry.year
-			});
-			
-			
+			}); 
 			view1.add(label1);
 			view1.add(label2);
 			$.table.add(view1);

@@ -13,8 +13,7 @@ function init(){
 	}else{
 		postElementModel = Alloy.createCollection('post_element');  
 	}
-	
-	
+	 
 	showList();
 }
 

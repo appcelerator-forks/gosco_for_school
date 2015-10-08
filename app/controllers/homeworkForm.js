@@ -7,13 +7,14 @@ var subjectModel = Alloy.createCollection('subjects');
 var educationClassModel = Alloy.createCollection('education_class');
 var subject;
 var classId;
+var details;
 init();
 
 function init(){
 	subject = subjectModel.getSubjectByUser(Ti.App.Properties.getString('u_id'), "");
 	
 	if(h_id != ""){
-		var details = homeworkModel.getHomeworkById(h_id);
+		details = homeworkModel.getHomeworkById(h_id);
 		
 		classId =details.ec_id;
 		var eduClass= educationClassModel.getEducationClassById(details.ec_id);
@@ -175,9 +176,43 @@ function hideDatePicker(){
 }
 
 function showExpiredPicker(){  
-	$.dateExpiredPicker.visible = true;
-	$.dateToolbar.visible = true;
-	$.selectorView.height = Ti.UI.SIZE;
+	
+	if(OS_ANDROID){ 
+		var curDate = currentDateTime();
+		var ed =  curDate.substr(0, 10);
+		if(h_id != ""){
+			ed = details.deadline;
+		}
+		
+		var res_ed = ed.split('-'); 
+		if(res_ed[1] == "08"){
+			res_ed[1] = "8";
+		}
+		if(res_ed[1] == "09"){
+			res_ed[1] = "9";
+		}
+		var datePicker = Ti.UI.createPicker({
+			  type: Ti.UI.PICKER_TYPE_DATE,
+			 // minDate: new Date(1930,0,1),
+			  id: "datePicker",
+			  visible: false
+		});
+		datePicker.showDatePickerDialog({
+			value: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
+			callback: function(e) {
+			if (e.cancel) { 
+				} else {
+					changeExpiredDate(e);
+				}
+			}
+		});
+	}else{  
+		$.dateExpiredPicker.visible = true;
+		$.dateToolbar.visible = true;
+		$.selectorView.height = Ti.UI.SIZE;
+	} 
+	
+	hideKeyboard();
 }
  
 function closeWindow(){  
@@ -200,7 +235,16 @@ function uploadAttachment(){
 	        Titanium.Media.showCamera({ 
 	            success:function(event) { 
 	               var image = event.media;
-        		    
+        		   if(image.width > image.height){
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		} 
+					image = image.imageAsResized(newWidth, newHeight);  
 	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 	                   //var nativePath = event.media.nativePath;  
 			           uploadAttachmentToServer(image); 
@@ -233,6 +277,16 @@ function uploadAttachment(){
 	            success:function(event){
 	            	// set image view
 	            	var image = event.media; 
+	            	if(image.width > image.height){
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		} 
+					image = image.imageAsResized(newWidth, newHeight);  
 		           	uploadAttachmentToServer(image);
 		           	loadAttachment(); 
 	            },
