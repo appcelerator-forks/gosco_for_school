@@ -14,7 +14,7 @@ COMMON.construct($);
 init();
 
 function init(){
-	if(isCurriculum == "1"){
+	if(isCurriculum != ""){
 	 	postElementModel = Alloy.createCollection('curriculumPost_element');  
 	}else{
 		postElementModel = Alloy.createCollection('post_element');  
@@ -144,19 +144,19 @@ function takePhoto(){
 	            success:function(event){
 	            	// set image view
 	            	var image = event.media;  
-	            	/**
+	            	 
 	            	if(image.width > image.height){
-	        			var newWidth = 320;
-	        			var ratio =   320 / image.width;
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
 	        			var newHeight = image.height * ratio;
 	        		}else{
-	        			var newHeight = 320;
-	        			var ratio =   320 / image.height;
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
 	        			var newWidth = image.width * ratio;
 	        		}
 	        		
 					image = image.imageAsResized(newWidth, newHeight);
-					**/
+					 
 	            	element2.image = image;
 	            	attachment = image;
 		           // blobContainer = image; 
@@ -227,10 +227,8 @@ function showList(){
 		}); 
 		view0.add(lbl1);
 		view0.add(element2);
-		view0.add(element3a);
-		 
-	}
-			 
+		view0.add(element3a); 
+	} 	 
 	$.editForm.add(view0);
 }
 
@@ -249,13 +247,13 @@ function save(){
 				type    : eleType,
 				Filedata : attachment,//element2.toImage(),
 				caption : element3a.value,
+				isCurriculum: isCurriculum,
 				session : Ti.App.Properties.getString('session')
 			}; 
 			API.callByPostImage({url:"addElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
-				if(res.status == "success"){ 
-					var post_element_model = Alloy.createCollection('post_element');  
-					post_element_model.addElement(res.data);  
+				if(res.status == "success"){  
+					postElementModel.addElement(res.data);  
 					COMMON.resultPopUp("Saved", "Element successfully added"); 
 					$.saveBtn.visible = false;
 				}else{
@@ -271,13 +269,13 @@ function save(){
 				a_id    : p_id, 
 				type    : eleType,
 				element : element2.value,
+				isCurriculum: isCurriculum,
 				session : Ti.App.Properties.getString('session')
 			};
 			API.callByPost({url:"addElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
-				if(res.status == "success"){ 
-					var post_element_model = Alloy.createCollection('post_element');  
-					post_element_model.addElement(res.data);  
+				if(res.status == "success"){  
+					postElementModel.addElement(res.data);  
 					COMMON.resultPopUp("Saved", "Element successfully added"); 
 					$.saveBtn.visible = false;
 				}else{
@@ -297,13 +295,13 @@ function save(){
 			id  	: details.id,
 			type    : details.type,
 			element : element2.value,
+			isCurriculum: isCurriculum,
 			session : Ti.App.Properties.getString('session')
 		};
 		API.callByPost({url:"updateElementUrl", params: param}, function(responseText){
 			var res = JSON.parse(responseText);  
-			if(res.status == "success"){ 
-				var post_element_model = Alloy.createCollection('post_element');  
-				post_element_model.updateElement(details.id,element2.value);  
+			if(res.status == "success"){  
+				postElementModel.updateElement(details.id,element2.value);  
 				COMMON.resultPopUp("Saved", "Element successfully updated"); 
 			}else{
 				$.win.close();

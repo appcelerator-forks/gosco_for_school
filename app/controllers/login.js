@@ -34,15 +34,13 @@ function do_login(){
 			userModel.saveArray(res.data);
 			
 			//set session
-			Ti.App.Properties.setString('session', res.data.session);
-			Ti.App.Properties.setString('u_id', res.data.id);
+			Ti.App.Properties.setString('session', res.data[0].session);
+			Ti.App.Properties.setString('u_id', res.data[0].id);
+			Ti.App.Properties.setString('roles', res.data[0].role);
+			$.password.value = "";
 			
 			//get admin/teacher school
-			getSchoolList();
-			
-			$.password.value = "";
-			$.win.close();
-			Alloy.Globals.Navigator.open("home");
+			getSchoolList(); 
 			return false; 
 		}
 		 
@@ -94,6 +92,9 @@ function getSchoolList(){
 				//set session
 				Ti.App.Properties.setString('e_id', list[0].e_id);
 			} 
+			
+			$.win.close();
+			Alloy.Globals.Navigator.open("home");
 		}
 	});
 }

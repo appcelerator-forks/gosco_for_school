@@ -83,7 +83,7 @@ exports.definition = {
 			addElement : function(arr) {
 				var collection = this;
                 db = Ti.Database.open(collection.config.adapter.db_name);
-	           
+	        
 	            //db.execute("BEGIN");
 				arr.forEach(function(entry) { 
 					

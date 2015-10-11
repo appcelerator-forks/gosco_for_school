@@ -20,6 +20,7 @@ var uploadHomeworkAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/uploadHomewor
 var getEventsList       = "http://"+API_DOMAIN+"/gosco/api/getEventsList?user="+USER+"&key="+KEY+"&auth";
 //var getTuitionList   	= "http://"+API_DOMAIN+"/gosco/api/getTuitionList?user="+USER+"&key="+KEY;  
 var deviceInfoUrl       = "http://"+API_DOMAIN+"/gosco/api/getDeviceInfo?user="+USER+"&key="+KEY;
+var uploadCurriculumLogoUrl = "http://"+API_DOMAIN+"/gosco/api/uploadCurriculumLogo?user="+USER+"&key="+KEY+"&auth";
  
 
 var doLoginUrl  		= "http://"+API_DOMAIN+"/gosco/api/loginAdmin?user="+USER+"&key="+KEY;
@@ -35,7 +36,9 @@ var updateElementUrl    = "http://"+API_DOMAIN+"/gosco/api/updateElement?user="+
 var deleteElementUrl    = "http://"+API_DOMAIN+"/gosco/api/deleteElement?user="+USER+"&key="+KEY+"&auth";
 var deleteAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/deleteAttachment?user="+USER+"&key="+KEY+"&auth";
 var addUpdateEventUrl   = "http://"+API_DOMAIN+"/gosco/api/updateEvent?user="+USER+"&key="+KEY+"&auth"; 
-
+var updateCurriculumPost = "http://"+API_DOMAIN+"/gosco/api/updateCurriculumPost?user="+USER+"&key="+KEY+"&auth"; 
+var getStaffListUrl     = "http://"+API_DOMAIN+"/gosco/api/getStaffList?user="+USER+"&key="+KEY+"&auth";
+var addUpdateStaffUrl   = "http://"+API_DOMAIN+"/gosco/api/updateAdminProfile?user="+USER+"&key="+KEY+"&auth"; 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getSchoolList, model: "education", checkId: "1"},

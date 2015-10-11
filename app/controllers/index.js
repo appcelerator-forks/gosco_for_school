@@ -45,6 +45,11 @@ if(OS_IOS){
 init();
 	
 function init(){
+	
+	var userModel = Alloy.createCollection('user');   
+	userModel.addColumn("status", "TEXT"); 
+	userModel.addColumn("e_id", "TEXT"); 
+	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById(1);
 	var last_updated ="";

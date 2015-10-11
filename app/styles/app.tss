@@ -252,8 +252,14 @@ overrode the settings with other TSS, XML, or JS settings:
 	backgroundColor: "#10844D"
 },
 
-"#activityIndicator" : { 
+"#activityIndicator[platform=ios]" : { 
 	 top:30,
+	 left:30,
+	 width:60,
+},
+
+"#activityIndicator[platform=android]" : { 
+	 top:10,
 	 left:30,
 	 width:60,
 },

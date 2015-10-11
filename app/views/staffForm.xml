@@ -1,0 +1,88 @@
+<Alloy>
+	<Window title="Post Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	 
+		<LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View>   
+		<Label class="padding whiteColor h5" top="10">Please fill in staff details</Label>
+		<ScrollView class="wfill hsize vert" top="40">
+			<View id="table" height="Ti.UI.SIZE"  backgroundColor="#ffffff" layout="vertical" scrollable="false">
+					<View id="tvrUsername"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Username" top="12" width="35%" class="title_Label padding-left themeColor"  />  
+							<View width="auto" class="right-align hsize"> 
+								<TextField class="h5 right-align wfill" borderColor="#ffffff" top="5" id="username" right='10'  hintText="Staff Username" />  
+							</View>
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+					<View id="tvrName"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Full Name" top="12" width="25%" class="title_Label padding-left themeColor"  /> 
+							<View width="auto" class="right-align hsize"> 
+								<TextField class="h5 right-align wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="fullname" top="5" right='10' hintText="Staff Full Name" />   
+							</View>  
+							
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+					<View id="tvrEmail"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Email" top="12" width="30%" class="title_Label padding-left themeColor"  /> 
+							<View width="auto" class="right-align hsize"> 
+								<TextField class="h5 right-align wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="email" top="5" right='10' hintText="Staff Email Address" />   
+							</View>
+						</View>
+					</View>
+					<View class="gray-line" /> 
+					<View id="tvrMobile"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Contact Number" top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<View width="auto" class="right-align hsize"> 
+								<TextField class="h5 right-align wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="mobile" top="5" right='10' hintText="Staff Contact Number" />   
+							</View>
+						</View>
+					</View>
+					<View class="gray-line" /> 
+					<View id="tvrPosition"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Position" top="12" width="30%" class="title_Label padding-left themeColor"  /> 
+							<View width="auto" class="right-align hsize"> 
+								<TextField class="h5 right-align wfill" borderColor="#ffffff" backgroundColor="#ffffff" id="position" top="5" right='10' hintText="Staff Position" />   
+							</View>
+						</View>
+					</View>
+					<View class="gray-line" /> 
+					<View id="tvrRole"  height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Roles" top="12" width="35%" class="title_Label padding-left themeColor"  /> 
+							<View width="auto" class="right-align hsize"> 
+								<Label text="Choose Staff Roles" class="padding right-align font_dark_grey wfill" top="12"  id="roles"  />   
+							   
+							</View>
+						</View>
+					</View>
+					<View class="gray-line" />
+					<View id="tvrStatus" height="45" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="horz hsize wfill right-align">
+							<Label text="Status" top="12" width="35%" class="title_Label padding-left themeColor"  />  
+							<View width="auto" class="right-align hsize"> 
+								<Label text="Choose Staff Status" class="padding right-align font_dark_grey wfill" top="12"  id="status"  />   
+							</View>
+						</View>
+					</View>   
+					 
+				</View> 
+				<Button onClick="save" id="saveBtn"  class="button" title="Save"    />
+			</ScrollView>
+			  
+	</Window> 
+</Alloy>
+ 

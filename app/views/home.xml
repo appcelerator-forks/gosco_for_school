@@ -12,8 +12,13 @@
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View> 
 		<ScrollView class="hfill vert">
-			<Label class="hsize wfill whiteColor padding h5 " id="welcomeUser" /> 
-			 <View class="wfill horz box padding grey-background" onClick="navWindow" height="50" mod="announcement" >
+			<View class="horz wfill" height="80">
+				<View width="50" height="50" borderRadius="25"  backgroundColor="#f5f5f5" left="10"  top="20">
+					<ImageView width="50" height="50" image="/images/avatar.jpg" borderRadius="25" id="thumbPreview" />
+				</View>
+				<Label class="hsize wfill whiteColor  h5 " top="20" left="10" id="welcomeUser" /> 
+			</View>
+			<View class="wfill horz box padding grey-background" onClick="navWindow" height="50" mod="announcement" >
 			 	<ImageView left="10" class="hsize" top="5" image="/images/announcement.png" width="40" mod="announcement" /> 
 			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 "  mod="announcement" >Announcement</Label>
 			 </View> 
@@ -23,7 +28,7 @@
 			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="events" >Events</Label>
 			 </View> 
 			 
-			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow"  mod="homework" >
+			 <View class="wfill hsize horz box padding grey-background" height="50" id="homeworkView" onClick="navWindow"  mod="homework" >
 			 	<ImageView left="10" class="hsize" top="5" image="/images/work.png" width="40" mod="homework" /> 
 			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="homework" >Homework</Label>
 			 </View> 
@@ -41,6 +46,11 @@
 			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="information" >
 			 	<ImageView left="10" class="hsize" top="5" image="/images/information.png" width="40" mod="information" /> 
 			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="information" >School Information</Label>
+			 </View> 
+			 
+			 <View class="wfill horz box padding grey-background" onClick="navWindow" id="staffView" height="50" mod="staff" >
+			 	<ImageView left="10" class="hsize" top="5" image="/images/staff.png" width="40" mod="staff" /> 
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 "  mod="staff" >Staff</Label>
 			 </View> 
 			 
 			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow"  mod="profile" >

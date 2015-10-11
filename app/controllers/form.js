@@ -10,7 +10,7 @@ COMMON.construct($);
 init();
 
 function init(){
-	if(isCurriculum == "1"){
+	if(isCurriculum != ""){
 	 	postModel = Alloy.createCollection('curriculumPost');  
 	}else{
 		postModel = Alloy.createCollection('post');  
@@ -22,6 +22,16 @@ function init(){
 		if(postDetails.type == 2){
 			$.win.title = "Award Form";
 			$.postDetailsBtn.title = "Award Details";
+		}
+		
+		if(postDetails.type == 2){
+			$.win.title = "Award Form";
+			$.postDetailsBtn.title = "Award Details";
+		}
+		
+		if(isCurriculum != ""){
+			$.win.title = "Curriculum Announcement Form";
+			$.postDetailsBtn.title = "Curriculum Post Details";
 		}
 		$.title.value   = postDetails.title;
 		$.message.value = postDetails.message;
@@ -58,36 +68,75 @@ function save(){
 	 
 	if((id == "") || (title != postDetails.title) || (message != postDetails.message) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
-		var param = {
-			id    : id,
-			e_id  : Ti.App.Properties.getString('e_id'),
-			title : title,
-			message : message,
-			type  : formType,
-			publish_date  : publish_date,
-			expired_date  : expired_date,
-			status        : status,
-			session : Ti.App.Properties.getString('session')
-		}; 
-		 
-		API.callByPost({url:"updatePost", params: param}, function(responseText){
-			var res = JSON.parse(responseText);  
-			if(res.status == "success"){   
-				postModel.addPost(res.data);  
-				//Ti.App.fireEvent('refreshPostList');   
-				COMMON.resultPopUp("Saved", "Information successfully updated"); 
-			}else{
-				$.win.close();
-				COMMON.hideLoading();
-				Alloy.Globals.Navigator.open("login");
-				COMMON.resultPopUp("Session Expired", res.data); 
-			}
-		});
+		if(isCurriculum != ""){
+			var param = {
+				id    : id,
+				c_id  : isCurriculum,
+				title : title,
+				message : message,
+				type  : formType,
+				publish_date  : publish_date,
+				expired_date  : expired_date,
+				status        : status,
+				session : Ti.App.Properties.getString('session')
+			}; 
+			  
+			console.log(param);		 
+			API.callByPost({url:"updateCurriculumPost", params: param}, function(responseText){
+				var res = JSON.parse(responseText);  
+				if(res.status == "success"){   
+					postModel.addPost(res.data);  
+					//Ti.App.fireEvent('refreshPostList');   
+					if(id == ""){
+						id = res.data[0]['id'];
+						goToDetails();
+					}
+					COMMON.resultPopUp("Saved", "Curriculum post successfully updated"); 
+				}else{
+					$.win.close();
+					COMMON.hideLoading();
+					Alloy.Globals.Navigator.open("login");
+					COMMON.resultPopUp("Session Expired", res.data); 
+				}
+			});
+		}else{
+			var param = {
+				id    : id,
+				e_id  : Ti.App.Properties.getString('e_id'),
+				title : title,
+				message : message,
+				type  : formType,
+				publish_date  : publish_date,
+				expired_date  : expired_date,
+				status        : status,
+				session : Ti.App.Properties.getString('session')
+			}; 
+			 
+			API.callByPost({url:"updatePost", params: param}, function(responseText){
+				var res = JSON.parse(responseText);  
+				if(res.status == "success"){   
+					postModel.addPost(res.data);  
+					//Ti.App.fireEvent('refreshPostList');   
+					if(id == ""){
+						id = res.data[0]['id'];
+						goToDetails();
+					}
+					COMMON.resultPopUp("Saved", "Information successfully updated"); 
+				}else{
+					$.win.close();
+					COMMON.hideLoading();
+					Alloy.Globals.Navigator.open("login");
+					COMMON.resultPopUp("Session Expired", res.data); 
+				}
+			});
+		}
+		
 	} 
 	
 }
 
 function goToDetails(){
+	console.log("id : "+id);
 	Alloy.Globals.Navigator.open('formElement',{id: id, isCurriculum : isCurriculum});  
 }
 

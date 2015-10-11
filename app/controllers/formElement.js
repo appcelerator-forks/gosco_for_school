@@ -8,7 +8,7 @@ COMMON.construct($);
 init();
 
 function init(){
-	if(isCurriculum == "1"){
+	if(isCurriculum != ""){
 	 	postElementModel = Alloy.createCollection('curriculumPost_element');  
 	}else{
 		postElementModel = Alloy.createCollection('post_element');  
@@ -96,8 +96,7 @@ function showList(){
 
 function editElement(e){
 	var elbl = JSON.stringify(e.source); 
-	var res = JSON.parse(elbl);    
-	console.log(res);
+	var res = JSON.parse(elbl);     
 	var isDel = res.id || "";
 	if(isDel == "deleteBtn"){
 		return false;

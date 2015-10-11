@@ -173,8 +173,14 @@ function openModal(win,payload){
 	}
 };
 
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
 
 Alloy.Globals.SchoolLevel =  [ 'Primary School', 'Secondary School', 'College'];
 Alloy.Globals.SchoolType =  [ 'Kebangsaan', 'Jenis Kebangsaan', 'Private/International' ];
 Alloy.Globals.SchoolState =  [ 'Kuala Lumpur','Selangor' ];
-Alloy.Globals.ElementType =  [ 'Sub Title','Paragraph', 'Photo', 'Youtube','Cancel' ];
+Alloy.Globals.StaffStatus =  [ 'Active','On Leave', 'Resign' ];
+Alloy.Globals.StaffRoles =  [ 'headmaster','teacher', 'admin' ];
+Alloy.Globals.ElementType =  [ 'Sub Title','Paragraph', 'Photo' ,'Cancel' ];

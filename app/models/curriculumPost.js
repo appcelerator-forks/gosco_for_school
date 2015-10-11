@@ -26,10 +26,14 @@ exports.definition = {
 	},
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
-			getLatestPostByCurriculum : function(c_id){
+			getLatestPostByCurriculum : function(c_id,searchKey){
 				var collection = this;
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE status !='3' AND c_id='"+c_id+"' ORDER BY publish_date DESC LIMIT 0,10";
-                
+				var search = "";  
+				if(searchKey != ""){
+					search = " AND (title LIKE'%"+searchKey +"%' OR message LIKE'%"+searchKey +"%' ) "; 
+				}
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE status !='3' AND c_id='"+c_id+"' " +search +" ORDER BY publish_date DESC LIMIT 0,10";
+              
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
@@ -180,7 +184,7 @@ exports.definition = {
 					}
 					
 		       		sql_query = "INSERT INTO "+ collection.config.adapter.collection_name + "(id, title, message,c_id, status,published_by,publish_date, expired_date, images) VALUES ('"+entry.id+"', '"+title+"', '"+message+"', '"+entry.c_id+"' , '"+entry.status+"', '"+entry.published_by+"', '"+entry.publish_date+"', '"+entry.expired_date+"', '"+entry.images+"')";
-					 console.log(sql_query);
+			 
 					db.execute(sql_query);
 				});
                // db.execute("COMMIT");

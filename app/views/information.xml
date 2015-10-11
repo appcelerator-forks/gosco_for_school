@@ -67,7 +67,7 @@
 					<View id="tvrAddress" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Address" top="12" width="25%" class="title_Label padding-left themeColor"  />  
-							<TextArea  horizontalWrap="true" id="address" class="padding left-align h5 font_dark_grey" width="100%"   hintText="School Address" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="50"  suppressReturn="false" >
+							<TextArea  horizontalWrap="true" id="address" class="padding left-align h5 font_dark_grey" width="100%"   hintText="School Address" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="80"  suppressReturn="false" >
 								<KeyboardToolbar platform="ios">
 									<Toolbar>
 										<Items> 
@@ -102,7 +102,7 @@
 					</View>  
 				</View>
 				 
-			<Button onClick="save" class="button" title="Update Information" top="10"></Button> 
+			<Button onClick="save" id="saveBtn" class="button" title="Update Information" top="10"></Button> 
 			
 		</ScrollView>
 	</Window> 

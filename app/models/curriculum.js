@@ -96,7 +96,19 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
-            
+            updateAttachment : function(arr){
+            	var collection = this;
+				
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }  
+        		var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET img_path=? WHERE id=?";
+				db.execute(sql_query,  arr.img_path , arr.c_id);
+			  
+	            db.close();
+	            collection.trigger('sync');
+            },
             saveArray : function(arr){
 				var collection = this;
 				

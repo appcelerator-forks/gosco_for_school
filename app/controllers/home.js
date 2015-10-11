@@ -9,7 +9,20 @@ init();
 function init(){
 	user = userModel.getUserById(u_id);
 	var education = educationModel.getSchoolById(Ti.App.Properties.getString('e_id'));
-	$.welcomeUser.text = user.fullname+ " / "+ education.name;
+	$.welcomeUser.text = user.fullname+ " / "+ education.name; 
+	$.thumbPreview.image = education.img_path;
+	
+	if(user.role != "headmaster" ){
+		$.staffView.height = 0;
+		$.staffView.top = 0;
+		$.staffView.bottom = 0;
+	}
+	
+	if(user.role != "teacher" ){
+		$.homeworkView.height = 0;
+		$.homeworkView.top = 0;
+		$.homeworkView.bottom = 0;
+	}
 }
 
 function logoutAction(){ 
@@ -68,3 +81,5 @@ if(OS_ANDROID){
 		logoutAction(); 
 	});
 }
+
+Ti.App.addEventListener('refreshData', init); 
