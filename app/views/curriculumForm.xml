@@ -1,0 +1,70 @@
+<Alloy>
+	<Window title="Curriculum Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
+	 
+		<LeftNavButton platform="ios">
+			<View onClick="closeWindow" left="0"  width="30" height="35">
+				<ImageView left='0'  width="Ti.UI.SIZE"   image="/images/btn-back.png" />
+			</View>
+		</LeftNavButton> 
+		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >
+			<ActivityIndicator id="activityIndicator" />
+			<Label top="5" class="center" text="Loading" color="#ffffff" />
+		</View>   
+		<Label class="padding whiteColor h5" top="10">Please fill in curriculum details</Label>
+		<ScrollView class="wfill hsize vert" top="40">
+			<View width="100" height="100" borderRadius="50"  backgroundColor="#f5f5f5" bottom="10">
+				<ImageView width="100" height="100" image="/images/koku.png" borderRadius="50" id="thumbPreview" />
+			</View>
+			<View id="table" height="Ti.UI.SIZE"  backgroundColor="#ffffff" layout="vertical" scrollable="false">
+				<View id="tvrName" class="hsize wfill">
+						<View class="horz" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Name" top="12" width="20%" class="title_Label padding-left themeColor"  />  
+							<View width="auto" class="right-align hsize">
+								<TextField class="h5 right-align padding wfill" borderColor="#ffffff"  backgroundColor="#ffffff" id="name" right="10"  hintText="Curriculum Name" /> 
+							 
+							</View>  
+						</View>
+					</View> 
+					<View class="gray-line" /> 
+				 
+					<View id="tvrDescription"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Description" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
+							<TextArea  horizontalWrap="true" id="description" class="padding left-align h5 font_dark_grey" width="100%"   hintText="Curriculum Description" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="120"  suppressReturn="false" >
+								<KeyboardToolbar platform="ios">
+									<Toolbar>
+										<Items> 
+											<FlexSpace/>
+											<Button onClick="hideKeyboard" backgroundImage="/images/btn-bottom.png" textAlign="right" right="5" width="20" height="20"  />
+										</Items>
+									</Toolbar>
+								</KeyboardToolbar>
+							</TextArea>
+						</View>
+					</View>  
+					<View class="gray-line" /> 
+					<View id="tvrType"  height="Ti.UI.SIZE"   selectedBackgroundColor="#ffffff">
+						<View  height="45" width="Ti.UI.FILL" class="right-align horz" >
+							<Label text="Curriculum Type" top="12" width="40%" class="padding-left themeColor"  />   
+							<View width="auto" class="right-align hsize">
+								<Label text="Choose curriculum type" class="padding font_dark_grey right-align wfill" right="10" id="type"  />
+							</View>  
+						</View> 
+					</View> 
+					<View class="gray-line" />
+					<View id="tvrStatus" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Status" top="12" width="75%" class="title_Label padding-left themeColor"  />  
+							<Switch id="statusSwitch" value="false" class="right-align hsize" right="5" top="10" bottom="10" />   
+						</View>
+					</View>   
+					<View class="gray-line" />
+				</View>  		 
+				<Button onClick="save" id="saveBtn" class="button" title="Save Curriculum" top="10"></Button> 
+			</ScrollView>
+		 
+			
+	</Window> 
+</Alloy>
+ 

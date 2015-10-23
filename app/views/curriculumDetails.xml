@@ -14,7 +14,7 @@
 		
 		<ScrollView class="vert hsize wfill" top="0" bottom="60"> 
 		 	<View width="100" height="100" borderRadius="50"  backgroundColor="#f5f5f5"   top="20">
-				<ImageView width="100" height="100" image="/images/avatar.jpg" borderRadius="50" id="thumbPreview" />
+				<ImageView width="100" height="100" image="/images/koku.png" borderRadius="50" id="thumbPreview" />
 			</View>
 			<Label class="padding whiteColor h5" id="description"></Label>
 			<View class="gray-line" />
@@ -28,8 +28,9 @@
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
 	    		<Label class="h6 font_dark_grey center">Refresh</Label>
 	    	</View>
-			<View width="25%" height="60">
-				<!--<ImageView id="favorite" height="Ti.UI.FILL" image="/images/icon-favorites.png" />-->
+			<View width="25%" height="60" class="vert">
+				<ImageView id="edit"  top="10"  height="30" image="/images/edit.png" />
+	        	<Label class="h6 font_dark_grey center">Edit</Label>
 			</View>
 	        <View width="25%" height="60" class="vert">
 	        	<ImageView id="search"  top="10"  height="30" image="/images/search.png" />

@@ -18,7 +18,7 @@ function init(){
 		$.staffView.bottom = 0;
 	}
 	
-	if(user.role != "teacher" ){
+	if(user.role == "admin" ){
 		$.homeworkView.height = 0;
 		$.homeworkView.top = 0;
 		$.homeworkView.bottom = 0;

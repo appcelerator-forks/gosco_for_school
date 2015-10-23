@@ -21,6 +21,8 @@ function init(){
 		$.roles.text = details.role;
 		$.position.value = details.position;
 		$.username.editable = false;
+		$.ps_notice.visible = false;
+		$.ps_notice.height = 0;
 	} 
 }
 

@@ -141,6 +141,7 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');
 			},
+			 
 			resetStaff : function(){
 				var collection = this;
                 var sql = "DELETE FROM " + collection.config.adapter.collection_name;

@@ -144,6 +144,10 @@ $.refresh.addEventListener('click', function(){
 	syncData();
 }); 
 
+$.add.addEventListener('click', function(){    
+	Alloy.Globals.Navigator.open('curriculumForm',{id: ""});
+}); 
+
 $.search.addEventListener('click', function(){    
 	var isVis=  $.searchItem.getVisible(); 
 	if(isVis === true){ 

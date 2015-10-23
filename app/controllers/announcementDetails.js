@@ -15,6 +15,30 @@ function init(){
 		postModel = Alloy.createCollection('post'); 
 		postElementModel = Alloy.createCollection('post_element'); 	
 	}
+	
+	if(Ti.App.Properties.getString('roles') != "teacher"){
+		//
+		if(OS_ANDROID){
+			var activity = $.win.activity;
+
+			activity.onCreateOptionsMenu = function(e){
+			  var menu = e.menu;
+			  var menuItem = menu.add({
+			    title: "Edit",
+			    icon:  "/images/edit.png",
+			    showAsAction: Ti.Android.SHOW_AS_ACTION_IF_ROOM
+			  });
+			  menuItem.addEventListener("click", function(e) {
+			   editPost();
+			  });
+			};
+		}else{
+			$.rightMenu.visble = false;
+		}
+		
+
+	}
+	 
 	showList(); 
 }
 

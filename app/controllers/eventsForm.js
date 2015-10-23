@@ -22,8 +22,7 @@ function init(){
 function hideKeyboard(){
 	$.title.blur();
 	$.message.blur();
-}
-
+} 
 
 function changePublishDate(e){  
 	$.publish_date.text = dateConvert(e.value); 

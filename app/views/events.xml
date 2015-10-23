@@ -28,7 +28,7 @@
 	        	<ImageView id="search"  top="10"  height="30" image="/images/search.png" />
 	        	<Label class="h6 font_dark_grey center">Search</Label>
 	        </View>
-	        <View width="auto" height="60" class="vert">
+	        <View width="auto" height="60" id="addView" class="vert">
 				<ImageView id="add"  top="10" height="30"  image="/images/add.png" />
 				<Label class="h6 font_dark_grey center">Add</Label>
 			</View>

@@ -13,9 +13,9 @@
 		<SearchBar barColor="#FFFFFF" top="0" zIndex="99" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false"  hintText="Search Announcement/Post" />
 		
 		<View class="vert wfill hsize" top="10">
-			<Label class="padding whiteColor h5">Lastest announcement/post</Label> 
+			<Label class="padding whiteColor h5">Lastest award post</Label> 
 		</View>
-    	<ScrollView id="announcementSv" class="vert hsize wfill"  backgroundColor="#ffffff"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" bottom="60"  top= "50" />
+    	<ScrollView id="announcementSv" class="vert hfill wfill"  backgroundColor="#ffffff"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" bottom="60"  top= "50" />
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
 	    	<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
@@ -28,7 +28,7 @@
 	        	<ImageView id="search"  top="10"  height="30" image="/images/search.png" />
 	        	<Label class="h6 font_dark_grey center">Search</Label>
 	        </View>
-	        <View width="auto" height="60" class="vert">
+	        <View width="auto" height="60" id="addView" class="vert">
 				<ImageView id="add"  top="10" height="30"  image="/images/add.png" />
 				<Label class="h6 font_dark_grey center">Add</Label>
 			</View>

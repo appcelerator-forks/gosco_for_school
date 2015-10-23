@@ -39,6 +39,7 @@ var addUpdateEventUrl   = "http://"+API_DOMAIN+"/gosco/api/updateEvent?user="+US
 var updateCurriculumPost = "http://"+API_DOMAIN+"/gosco/api/updateCurriculumPost?user="+USER+"&key="+KEY+"&auth"; 
 var getStaffListUrl     = "http://"+API_DOMAIN+"/gosco/api/getStaffList?user="+USER+"&key="+KEY+"&auth";
 var addUpdateStaffUrl   = "http://"+API_DOMAIN+"/gosco/api/updateAdminProfile?user="+USER+"&key="+KEY+"&auth"; 
+var addUpdateCurriculumUrl = "http://"+API_DOMAIN+"/gosco/api/addUpdateCurriculum?user="+USER+"&key="+KEY+"&auth"; 
 //API that call in sequence 
 var APILoadingList = [
 	{url: getSchoolList, model: "education", checkId: "1"},
@@ -63,7 +64,7 @@ exports.callByPostImage = function(e, onload, getParam){
  
 exports.callByPost = function(e, onload, onerror){
 	var url =  eval(e.url);
-	console.log(url);
+	//console.log(url);
 	var _result = contactServerByPost(url, e.params || {});   
 	_result.onload = function(e) {   
 		onload && onload(this.responseText); 

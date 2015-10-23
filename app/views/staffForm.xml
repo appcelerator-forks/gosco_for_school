@@ -80,6 +80,8 @@
 					</View>   
 					 
 				</View> 
+				<Label text='* All new staffs creation will assigned default password "123456". New staff can reset password at their profile.' class="padding whiteColor wfill" top="12"  id="ps_notice"  />   
+							   
 				<Button onClick="save" id="saveBtn"  class="button" title="Save"    />
 			</ScrollView>
 			  

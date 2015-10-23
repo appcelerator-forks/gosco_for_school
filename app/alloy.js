@@ -183,4 +183,5 @@ Alloy.Globals.SchoolType =  [ 'Kebangsaan', 'Jenis Kebangsaan', 'Private/Interna
 Alloy.Globals.SchoolState =  [ 'Kuala Lumpur','Selangor' ];
 Alloy.Globals.StaffStatus =  [ 'Active','On Leave', 'Resign' ];
 Alloy.Globals.StaffRoles =  [ 'headmaster','teacher', 'admin' ];
+Alloy.Globals.CurriculumType =  [ 'club/society','sports', 'uniform','Cancel' ];
 Alloy.Globals.ElementType =  [ 'Sub Title','Paragraph', 'Photo' ,'Cancel' ];

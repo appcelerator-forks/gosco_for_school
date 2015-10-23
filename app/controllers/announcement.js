@@ -7,6 +7,10 @@ init();
 function init(){
 	showList();
 	syncData();
+	
+	if(Ti.App.Properties.getString('roles') == "teacher"){
+		COMMON.removeAllChildren($.addView);
+	}
 }
 
 function syncData(){

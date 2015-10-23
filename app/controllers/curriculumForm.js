@@ -1,71 +1,103 @@
 var args = arguments[0] || {};
-COMMON.construct($); 
-var educationModel = Alloy.createCollection('education'); 
-var school; 
-var photoLoad;
+var id = args.id || "";
+var curriculumModel = Alloy.createCollection('curriculum'); 
+
+var details;
+var selected = 0; 
+var attachment;
+COMMON.construct($);  
 init();
 
-function init(){ 
-	showList(); 
-}
-
-function showList(){
-	school = educationModel.getSchoolById( Ti.App.Properties.getString('e_id')); 
-	$.schoolName.text  = school.name;
-	$.contact_no.value = school.contact_no;
-	$.fax_no.value   = school.fax_no;
-	$.email.value    = school.email;
-	$.address.value    = school.address;
-	$.website.value  = school.website;
-	$.postcode.value = school.postcode;
-	$.longitude.value = school.longitude;
-	$.latitude.value = school.latitude;
-	$.thumbPreview.image = school.img_path;
-	
-	var schoolLevelArr =  Alloy.Globals.SchoolLevel;
-	$.schoolLevel.value = schoolLevelArr[parseInt(school.education_type) -1];
-	
-	var schoolTypeArr =  Alloy.Globals.SchoolType;
-	$.schoolType.value = schoolTypeArr[parseInt(school.school_type) -1];
-	
-	if(Ti.App.Properties.getString('roles') == "teacher"){
-		$.saveBtn.height = 0;
+function init(){
+	if(id != ""){ 
+		details = curriculumModel.getCurriculumById(id);
+		if(details.img_path != ""){
+			$.thumbPreview.image = details.img_path;
+		}
+		
+		$.name.value = details.curriculum;
+		$.description.value = details.description;
+		if(details.status == 1){ 
+			$.statusSwitch.value = true;
+		}
+		selected = parseInt(details.type) -1;
+		$.type.text  = Alloy.Globals.CurriculumType[selected];
+		$.type.color= "#000000";
 	}
+	
 }
 
-function save(){ 
-	var param = {
-		id    : school.id,
-		name  : school.name,
-		level  : school.level,
-		email  : $.email.value,
-		contact_no : $.contact_no.value,
-		fax_no : $.fax_no.value,
-		education_type : school.education_type,
-		school_type  : school.school_type,
-		postcode  : $.postcode.value,
-		address  : $.address.value,
-		state  : school.state,
-		longitude : $.longitude.value,
-		latitude : $.latitude.value,
-		website  : $.website.value,
-		status  : school.status,
-		session : Ti.App.Properties.getString('session'),
-		Filedata : photoLoad 
+function hideKeyboard(){
+	$.name.blur();
+	$.description.blur();
+}  
+
+function save(){
+	var title = $.name.value;
+	var description = $.description.value;
+	var status = $.statusSwitch.value; 
+	var description = $.description.value;
+	if(status == false){
+		status = 2;
+	}else{
+		status = 1;
+	}
+	
+	var param = { 
+		"id" : id,
+		"e_id" : Ti.App.Properties.getString('e_id'),
+		"curriculum" : title,
+		"description" : description,
+		"type" : parseInt(selected) + 1, 
+		"status"  : status,
+		"Filedata" : attachment,
+		"session" : Ti.App.Properties.getString('session')
 	}; 
-	  
-	API.callByPostImage({url:"updateSchoolUrl", params: param}, function(responseText){
-		var res = JSON.parse(responseText); 
-	 
-		if(res.status == "success"){  
-		 	/**load new set of category from API**/
-		 	var arr = res.data; 
-		    educationModel.saveArray(arr);  
-		    Ti.App.fireEvent('refreshData'); 
-		    COMMON.resultPopUp("Saved", "Information successfully updated"); 
-		} 
+			
+	API.callByPostImage({url:"addUpdateCurriculumUrl", params: param}, function(responseText){
+		var res = JSON.parse(responseText);  
+		if(res.status == "success"){   
+			var arr = res.data;   
+			curriculumModel.saveArray(arr); 
+			 
+			Ti.App.fireEvent('refreshCurriculumPost');  
+			if(id == ""){
+				COMMON.resultPopUp("Create success","Successfully create curriculum!");
+			}else{
+				COMMON.resultPopUp("Update success","Successfully update this curriculum!");
+			}
+			 
+		}else{
+			$.win.close();
+			COMMON.hideLoading();
+			Alloy.Globals.Navigator.open("login");
+			COMMON.resultPopUp("Session Expired", res.data); 
+		}
 	});
 }
+
+$.tvrType.addEventListener('click', function(){
+	var curriculumType = [];
+	var curriculumType = Alloy.Globals.CurriculumType;  
+	var cancelBtn = curriculumType.length -1;
+	var dialog = Ti.UI.createOptionDialog({
+		  cancel: curriculumType.length -1,
+		  options: curriculumType,
+		  selectedIndex: selected,
+		  title: 'Choose Curriculum Type'
+	});
+		
+	dialog.show();	 
+	dialog.addEventListener("click", function(e){   
+		if(cancelBtn != e.index){ 
+			dialog.selectedIndex = e.index;
+			selected = e.index;
+			$.type.value = curriculumType[e.index];
+			$.type.color= "#000000";
+		}
+	});
+ 
+});
 
 $.thumbPreview.addEventListener('click', function(){
 	var dialog = Titanium.UI.createOptionDialog({ 
@@ -97,7 +129,7 @@ $.thumbPreview.addEventListener('click', function(){
 	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 	                   //var nativePath = event.media.nativePath; 
 		            	$.thumbPreview.image = image; 
-			            photoLoad = image;
+			            attachment = image;
 			            //mainView.undoPhoto.visible = true;
 	                }
 	            },
@@ -140,7 +172,7 @@ $.thumbPreview.addEventListener('click', function(){
 	        		
 					image = image.imageAsResized(newWidth, newHeight);
 	            	$.thumbPreview.image = image; 
-	            	photoLoad = image;
+	            	attachment = image;
 	            },
 	            cancel:function() {
 	               
@@ -157,10 +189,6 @@ $.thumbPreview.addEventListener('click', function(){
 	dialog.show();
 });
 
-function hideKeyboard(){
-	$.address.blur(); 
-}
-
-function closeWindow(){ 
+function closeWindow(){  
 	$.win.close();
-} 
+}

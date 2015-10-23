@@ -7,6 +7,10 @@ init();
 function init(){
 	showList();
 	syncData();
+	
+	if(Ti.App.Properties.getString('roles') == "teacher"){
+		COMMON.removeAllChildren($.addView);
+	}
 }
 
 function syncData(){
@@ -110,8 +114,10 @@ function showList(){
 			view1.add(label2);
 			view1.add(label3);
 			view0.add(view1);
-			view0.add(imgView1);
-			view0.addEventListener('click', goDetails);
+			if(Ti.App.Properties.getString('roles') != "teacher"){
+				view0.add(imgView1); 
+				view0.addEventListener('click', goDetails);
+			}
 			horzView.add(view0);
 			
 			$.list.add(horzView);

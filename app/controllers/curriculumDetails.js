@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 var id = args.id || "";
 COMMON.construct($); 
+var userModel = Alloy.createCollection('user'); 
 var curriculumModel = Alloy.createCollection('curriculum'); 
 var curriculumPostModel = Alloy.createCollection('curriculumPost'); 
 var curriculumPostElementModel = Alloy.createCollection('curriculumPost_element'); 
@@ -9,9 +10,11 @@ var searchKey ="";
 init();
 
 function init(){
-	var curriculum = curriculumModel.getCurriculumById(id);
-	console.log(curriculum);
-	$.thumbPreview.image = curriculum.img_path;	
+	var curriculum = curriculumModel.getCurriculumById(id); 
+	if(curriculum.img_path != ""){
+		$.thumbPreview.image = curriculum.img_path;	
+	}
+	
 	$.description.text   = curriculum.description;
 	$.win.title = curriculum.curriculum; 
 	showList();
@@ -23,30 +26,37 @@ function showList(){
 	COMMON.hideLoading(); 
  	COMMON.removeAllChildren($.list);
 	if(list.length > 0){ 
-		var count = 0;
-		list.forEach(function(entry) {
+		var count = 1;
+		list.forEach(function(entry) { 
 			var view0 = $.UI.create('View',{
-				classes :['hsize','wfill' ],
-				source :entry.id
+				classes :['hsize' ],
+				source :entry.id,
+				selectedBackgroundColor : "#ffffff", 
 			});
 			
 			var view1 = $.UI.create('View',{
-				classes :['hsize', 'vert', 'wfill'],
-				source :entry.id 
+				classes :['hsize', 'vert'],
+				source :entry.id,
+				selectedBackgroundColor : "#ffffff", 
 			});
 			
 			var label1 = $.UI.create('Label',{
-				classes :['h5','hsize', 'wfill','themeColor', 'padding-left' ], 
+				classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
 				top:12,
+				width: "80%",
 				source :entry.id,
 				text: entry.title
 			});
-			 
+			var user=  userModel.getUserById(entry.published_by); 
+			var publisher = entry.published_by;
+			if(user != ""){
+				publisher = user.fullname;
+			}
 			var label2 = $.UI.create('Label',{
 				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ], 
 				top:5,
 				source :entry.id,
-				text: entry.published_by + " at "+ timeFormat(entry.publish_date)
+				text: publisher + " at "+ timeFormat(entry.publish_date)
 			});
 			
 			var imgView1 = $.UI.create('ImageView',{
@@ -68,9 +78,9 @@ function showList(){
 				var viewLine = $.UI.create('View',{
 					classes :['gray-line']
 				}); 
-				$.list.add(label1);
+				$.list.add(viewLine);
 			} 
-			count++;
+			count++; 
 		});
 	}else{
 		var view0 = $.UI.create('View',{
@@ -110,7 +120,7 @@ function syncData(){
 		
 		var res = JSON.parse(responseText);  
 		if(res.status == "success"){  
-			var postData = res.data; 
+			var postData = res.data;  
 			if(postData != ""){ 
 				var post = res.data.post;   
 				curriculumPostModel.addPost(post);  
@@ -129,6 +139,7 @@ function syncData(){
 }
 
 function closeWindow(){
+	Ti.App.removeEventListener('refreshCurriculumPost', init); 
 	$.win.close();
 }
 
@@ -160,6 +171,16 @@ function uploadAttachmentToServer(attachment){
 	});
 }
 
+function separateHozLine(){
+	return seperatorLine = Titanium.UI.createView({ 
+		backgroundColor: "#D5D5D5",
+		height:1, 
+		top:5,
+		width:Ti.UI.FILL
+	});
+} 
+ 
+ 
 /***SEARCH FUNCTION***/
 function searchResult(){
 	$.searchItem.blur(); 
@@ -201,94 +222,9 @@ $.search.addEventListener('click', function(){
 	}
 });  
 
-
-$.thumbPreview.addEventListener('click', function(){
-	var dialog = Titanium.UI.createOptionDialog({ 
-	    title: 'Choose an image source...', 
-	    options: ['Camera','Photo Gallery', 'Cancel'], 
-	    cancel:2 //index of cancel button
-	});
-	  
-	dialog.addEventListener('click', function(e) { 
-	     
-	    if(e.index == 0) { //if first option was selected
-	        //then we are getting image from camera
-	        Titanium.Media.showCamera({ 
-	            success:function(event) { 
-	                var image = event.media; 
-	                
-	                if(image.width > image.height){
-	        			var newWidth = 640;
-	        			var ratio =   640 / image.width;
-	        			var newHeight = image.height * ratio;
-	        		}else{
-	        			var newHeight = 640;
-	        			var ratio =   640 / image.height;
-	        			var newWidth = image.width * ratio;
-	        		}
-	        		
-	        		image = image.imageAsResized(newWidth, newHeight);
-
-	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-	                   //var nativePath = event.media.nativePath; 
-		            	$.thumbPreview.image = image; 
-			            uploadAttachmentToServer(image);
-			            //mainView.undoPhoto.visible = true;
-	                }
-	            },
-	            cancel:function(){
-	                //do somehting if user cancels operation
-	            },
-	            error:function(error) {
-	                //error happend, create alert
-	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
-	                //set message
-	                if (error.code == Titanium.Media.NO_CAMERA){
-	                    a.setMessage('Device does not have camera');
-	                }else{
-	                    a.setMessage('Unexpected error: ' + error.code);
-	                }
-	 
-	                // show alert
-	                a.show();
-	            },
-	            allowImageEditing:true,
-	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
-	            saveToPhotoGallery:true
-	        });
-	    } else if(e.index == 1){
-	    	 
-	    	//obtain an image from the gallery
-	        Titanium.Media.openPhotoGallery({
-	            success:function(event){
-	            	// set image view
-	            	var image = event.media;  
-	            	if(image.width > image.height){
-	        			var newWidth = 640;
-	        			var ratio =   640 / image.width;
-	        			var newHeight = image.height * ratio;
-	        		}else{
-	        			var newHeight = 640;
-	        			var ratio =   640 / image.height;
-	        			var newWidth = image.width * ratio;
-	        		}
-	        		
-					image = image.imageAsResized(newWidth, newHeight);
-	            	$.thumbPreview.image = image; 
-	            	uploadAttachmentToServer(image);
-	            },
-	            cancel:function() {
-	               
-	            },
-	            
-	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
-	        });
-	    } else {
-	        
-	    }
-	});
-	 
-	//show dialog
-	dialog.show();
+$.edit.addEventListener('click', function(){
+	Alloy.Globals.Navigator.open('curriculumForm',{id: id});
 });
+
+Ti.App.addEventListener('refreshCurriculumPost', init); 
  

@@ -80,8 +80,7 @@ function save(){
 				status        : status,
 				session : Ti.App.Properties.getString('session')
 			}; 
-			  
-			console.log(param);		 
+			   	 
 			API.callByPost({url:"updateCurriculumPost", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
@@ -91,6 +90,7 @@ function save(){
 						id = res.data[0]['id'];
 						goToDetails();
 					}
+					$.saveBtn.visible = false;
 					COMMON.resultPopUp("Saved", "Curriculum post successfully updated"); 
 				}else{
 					$.win.close();
@@ -121,6 +121,7 @@ function save(){
 						id = res.data[0]['id'];
 						goToDetails();
 					}
+					$.saveBtn.visible = false;
 					COMMON.resultPopUp("Saved", "Information successfully updated"); 
 				}else{
 					$.win.close();
@@ -135,8 +136,7 @@ function save(){
 	
 }
 
-function goToDetails(){
-	console.log("id : "+id);
+function goToDetails(){ 
 	Alloy.Globals.Navigator.open('formElement',{id: id, isCurriculum : isCurriculum});  
 }
 

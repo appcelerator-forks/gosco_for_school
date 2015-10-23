@@ -37,7 +37,7 @@ function syncData(){
 			if(arr.length > 0){
 				showList();  
 			}
-			
+			COMMON.hideLoading();
 		}else{
 			$.win.close();
 			COMMON.hideLoading();
