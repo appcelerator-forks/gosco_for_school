@@ -160,7 +160,7 @@ $.add.addEventListener('click', function(){
 	var dialog = Ti.UI.createOptionDialog({
 		  cancel: Alloy.Globals.ElementType.length -1,
 		  options: Alloy.Globals.ElementType, 
-		  title: 'Choose Element Type'
+		  title: 'Choose Note Type'
 	});
 		
 	dialog.show();	 

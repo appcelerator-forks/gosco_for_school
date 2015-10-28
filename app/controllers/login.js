@@ -104,7 +104,7 @@ if(OS_ANDROID){
 		var dialog = Ti.UI.createAlertDialog({
 		    cancel: 0,
 		    buttonNames: ['Cancel','Confirm'],
-		    message: 'Would you like to close GOSCO?',
+		    message: 'Would you like to close Gosco For School App?',
 		    title: 'Exit Gosco'
 		});
 		dialog.addEventListener('click', function(e){  
