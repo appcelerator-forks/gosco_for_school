@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 COMMON.construct($); 
 var eventsModel = Alloy.createCollection('events'); 
+var eventsAttachmentModel = Alloy.createCollection('eventsAttachment'); 
 var searchKey = "";
 init();
 
@@ -25,6 +26,7 @@ function syncData(){
 			var eventsModel = Alloy.createCollection('events'); 
 			var arr = res.data;  
 			eventsModel.saveArray(arr); 
+			eventsAttachmentModel.saveArray(arr);
 			showList();
 		}else{
 			$.win.close();

@@ -361,7 +361,7 @@ function attachedPhoto(image,position){
 	iView.add(iImage);
 	
 	iView.addEventListener('click',function(e){ 
-		var page = Alloy.createController("attachmentDetails",{h_id:h_id,position:position}).getView(); 
+		var page = Alloy.createController("attachmentDetails",{id:h_id,position:position, type: "homework"}).getView(); 
 	  	page.open();
 	  	page.animate({
 			curve: Ti.UI.ANIMATION_CURVE_EASE_IN,

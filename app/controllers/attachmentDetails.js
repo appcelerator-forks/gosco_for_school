@@ -1,12 +1,21 @@
 var args = arguments[0] || {};
-var h_id = args.h_id;
+var type = args.type;
+var id = args.id;
 var position = args.position;   
-var homeworkAttachmentModel = Alloy.createCollection('homeworkAttachment'); 
- 
+var attachmentModel;
+if(type == "homework"){
+	attachmentModel = Alloy.createCollection('homeworkAttachment'); 
+}else{
+	attachmentModel = Alloy.createCollection('eventsAttachment'); 
+} 
 init(); 
 
 function init(){
-	var items  = homeworkAttachmentModel.getRecordByHomework(h_id);
+	if(type == "homework"){
+		var items  = attachmentModel.getRecordByHomework(id);
+	}else{
+		var items  = attachmentModel.getRecordByEvents(id);
+	}
 	var counter = 0;
 	var imagepath, adImage, row = '';
 	var my_page = 0; 
@@ -98,6 +107,7 @@ function init(){
 				
 				var param = { 
 					"img_id" : items[my_page].id, 
+					"type"   : type,
 					"session" : Ti.App.Properties.getString('session')
 				};
 				 
@@ -105,9 +115,15 @@ function init(){
 					var res = JSON.parse(responseText); 
 					
 					if(res.status == "success"){   
-						homeworkAttachmentModel.removeRecordById(items[my_page].id);
+						attachmentModel.removeRecordById(items[my_page].id);
 						init();
-						Ti.App.fireEvent('refreshAttachment'); 
+						
+						if(type == "homework"){
+							Ti.App.fireEvent('refreshAttachment'); 
+						}else{
+							Ti.App.fireEvent('refreshEventsAttachment'); 
+						} 
+						
 						$.win.close({
 							curve: Ti.UI.ANIMATION_CURVE_EASE_OUT,
 							opacity: 0,

@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 var id = args.id || "";
 var eventsModel = Alloy.createCollection('events'); 
+var eventsAttachmentModel = Alloy.createCollection('eventsAttachment'); 
 var details;
 COMMON.construct($); 
 var curDate = currentDateTime();   
@@ -16,8 +17,23 @@ function init(){
 		if(details.status == 1){ 
 			$.statusSwitch.value = true;
 		}
+		loadAttachment();
 	}
 }
+
+function loadAttachment(){
+	var attList = eventsAttachmentModel.getRecordByEvents(id);  
+	var counter = 0;
+	 
+	COMMON.removeAllChildren($.attachment);
+	if(attList.length > 0){ 
+	 	attList.forEach(function(att){  
+	 		$.attachment.add(attachedPhoto(att.img_thumb, counter));
+	 		counter++;  
+	 	}); 
+	 }
+}
+
 
 function hideKeyboard(){
 	$.title.blur();
@@ -55,7 +71,7 @@ function save(){
 		"status"  : status,
 		"session" : Ti.App.Properties.getString('session')
 	}; 
-			
+ 
 	API.callByPost({url:"addUpdateEventUrl", params: param}, function(responseText){
 		var res = JSON.parse(responseText);  
 		if(res.status == "success"){   
@@ -162,6 +178,151 @@ function showExpiredPicker(){
 	hideKeyboard();
 }
 
+
+/*** Event attachment***/
+function uploadAttachment(){
+	var dialog = Titanium.UI.createOptionDialog({ 
+	    title: 'Choose an image source...', 
+	    options: ['Camera','Photo Gallery', 'Cancel'], 
+	    cancel:2 //index of cancel button
+	});
+ 
+	dialog.addEventListener('click', function(e) { 
+	    
+	    if(e.index == 0) { //if first option was selected
+	        //then we are getting image from camera
+	        Titanium.Media.showCamera({ 
+	            success:function(event) { 
+	               var image = event.media;
+        		   if(image.width > image.height){
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		} 
+					image = image.imageAsResized(newWidth, newHeight);  
+	                if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+	                   //var nativePath = event.media.nativePath;  
+			           uploadAttachmentToServer(image); 
+	                }
+	            },
+	            cancel:function(){
+	                //do somehting if user cancels operation
+	            },
+	            error:function(error) {
+	                //error happend, create alert
+	                var a = Titanium.UI.createAlertDialog({title:'Camera'});
+	                //set message
+	                if (error.code == Titanium.Media.NO_CAMERA){
+	                    a.setMessage('Device does not have camera');
+	                }else{
+	                    a.setMessage('Unexpected error: ' + error.code);
+	                }
+	 
+	                // show alert
+	                a.show();
+	            },
+	            allowImageEditing:true,
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	            saveToPhotoGallery:true
+	        });
+	    } else if(e.index == 1){
+	    	 
+	    	//obtain an image from the gallery
+	        Titanium.Media.openPhotoGallery({
+	            success:function(event){
+	            	// set image view
+	            	var image = event.media; 
+	            	if(image.width > image.height){
+	        			var newWidth = 640;
+	        			var ratio =   640 / image.width;
+	        			var newHeight = image.height * ratio;
+	        		}else{
+	        			var newHeight = 640;
+	        			var ratio =   640 / image.height;
+	        			var newWidth = image.width * ratio;
+	        		} 
+					image = image.imageAsResized(newWidth, newHeight);  
+		           	uploadAttachmentToServer(image);
+		           	loadAttachment(); 
+	            },
+	            cancel:function() {
+	               
+	            },
+	            
+	            mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	        });
+	    } else {
+	        
+	    }
+	});
+	 
+	//show dialog
+	dialog.show();
+}
+
+
+function uploadAttachmentToServer(attachment){
+	COMMON.showLoading(); 
+	var param = {
+		id    : id,  
+		Filedata : attachment, 
+		session : Ti.App.Properties.getString('session')
+	};  
+
+	API.callByPostImage({url:"uploadEventAttachmentUrl", params: param}, function(responseText){
+		var res = JSON.parse(responseText);  
+		console.log(res);
+		if(res.status == "success"){   
+			eventsAttachmentModel.addAttachment(res.data);
+		 	init();
+		 	COMMON.hideLoading();
+			COMMON.resultPopUp("Create success","Successfully added events attachment!"); 
+		}else{
+			$.win.close();
+			COMMON.hideLoading();
+			Alloy.Globals.Navigator.open("login");
+			COMMON.resultPopUp("Session Expired", res.data); 
+		}
+	});
+}
+
+function attachedPhoto(image,position){ 
+	var iView = $.UI.create('View', {
+		backgroundColor: "#D5D5D5",
+		height : 50,
+		position : position,
+		width: 50,
+		left:5,
+		right: 5,
+		bottom:0
+	});
+	        
+	var iImage = Ti.UI.createImageView({
+		image : image,
+		position :position,
+		width: Ti.UI.FILL
+	}); 
+	iView.add(iImage);
+	
+	iView.addEventListener('click',function(e){ 
+		var page = Alloy.createController("attachmentDetails",{id:id,position:position, type: "events"}).getView(); 
+	  	page.open();
+	  	page.animate({
+			curve: Ti.UI.ANIMATION_CURVE_EASE_IN,
+			opacity: 1,
+			duration: 300
+		});
+		 
+	});
+	return iView;	            
+}
+
 function closeWindow(){ 
 	$.win.close();
 }
+
+Ti.App.addEventListener('refreshEventsAttachment', init); 

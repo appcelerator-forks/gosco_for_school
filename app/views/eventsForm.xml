@@ -25,9 +25,8 @@
 					<View class="gray-line" /> 
 					<View id="tvrMessage" class="hsize wfill" >
 						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
-							<Label text="Message" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
-							
-							<TextArea  horizontalWrap="true" id="message" class="padding left-align h5 font_dark_grey"    hintText="Please fill in event message" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
+							<Label text="Message" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />   
+							<TextArea  horizontalWrap="true" id="message" class="padding left-align h5 font_dark_grey " hintText="Please fill in event message" value="" borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
 								<KeyboardToolbar platform="ios">
 									<Toolbar>
 										<Items> 
@@ -61,6 +60,13 @@
 						</View>
 					</View> 
 				</View> 
+				
+				<View id="attView" top="10" class="horz wfill" height="50" backgroundColor="#ffffff"  >
+					<ScrollView id="attachment" scrollType="horizontal" class="horz hsize"  width="80%" /> 
+					<View width="auto" class="hsize" onClick="uploadAttachment" >
+						<View class="themeBg wfill" height="50" right="0" ><ImageView id="addLbl" height="25" width="30" image="/images/add_white.png" /></View>
+					</View> 
+				</View>
 				<Button onClick="save" class="button" id="saveBtn" title="Save" top="10"></Button>  
 			</ScrollView>
 			

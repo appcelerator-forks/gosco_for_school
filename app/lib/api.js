@@ -22,7 +22,7 @@ var getEventsList       = "http://"+API_DOMAIN+"/gosco/api/getEventsList?user="+
 var deviceInfoUrl       = "http://"+API_DOMAIN+"/gosco/api/getDeviceInfo?user="+USER+"&key="+KEY;
 var uploadCurriculumLogoUrl = "http://"+API_DOMAIN+"/gosco/api/uploadCurriculumLogo?user="+USER+"&key="+KEY+"&auth";
  
-
+var uploadEventAttachmentUrl = "http://"+API_DOMAIN+"/gosco/api/uploadEventAttachment?user="+USER+"&key="+KEY+"&auth";
 var doLoginUrl  		= "http://"+API_DOMAIN+"/gosco/api/loginAdmin?user="+USER+"&key="+KEY;
 var doLogoutUrl			= "http://"+API_DOMAIN+"/gosco/api/logoutAdmin?user="+USER+"&key="+KEY;
 var getSchoolList  		= "http://"+API_DOMAIN+"/gosco/api/getSchoolList?user="+USER+"&key="+KEY;
