@@ -1,5 +1,5 @@
 <Alloy>
-	<Window title="Curriculum" backgroundImage="/images/home_background.jpg" id="win"  > 
+	<Window title="Co-Curriculum" backgroundImage="/images/home_background.jpg" id="win"  > 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<LeftNavButton platform="ios">
 			<View onClick="closeWindow" left="0"  width="30" height="35">
@@ -10,10 +10,10 @@
 			<ActivityIndicator id="activityIndicator" />
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View>   
-		<SearchBar barColor="#FFFFFF" top="0" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false" zIndex="99" hintText="Search Curriculum" />
+		<SearchBar barColor="#FFFFFF" top="0" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false" zIndex="99" hintText="Search Co-Curriculum" />
 	 
 		<View class="vert wfill hsize" top="10" >
-			<Label class="padding whiteColor h5">Available curriculum activities</Label> 
+			<Label class="padding whiteColor h5">Available co-curriculum activities</Label> 
 		</View>  
 		<ScrollView id="list"  bottom='60' width="Ti.UI.FILL"  height="Ti.UI.SIZE" top= "50" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />	
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 

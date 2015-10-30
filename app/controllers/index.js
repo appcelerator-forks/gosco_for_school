@@ -1,3 +1,4 @@
+var userModel = Alloy.createCollection('user');   
 /**
  * Global Navigation Handler
  */
@@ -46,7 +47,7 @@ init();
 	
 function init(){
 	
-	var userModel = Alloy.createCollection('user');   
+	
 	userModel.addColumn("status", "TEXT"); 
 	userModel.addColumn("e_id", "TEXT"); 
 	
@@ -77,7 +78,12 @@ function init(){
 
 function launchPage(){
 	var session = Ti.App.Properties.getString('session') || "";
-	if(session != ""){
+	var u_id = Ti.App.Properties.getString('u_id') || "";  
+	var user = userModel.getUserById(u_id);
+	var e_id = Ti.App.Properties.getString('e_id') || "";
+	 
+	
+	if(session != "" && user != "" && e_id != ""){
 		Alloy.Globals.Navigator.open("home");
 	}else{
 		Alloy.Globals.Navigator.open("login");

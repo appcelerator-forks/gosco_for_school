@@ -1,13 +1,14 @@
 var args = arguments[0] || {}; 
 COMMON.construct($); 
-var u_id = Ti.App.Properties.getString('u_id');  
+var u_id = Ti.App.Properties.getString('u_id') || "";  
 var userModel = Alloy.createCollection('user'); 
 var educationModel = Alloy.createCollection('education'); 
 var user;
 init();
  
-function init(){
+function init(){ 
 	user = userModel.getUserById(u_id);
+	
 	var education = educationModel.getSchoolById(Ti.App.Properties.getString('e_id'));
 	$.welcomeUser.text = user.fullname+ " / "+ education.name; 
 	$.thumbPreview.image = education.img_path;

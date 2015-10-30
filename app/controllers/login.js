@@ -32,7 +32,7 @@ function do_login(){
 			COMMON.hideLoading(); 
 			var userModel = Alloy.createCollection('user'); 
 			userModel.saveArray(res.data);
-			
+			console.log(res.data);
 			//set session
 			Ti.App.Properties.setString('session', res.data[0].session);
 			Ti.App.Properties.setString('u_id', res.data[0].id);

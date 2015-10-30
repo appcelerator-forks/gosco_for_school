@@ -38,7 +38,7 @@
 					<View id="tvrContact" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View  layout="horizontal" height="45" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Contact" top="12" width="25%" class="title_Label padding-left"  /> 
-							<TextField class="h5" borderColor="#ffffff" id="contact" top="5" bottom='5' right='5' textAlign="right" keyboardType="Titanium.UI.KEYBOARD_PHONE_PAD" hintText="Parent Contact No." /> 
+							<TextField class="h5" borderColor="#ffffff" id="contact" top="5" bottom='5' right='5' textAlign="right" keyboardType="Titanium.UI.KEYBOARD_PHONE_PAD" hintText="Staff Contact No." /> 
 						</View>
 					</View>   
 					<View class="gray-line" />

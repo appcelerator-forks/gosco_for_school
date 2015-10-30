@@ -120,7 +120,7 @@ function deleteElement(e){
 	    cancel: 0,
 	    buttonNames: ['Cancel','Confirm'],
 	    message: 'Are you sure want to delete this element?',
-	    title: 'Delete Element'
+	    title: 'Delete Records'
 	});
 	dialog.addEventListener('click', function(e){  
 		if (e.index === e.source.cancel){
@@ -139,7 +139,7 @@ function deleteElement(e){
 				if(res.status == "success"){ 
 					var post_element_model = Alloy.createCollection('post_element');  
 					post_element_model.deletePostElement(result.source);  
-					COMMON.resultPopUp("Delete Element", "Element successfully deleted");  
+					COMMON.resultPopUp("Delete Element", "Record successfully deleted");  
 					refreshElement();
 				}else{
 					$.win.close();
@@ -160,7 +160,7 @@ $.add.addEventListener('click', function(){
 	var dialog = Ti.UI.createOptionDialog({
 		  cancel: Alloy.Globals.ElementType.length -1,
 		  options: Alloy.Globals.ElementType, 
-		  title: 'Choose Note Type'
+		  title: 'Choose To Add/Edit'
 	});
 		
 	dialog.show();	 

@@ -13,7 +13,7 @@
 		<SearchBar barColor="#FFFFFF" top="0" zIndex="99" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false"  hintText="Search Announcement/Post" />
 		
 		<View class="vert wfill hsize" top="10">
-			<Label class="padding whiteColor h5">Lastest award post</Label> 
+			<Label class="padding whiteColor h5">Latest award</Label> 
 		</View>
     	<ScrollView id="announcementSv" class="vert hfill wfill"  backgroundColor="#ffffff"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" bottom="60"  top= "50" />
 		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 

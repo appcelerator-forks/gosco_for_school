@@ -31,7 +31,7 @@ function init(){
 		
 		if(isCurriculum != ""){
 			$.win.title = "Curriculum Announcement Form";
-			$.postDetailsBtn.title = "Curriculum Post Details";
+			$.postDetailsBtn.title = "Curriculum Posted Details";
 		}
 		$.title.value   = postDetails.title;
 		$.message.value = postDetails.message;

@@ -1,5 +1,5 @@
 <Alloy>
-	<Window title="Curriculum Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+	<Window title="Co-Curriculum Form" backgroundImage="/images/home_background.jpg" id="win"  > 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 	 
 		<LeftNavButton platform="ios">
@@ -11,7 +11,7 @@
 			<ActivityIndicator id="activityIndicator" />
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View>   
-		<Label class="padding whiteColor h5" top="10">Please fill in curriculum details</Label>
+		<Label class="padding whiteColor h5" top="10">Please fill in co-curriculum details</Label>
 		<ScrollView class="wfill hsize vert" top="40">
 			<View width="100" height="100" borderRadius="50"  backgroundColor="#f5f5f5" bottom="10">
 				<ImageView width="100" height="100" image="/images/koku.png" borderRadius="50" id="thumbPreview" />
@@ -21,7 +21,7 @@
 						<View class="horz" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Name" top="12" width="20%" class="title_Label padding-left themeColor"  />  
 							<View width="auto" class="right-align hsize">
-								<TextField class="h5 right-align padding wfill" borderColor="#ffffff"  backgroundColor="#ffffff" id="name" right="10"  hintText="Curriculum Name" /> 
+								<TextField class="h5 right-align padding wfill" borderColor="#ffffff"  backgroundColor="#ffffff" id="name" right="10"  hintText="Co-Curriculum Name" /> 
 							 
 							</View>  
 						</View>
@@ -31,7 +31,7 @@
 					<View id="tvrDescription"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Description" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
-							<TextArea  horizontalWrap="true" id="description" class="padding left-align h5 font_dark_grey" width="100%"   hintText="Curriculum Description" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="120"  suppressReturn="false" >
+							<TextArea  horizontalWrap="true" id="description" class="padding left-align h5 font_dark_grey" width="100%"   hintText="Co-Curriculum Description" value="" class="h5" borderColor="#ffffff" backgroundColor="#ffffff"  height="120"  suppressReturn="false" >
 								<KeyboardToolbar platform="ios">
 									<Toolbar>
 										<Items> 
@@ -46,9 +46,9 @@
 					<View class="gray-line" /> 
 					<View id="tvrType"  height="Ti.UI.SIZE"   selectedBackgroundColor="#ffffff">
 						<View  height="45" width="Ti.UI.FILL" class="right-align horz" >
-							<Label text="Curriculum Type" top="12" width="40%" class="padding-left themeColor"  />   
+							<Label text="Co-Curriculum Type" top="12" width="40%" class="padding-left themeColor"  />   
 							<View width="auto" class="right-align hsize">
-								<Label text="Choose curriculum type" class="padding font_dark_grey right-align wfill" right="10" id="type"  />
+								<Label text="Choose co-curriculum type" class="padding font_dark_grey right-align wfill" right="10" id="type"  />
 							</View>  
 						</View> 
 					</View> 
@@ -61,7 +61,7 @@
 					</View>   
 					<View class="gray-line" />
 				</View>  		 
-				<Button onClick="save" id="saveBtn" class="button" title="Save Curriculum" top="10"></Button> 
+				<Button onClick="save" id="saveBtn" class="button" title="Save Co-Curriculum" top="10"></Button> 
 			</ScrollView>
 		 
 			

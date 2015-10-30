@@ -59,7 +59,7 @@ exports.definition = {
             getEducationClassList :  function(year, e_id){
 				var collection = this;
                 var sql = "SELECT * FROM " + collection.config.adapter.collection_name + " WHERE e_id='"+ e_id+ "' AND year='"+year+"' ORDER BY className " ;
- 				console.log(sql);
+ 				 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
@@ -99,7 +99,7 @@ exports.definition = {
 					db.execute(sql_query, entry.id, entry.e_id,  entry.year,entry.class ,entry.status,entry.created,entry.updated);
 					var sql_query =  "UPDATE "+collection.config.adapter.collection_name+" SET e_id=?,year=?,className=?,status=?,updated=? WHERE id=?";
 					db.execute(sql_query, entry.e_id,entry.year,entry.class,  entry.status ,entry.updated, entry.id);
-			 			console.log(sql_query);
+			 		 
 			 	});
 			 
 				db.execute("COMMIT");
