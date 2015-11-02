@@ -18,6 +18,10 @@ function init(){
 			$.statusSwitch.value = true;
 		}
 		loadAttachment();
+		
+	}else{
+		$.attView.visible = false;
+		$.attView.height = 0;
 	}
 }
 

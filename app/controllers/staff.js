@@ -2,6 +2,7 @@ var args = arguments[0] || {};
 COMMON.construct($); 
 var userModel = Alloy.createCollection('user'); 
 var searchKey = "";
+var details;
 init();
 
 function init(){
@@ -34,7 +35,7 @@ function showList(){
 			var horzView = $.UI.create('View',{
 				classes: ['horz','wfill'], 
 				source: entry.id,  
-				height: 70 
+				height: 50 
 			});
 			
 			var statustView = $.UI.create('View',{
@@ -185,6 +186,8 @@ $.search.addEventListener('click', function(){
 
 
 function closeWindow(){
-	//Ti.App.fireEvent('refreshPost');  
+	Ti.App.removeEventListener('refreshStaffList', showList); 
 	$.win.close();
 }
+
+Ti.App.addEventListener('refreshStaffList', showList); 

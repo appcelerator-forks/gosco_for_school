@@ -1,5 +1,5 @@
 <Alloy>  
-	<Window title="Edit Element" id="win" fullscreen="true"> 
+	<Window title="Edit Details" id="win" fullscreen="true"> 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<View platform="ios" top="0" height="50" backgroundColor="#F4F4F4"> 
 			<View left="0" zIndex="9" width="20%" onClick="closeWindow">

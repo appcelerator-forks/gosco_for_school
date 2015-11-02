@@ -80,6 +80,7 @@ function save(){
 			COMMON.resultPopUp("Fail",res.data[0]);
 			return false;
 		}else{ 
+			Ti.App.fireEvent('refreshStaffList');   
 			COMMON.hideLoading();  
 			userModel.saveArray(res.data);
 			COMMON.resultPopUp("Success", "Successfully saved staff information"); 

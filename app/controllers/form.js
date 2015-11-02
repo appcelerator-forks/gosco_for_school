@@ -85,7 +85,7 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					//Ti.App.fireEvent('refreshPostList');   
+					Ti.App.fireEvent('refreshPostList');   
 					if(id == ""){
 						id = res.data[0]['id'];
 						goToDetails();
@@ -116,7 +116,7 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					//Ti.App.fireEvent('refreshPostList');   
+					Ti.App.fireEvent('refreshPostList');   
 					if(id == ""){
 						id = res.data[0]['id'];
 						goToDetails();

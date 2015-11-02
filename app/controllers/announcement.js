@@ -166,3 +166,5 @@ $.search.addEventListener('click', function(){
 		$.searchItem.height = 50;
 	}
 });  
+
+Ti.App.addEventListener('refreshPostList', showList); 

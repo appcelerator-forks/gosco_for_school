@@ -276,7 +276,7 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  
 					postElementModel.addElement(res.data);  
-					COMMON.resultPopUp("Saved", "Element successfully added"); 
+					COMMON.resultPopUp("Saved", "Records are added"); 
 					$.saveBtn.visible = false;
 				}else{
 					$.win.close();
