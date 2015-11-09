@@ -155,8 +155,7 @@ function deleteElement(e){
 }
 
 $.add.addEventListener('click', function(){
-	  
-	var cancelBtn = Alloy.Globals.ElementType.length -1;
+	var cancelBtn  = Alloy.Globals.ElementType.length -1;
 	var dialog = Ti.UI.createOptionDialog({
 		  cancel: Alloy.Globals.ElementType.length -1,
 		  options: Alloy.Globals.ElementType, 

@@ -159,12 +159,13 @@ function showExpiredPicker(){
 		}
 		var datePicker = Ti.UI.createPicker({
 			  type: Ti.UI.PICKER_TYPE_DATE,
-			 // minDate: new Date(1930,0,1),
+			  minDate: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
 			  id: "datePicker",
 			  visible: false
 		});
 		datePicker.showDatePickerDialog({
 			value: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
+			 minDate: new Date(res_ed[0],parseInt(res_ed[1]) -1,res_ed[2]),
 			callback: function(e) {
 			if (e.cancel) { 
 				} else {

@@ -34,13 +34,17 @@ function init(){
 			$.postDetailsBtn.title = "Curriculum Posted Details";
 		}
 		$.title.value   = postDetails.title;
-		$.message.value = postDetails.message;
+		//$.message.value = postDetails.message;
 		
 		$.publish_date.text = timeFormat(postDetails.publish_date);
 		$.expired_date.text = timeFormat(postDetails.expired_date); 
 		if(postDetails.status == 1){ 
 			$.statusSwitch.value = true;
 		}
+		if(postDetails.e_id == ""){ 
+			$.publishGlobal.value = true;
+		}
+		
 	}else{
 		if(formType== 2){
 			$.win.title = "Award Form";
@@ -54,8 +58,9 @@ function init(){
 
 function save(){
 	var title = $.title.value;
-	var message = $.message.value;
+	//var message = $.message.value;
 	var status = $.statusSwitch.value;
+	var publishGlobal = $.publishGlobal.value;
 	var publish_date = convertToDBDateFormat($.publish_date.text);
 	var expired_date = convertToDBDateFormat($.expired_date.text);
 	
@@ -64,16 +69,15 @@ function save(){
 	}else{
 		status = 1;
 	}
-	
 	 
-	if((id == "") || (title != postDetails.title) || (message != postDetails.message) || (publish_date != postDetails.publish_date) || 
+	if((id == "") || (title != postDetails.title) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
 		if(isCurriculum != ""){
 			var param = {
 				id    : id,
 				c_id  : isCurriculum,
 				title : title,
-				message : message,
+				message : "",//message,
 				type  : formType,
 				publish_date  : publish_date,
 				expired_date  : expired_date,
@@ -100,11 +104,15 @@ function save(){
 				}
 			});
 		}else{
+			var eid = Ti.App.Properties.getString('e_id');
+			if(publishGlobal == true){
+				eid = "";
+			}
 			var param = {
 				id    : id,
-				e_id  : Ti.App.Properties.getString('e_id'),
+				e_id  : eid,
 				title : title,
-				message : message,
+				message : "",//message,
 				type  : formType,
 				publish_date  : publish_date,
 				expired_date  : expired_date,
@@ -142,7 +150,7 @@ function goToDetails(){
 
 function hideKeyboard(){
 	$.title.blur();
-	$.message.blur();
+	//$.message.blur();
 }
 
 function changePublishDate(e){  
@@ -202,7 +210,7 @@ function showPublishPicker(){
 		var res_pd = pd.split('-'); 
 		var datePicker = Ti.UI.createPicker({
 			  type: Ti.UI.PICKER_TYPE_DATE,
-			 // minDate: new Date(1930,0,1),
+			  minDate: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
 			  id: "datePicker",
 			  visible: false
 		});
@@ -216,6 +224,7 @@ function showPublishPicker(){
 		
 		datePicker.showDatePickerDialog({
 			value: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
+			minDate: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
 			callback: function(e) {
 			if (e.cancel) { 
 				} else {

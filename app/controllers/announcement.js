@@ -2,10 +2,23 @@ var args = arguments[0] || {};
 COMMON.construct($); 
 var postModel = Alloy.createCollection('post'); 
 var searchKey = "";
+var post_counter = 0;
+var loadLimit = 0; 
+var count = 1;
+if(OS_IOS){
+	var viewTolerance = 250;
+}else{
+	var viewTolerance = 400;
+}
+var lastDistance = 0;
+var nextDistance = viewTolerance;
 init();
 
 function init(){
-	showList();
+	setTimeout(function(){
+		showList();
+	},1000);
+	
 	syncData();
 	
 	if(Ti.App.Properties.getString('roles') == "teacher"){
@@ -43,60 +56,71 @@ function syncData(){
 function showList(){
 	var latestPost = postModel.getPostByEducation( Ti.App.Properties.getString('e_id'),1,searchKey);  
 	COMMON.hideLoading();
- 	COMMON.removeAllChildren($.announcementSv);
+ 	//COMMON.removeAllChildren($.announcementSv);
 	if(latestPost.length > 0){ 
-		var count = 1;
-		latestPost.forEach(function(entry) { 
-			var view0 = $.UI.create('View',{
-				classes :['hsize' ],
-				source :entry.id,
-				selectedBackgroundColor : "#ffffff", 
-			});
-			
-			var view1 = $.UI.create('View',{
-				classes :['hsize', 'vert'],
-				source :entry.id,
-				selectedBackgroundColor : "#ffffff", 
-			});
-			
-			var label1 = $.UI.create('Label',{
-				classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
-				top:12,
-				width: "80%",
-				source :entry.id,
-				text: entry.title
-			});
-			 
-			var label2 = $.UI.create('Label',{
-				classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ], 
-				top:5,
-				source :entry.id,
-				text: entry.published_by + " at "+ timeFormat(entry.publish_date)
-			});
-			
-			var imgView1 = $.UI.create('ImageView',{
-				image : "/images/btn-forward.png",
-				source :entry.id,
-				width : 20,
-				height : 20,
-				right: 10
-			});
-		 	
-			view1.add(label1);
-			view1.add(label2);
-			view0.add(view1);
-			view0.add(imgView1);
-			view0.addEventListener('click', goDetails);
-			$.announcementSv.add(view0);
-			
-			if(latestPost.length != count){
-				var viewLine = $.UI.create('View',{
-					classes :['gray-line']
-				}); 
-				$.announcementSv.add(viewLine);
-			} 
-			count++; 
-		});  
+		
+		loadLimit = latestPost.length;
+		if(latestPost.length > post_counter ){
+			loadLimit = post_counter +10;
+		} 
+		
+		for(i=post_counter; i < loadLimit ; i++){
+			if(i < latestPost.length  ){
+			//latestPost.forEach(function(entry) { 
+				var entry = latestPost[i]; 
+				var view0 = $.UI.create('View',{
+					classes :['hsize' ],
+					source :entry.id,
+					selectedBackgroundColor : "#ffffff", 
+				});
+				
+				var view1 = $.UI.create('View',{
+					classes :['hsize', 'vert'],
+					source :entry.id,
+					selectedBackgroundColor : "#ffffff", 
+				});
+				
+				var label1 = $.UI.create('Label',{
+					classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
+					top:12,
+					width: "80%",
+					source :entry.id,
+					text: entry.title
+				});
+				 
+				var label2 = $.UI.create('Label',{
+					classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ], 
+					top:5,
+					source :entry.id,
+					text: entry.published_by + " at "+ timeFormat(entry.publish_date)
+				});
+				
+				var imgView1 = $.UI.create('ImageView',{
+					image : "/images/btn-forward.png",
+					source :entry.id,
+					width : 20,
+					height : 20,
+					right: 10
+				});
+			 	
+				view1.add(label1);
+				view1.add(label2);
+				view0.add(view1);
+				view0.add(imgView1);
+				view0.addEventListener('click', goDetails);
+				$.announcementSv.add(view0);
+				
+				if(latestPost.length != count){
+					var viewLine = $.UI.create('View',{
+						classes :['gray-line']
+					}); 
+					$.announcementSv.add(viewLine);
+				} 
+				count++; 
+			}
+		} 
+		
+		post_counter += 10; 
 	} 
 }
 
@@ -167,4 +191,19 @@ $.search.addEventListener('click', function(){
 	}
 });  
 
-Ti.App.addEventListener('refreshPostList', showList); 
+
+$.announcementSv.addEventListener("scroll", function(e){ 
+	lastDistance = e.y;   
+	if(lastDistance >= nextDistance){
+		nextDistance += viewTolerance; 
+		showList(); 
+	}  
+	 
+});
+
+function refreshPostList(){
+	COMMON.removeAllChildren($.announcementSv);
+ 	showList();
+}
+
+Ti.App.addEventListener('refreshPostList', refreshPostList); 

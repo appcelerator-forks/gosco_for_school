@@ -28,7 +28,8 @@
 							</TextArea>
 						</View>
 					</View> 
-					<View class="gray-line" /> 
+					<!--
+						<View class="gray-line" /> 
 					<View id="tvrName"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View  class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Description" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  /> 
@@ -44,11 +45,19 @@
 							</TextArea>
 						</View>
 					</View> 
+					-->
 					<View class="gray-line" />
 					<View id="tvrStatus" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
-							<Label text="Status" top="12" width="75%" class="title_Label padding-left themeColor"  />  
+							<Label text="Publish Post" top="12" width="75%" class="title_Label padding-left themeColor"  />  
 							<Switch id="statusSwitch" value="false" class="right-align hsize" right="5" top="10" bottom="10" onChange="changeStatus"/>   
+						</View>
+					</View>   
+					<View class="gray-line" />
+					<View id="tvrStatus" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="Publish to global" top="12" width="75%" class="title_Label padding-left themeColor"  />  
+							<Switch id="publishGlobal" value="false" class="right-align hsize" right="5" top="10" bottom="10" />   
 						</View>
 					</View>   
 					<View class="gray-line" />
