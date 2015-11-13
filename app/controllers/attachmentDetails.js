@@ -24,7 +24,7 @@ function init(){
 	for (var i=0; i< items.length; i++) {  
 		var attachmentImg = items[i].img_path;
 		if(OS_ANDROID){
-			attachmentImg = items[i].img_thumb;
+		//	attachmentImg = items[i].img_thumb;
 		} 
 		adImage = Ti.UI.createImageView({
 			image: attachmentImg,

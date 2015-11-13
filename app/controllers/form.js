@@ -27,6 +27,7 @@ function init(){
 		if(postDetails.type == 2){
 			$.win.title = "Award Form";
 			$.postDetailsBtn.title = "Award Details";
+			$.tvrPublicGlobal.height= 0;
 		}
 		
 		if(isCurriculum != ""){
@@ -49,6 +50,7 @@ function init(){
 		if(formType== 2){
 			$.win.title = "Award Form";
 			$.postDetailsBtn.title = "Award Details";
+			$.tvrPublicGlobal.height= 0;
 		}
 		$.postDetailsBtn.visible =false;
 	}
@@ -89,7 +91,7 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					Ti.App.fireEvent('refreshPostList');   
+					//Ti.App.fireEvent('refreshPostList');   
 					if(id == ""){
 						id = res.data[0]['id'];
 						goToDetails();
@@ -105,9 +107,12 @@ function save(){
 			});
 		}else{
 			var eid = Ti.App.Properties.getString('e_id');
-			if(publishGlobal == true){
-				eid = "";
+			if(formType == 1){
+				if(publishGlobal == true){
+					eid = "";
+				}
 			}
+			
 			var param = {
 				id    : id,
 				e_id  : eid,
@@ -124,7 +129,7 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					Ti.App.fireEvent('refreshPostList');   
+					//Ti.App.fireEvent('refreshPostList');   
 					if(id == ""){
 						id = res.data[0]['id'];
 						goToDetails();
@@ -168,6 +173,8 @@ function changeStatus(e){
 function changeDate(e){ 
 	  
 	var pickerdate = e.value; 
+	var res_pd = pd.split('-'); 
+	
     var day = pickerdate.getDate();
     day = day.toString();
  
@@ -208,9 +215,10 @@ function showPublishPicker(){
 			pd =  postDetails.publish_date;
 		}
 		var res_pd = pd.split('-'); 
+		  
 		var datePicker = Ti.UI.createPicker({
 			  type: Ti.UI.PICKER_TYPE_DATE,
-			  minDate: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
+			  minDate: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]), 
 			  id: "datePicker",
 			  visible: false
 		});
@@ -223,16 +231,23 @@ function showPublishPicker(){
 		}
 		
 		datePicker.showDatePickerDialog({
-			value: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
-			minDate: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]),
+			value: new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]), 
 			callback: function(e) {
 			if (e.cancel) { 
 				} else {
-					changePublishDate(e);
+					 
+					var today = new Date();
+					today = today.setDate(today.getDate() - 1); 
+				    if(e.value < today){
+				    	COMMON.resultPopUp("Fail", "You cannot select past date"); 
+				    	return false;
+				    }else{
+				    	changePublishDate(e);
+				    }  
 				}
 			}
 		});
-	}else{  
+	}else{   
 		$.dateExpiredPicker.visible = false;
 		$.datePublishPicker.visible = true;
 		$.selectorView.height = Ti.UI.SIZE;
@@ -267,7 +282,15 @@ function showExpiredPicker(){
 			callback: function(e) {
 			if (e.cancel) { 
 				} else {
-					changeExpiredDate(e);
+					var today = new Date();
+					today = today.setDate(today.getDate() - 1); 
+				    if(e.value < today){
+				    	COMMON.resultPopUp("Fail", "You cannot select past date"); 
+				    	return false;
+				    }else{
+				    	changeExpiredDate(e);
+				    }  
+				 
 				}
 			}
 		});

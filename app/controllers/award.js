@@ -42,7 +42,7 @@ function syncData(){
 
 function showList(){
 	var latestPost = postModel.getPostByEducation( Ti.App.Properties.getString('e_id'),2,searchKey);  
-	COMMON.hideLoading();
+	 
  	COMMON.removeAllChildren($.announcementSv);
 	if(latestPost.length > 0){ 
 		var count = 1;
@@ -98,6 +98,7 @@ function showList(){
 			count++; 
 		});  
 	} 
+	COMMON.hideLoading();
 }
 
 
@@ -148,6 +149,7 @@ $.searchItem.addEventListener('blur', function(e){
 });
 
 $.refresh.addEventListener('click', function(){    
+	COMMON.showLoading();
 	syncData();
 }); 
 

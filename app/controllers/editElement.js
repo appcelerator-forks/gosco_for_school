@@ -3,6 +3,7 @@ var id = args.id || "";
 var p_id=args.p_id || "";
 var isCurriculum = args.isCurriculum || "";
 var eleType =  args.elementType || ""; 
+ 
 var details;
 var postElementModel;
 var element1;
@@ -14,9 +15,9 @@ COMMON.construct($);
 init();
 
 function init(){
-	if(isCurriculum != ""){
+	if(isCurriculum == "1"){ 
 	 	postElementModel = Alloy.createCollection('curriculumPost_element');  
-	}else{
+	}else{ 
 		postElementModel = Alloy.createCollection('post_element');  
 	}
 	 
@@ -180,8 +181,6 @@ function takePhoto(){
 
 function showList(){
 	details = postElementModel.getRecordsById(id);
-	//console.log(details);
-	
 	var view0 = $.UI.create('View',{
 		classes: ['vert', 'wfill', 'hsize','padding'],
 		source :details.id
@@ -290,19 +289,34 @@ function save(){
 	 
 		
 		
-	}else{
-		var param = {
-			id  	: details.id,
-			type    : details.type,
-			element : element2.value,
-			isCurriculum: isCurriculum,
-			session : Ti.App.Properties.getString('session')
-		};
+	}else{  
+		if(details.type == 3){//image
+			var param = {
+				id    : details.id, 
+				type    : details.type, 
+				element : details.element,
+				caption : element3a.value,
+				isCurriculum: isCurriculum,
+				session : Ti.App.Properties.getString('session')
+			}; 
+		 
+		}else{
+			var param = {
+				id  	: details.id,
+				type    : details.type,
+				element : element2.value,
+				caption : "",
+				isCurriculum: isCurriculum,
+				session : Ti.App.Properties.getString('session')
+			}; 
+		} 
+ 
 		API.callByPost({url:"updateElementUrl", params: param}, function(responseText){
 			var res = JSON.parse(responseText);  
-			if(res.status == "success"){  
-				postElementModel.updateElement(details.id,element2.value);  
-				COMMON.resultPopUp("Saved", "Element successfully updated"); 
+			if(res.status == "success"){   
+			
+				postElementModel.updateElement(res.data.id,res.data.element,res.data.caption);  
+				COMMON.resultPopUp("Saved", "Records successfully updated"); 
 			}else{
 				$.win.close();
 				COMMON.hideLoading();

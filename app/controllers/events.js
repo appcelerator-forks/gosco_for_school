@@ -5,9 +5,11 @@ var eventsAttachmentModel = Alloy.createCollection('eventsAttachment');
 var searchKey = "";
 init();
 
-function init(){
-	showList();
-	syncData();
+function init(){ 
+	COMMON.showLoading();
+	setTimeout(function(){
+		syncData();
+	},2000); 
 	
 	if(Ti.App.Properties.getString('roles') == "teacher"){
 		COMMON.removeAllChildren($.addView);
@@ -34,6 +36,9 @@ function syncData(){
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+	}, function(){
+		// on error
+		showList();
 	});
 }
 
@@ -135,6 +140,7 @@ function showList(){
 	}else{
 	 
 	}
+	COMMON.hideLoading();
 }
 
 function goDetails(e){

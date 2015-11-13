@@ -19,7 +19,7 @@
 			<Label class="padding whiteColor h5" id="description"></Label>
 			<View class="gray-line" />
 			<View class="vert wfill hsize" top="10">
-				<Label class="padding whiteColor h5">Last Co-Curriculum Post</Label>
+				<Label class="padding whiteColor h5">Lastest Co-Curriculum Post</Label>
 		    	<ScrollView id="list" backgroundColor="#ffffff"  class="wfill hsize vert" scrollType="vertical" top= "10" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
 			</View>  
 		</ScrollView>	

@@ -202,7 +202,15 @@ function showExpiredPicker(){
 			callback: function(e) {
 			if (e.cancel) { 
 				} else {
-					changeExpiredDate(e);
+					var today = new Date();
+					today = today.setDate(today.getDate() - 1); 
+				    if(e.value < today){
+				    	COMMON.resultPopUp("Fail", "You cannot select past date"); 
+				    	return false;
+				    }else{
+				    	changeExpiredDate(e);
+				    }  
+				 
 				}
 			}
 		});
@@ -312,7 +320,7 @@ function loadAttachment(){
 	COMMON.removeAllChildren($.attachment);
 	if(attList.length > 0){ 
 	 	attList.forEach(function(att){  
-	 		$.attachment.add(attachedPhoto(att.img_thumb, counter));
+	 		$.attachment.add(attachedPhoto(att.img_path, counter));
 	 		counter++;  
 	 	}); 
 	 }

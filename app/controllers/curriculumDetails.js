@@ -17,7 +17,7 @@ function init(){
 	
 	$.description.text   = curriculum.description;
 	$.win.title = curriculum.curriculum; 
-	showList();
+	//showList();
 	syncData();
 }
 
@@ -116,6 +116,7 @@ function syncData(){
 		"last_updated" : last_updated
 	};
 	COMMON.showLoading();
+	 
 	API.callByPost({url:"getCurriculumPost", params: param}, function(responseText){
 		
 		var res = JSON.parse(responseText);  
@@ -125,7 +126,7 @@ function syncData(){
 				var post = res.data.post;   
 				curriculumPostModel.addPost(post);  
 				curriculumPostElementModel.addElement(post);   
-				showList();  
+				 
 			}  
 			checker.updateModule(2,"curriculumPost", COMMON.now(), id);
 			COMMON.hideLoading();
@@ -135,6 +136,11 @@ function syncData(){
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+		
+		showList(); 
+	}, function(){
+		// on error
+		showList(); 
 	});
 }
 

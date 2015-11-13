@@ -114,6 +114,24 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');
             },
+            updateElement : function(id, element, caption){
+            	var collection = this; 
+                var sql = "UPDATE " + collection.config.adapter.collection_name + " SET element='"+element+"', caption='"+caption+"' WHERE id="+ id; 
+                  console.log("YESYES");
+		console.log(sql);
+				db = Ti.Database.open(collection.config.adapter.db_name);
+                db.execute(sql);
+            	db.close();
+	            collection.trigger('sync');
+            },
+            deletePostElement : function(id){
+				var collection = this;
+                var sql = "DELETE FROM " + collection.config.adapter.collection_name + " WHERE id="+ id; 
+                db = Ti.Database.open(collection.config.adapter.db_name);
+                db.execute(sql);
+                db.close();
+                collection.trigger('sync');
+			},
             resetPostElement : function(){
 				var collection = this;
                 var sql = "DELETE FROM " + collection.config.adapter.collection_name;

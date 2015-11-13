@@ -23,6 +23,9 @@ function init(){
 		selected = parseInt(details.type) -1;
 		$.type.text  = Alloy.Globals.CurriculumType[selected];
 		$.type.color= "#000000";
+	}else{
+		$.thumbContainer.height = 0;
+		$.thumbContainer.hide();
 	}
 	
 }

@@ -15,18 +15,18 @@ var nextDistance = viewTolerance;
 init();
 
 function init(){
+	COMMON.showLoading();
+	
 	setTimeout(function(){
-		showList();
-	},1000);
-	
-	syncData();
-	
+		syncData();
+	},2000); 
 	if(Ti.App.Properties.getString('roles') == "teacher"){
 		COMMON.removeAllChildren($.addView);
 	}
 }
 
 function syncData(){
+	console.log("announcement syncData");
 	var param = { 
 		"e_id"	  : Ti.App.Properties.getString('e_id'),
 		"session" : Ti.App.Properties.getString('session')
@@ -36,19 +36,27 @@ function syncData(){
 		var res = JSON.parse(responseText); 
 		if(res.status == "success"){ 
 			var postData = res.data; 
+			console.log(postData);
 			 if(postData != ""){ 
 			 	 var post = res.data.post;   
 				 postModel.addPost(post); 
 				 var post_element_model = Alloy.createCollection('post_element');  
 				 post_element_model.addElement(post);  
-				 showList();  
+				 console.log("updated");
 			 } 
-			
+			COMMON.removeAllChildren($.announcementSv);
+			post_counter = 0;
+			loadLimit = 0; 
+			showList();  
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+		COMMON.hideLoading();
+	}, function(){
+		//on error
+		showList();  
 	});
 	
 }
@@ -79,7 +87,7 @@ function showList(){
 					source :entry.id,
 					selectedBackgroundColor : "#ffffff", 
 				});
-				
+				console.log("announcement title :"+entry.title);
 				var label1 = $.UI.create('Label',{
 					classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
 					top:12,
@@ -172,6 +180,10 @@ $.searchItem.addEventListener('blur', function(e){
 });
 
 $.refresh.addEventListener('click', function(){    
+	console.log("refresh click");
+	post_counter = 0;
+	loadLimit = 0; 
+	COMMON.showLoading();
 	syncData();
 }); 
 
@@ -202,8 +214,13 @@ $.announcementSv.addEventListener("scroll", function(e){
 });
 
 function refreshPostList(){
-	COMMON.removeAllChildren($.announcementSv);
- 	showList();
+	post_counter = 0;
+	loadLimit = 0; 
+	console.log("refreshPostList");
+	syncData();
+	//COMMON.removeAllChildren($.announcementSv);
+ 	//showList();
 }
 
-Ti.App.addEventListener('refreshPostList', refreshPostList); 
+Ti.App.addEventListener('postlayout', refreshPostList); 
+//Ti.App.addEventListener('refreshPostList', refreshPostList); 

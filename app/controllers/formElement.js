@@ -19,79 +19,95 @@ function init(){
 
 function showList(){
 	details = postElementModel.getListByPost(id);  
-	var count =1;
-	details.forEach(function(entry) { 
-		var view0 = $.UI.create('View',{
-			classes: ['vert', 'wfill', 'hsize','padding', 'box'],
-			source :entry.id
+	console.log(details);
+	if(details.length > 0){
+		 
+		var count =1;
+		details.forEach(function(entry) { 
+			var view0 = $.UI.create('View',{
+				classes: ['vert', 'wfill', 'hsize','padding', 'box'],
+				source :entry.id
+			});
+			var elementType = Alloy.Globals.ElementType[parseInt(entry.type) - 1];
+			var msg = escapeSpecialCharacter(entry.element); 
+			
+			var view1 = $.UI.create('View',{
+				classes: ['horz', 'wfill', 'hsize'],
+				source :entry.id
+			});
+			
+			var lbl1 = $.UI.create('Label',{
+				text: "Type : " + elementType,
+				source :entry.id,
+				width:"80%",
+				classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
+			});
+		 	var deleteImg = $.UI.create('ImageView',{
+				image: "/images/cross.png",
+				source :entry.id,
+				type :entry.type,
+				id : "deleteBtn",
+				width: 15,
+				height: 15
+			});
+			view1.add(lbl1);
+			view1.add(deleteImg);
+			view0.add(view1);
+			deleteImg.addEventListener('click', deleteElement);
+			if(entry.type == 1){
+				var element1 = $.UI.create('Label',{
+					text: msg,
+					classes: ['hsize','wfill','padding','h6'],
+					source :entry.id,
+				}); 
+				
+				view0.add(element1);
+			}
+			
+			if(entry.type == 2){
+				var element2 = $.UI.create('Label',{
+					text: textLimit(entry.element,120),
+					classes: ['hsize','wfill','padding','h6'],
+					source :entry.id,
+				}); 
+				  
+				view0.add(element2);
+			}
+			
+			if(entry.type == 3){
+				var element3 = $.UI.create('ImageView',{
+					image: entry.element,
+					source :entry.id,
+					classes: ['wsize','vert']
+				});
+			 	  
+				view0.add(element3); 
+				if(details.length != count){ 
+					var viewLine = $.UI.create('View',{
+						classes :['gray-line','padding-top']
+					}); 
+					view0.add(viewLine);
+				}  
+			} 
+			
+			view0.addEventListener('click', editElement);
+			$.myContentView.add(view0); 
+			
+			count++;  
 		});
-		var elementType = Alloy.Globals.ElementType[parseInt(entry.type) - 1];
-		var msg = escapeSpecialCharacter(entry.element); 
-		
+	}else{
 		var view1 = $.UI.create('View',{
-			classes: ['horz', 'wfill', 'hsize'],
-			source :entry.id
+			classes: ['horz', 'wfill', 'hsize'], 
+			backgroundColor: "#ffffff"
 		});
-		
+			
 		var lbl1 = $.UI.create('Label',{
-			text: "Type : " + elementType,
-			source :entry.id,
-			width:"80%",
-			classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
-		});
-	 	var deleteImg = $.UI.create('ImageView',{
-			image: "/images/cross.png",
-			source :entry.id,
-			type :entry.type,
-			id : "deleteBtn",
-			width: 15,
-			height: 15
+				text: 'Please click "+" to add announcement or photo ' , 
+				classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
 		});
 		view1.add(lbl1);
-		view1.add(deleteImg);
-		view0.add(view1);
-		deleteImg.addEventListener('click', deleteElement);
-		if(entry.type == 1){
-			var element1 = $.UI.create('Label',{
-				text: msg,
-				classes: ['hsize','wfill','padding','h6'],
-				source :entry.id,
-			}); 
-			
-			view0.add(element1);
-		}
-		
-		if(entry.type == 2){
-			var element2 = $.UI.create('Label',{
-				text: textLimit(entry.element,120),
-				classes: ['hsize','wfill','padding','h6'],
-				source :entry.id,
-			}); 
-			  
-			view0.add(element2);
-		}
-		
-		if(entry.type == 3){
-			var element3 = $.UI.create('ImageView',{
-				image: entry.element,
-				source :entry.id,
-				classes: ['wsize','vert']
-			});
-		 	  
-			view0.add(element3); 
-			if(details.length != count){ 
-				var viewLine = $.UI.create('View',{
-					classes :['gray-line','padding-top']
-				}); 
-				view0.add(viewLine);
-			}  
-		} 
-		
-		view0.addEventListener('click', editElement);
-		$.myContentView.add(view0); 
-		
-		count++;  
-	});
+		$.myContentView.add(view1); 
+	}
 }
 
 function editElement(e){
@@ -131,14 +147,14 @@ function deleteElement(e){
 	    	var param = {
 				id  	: result.source,
 			 	c_type  : result.type,
+			 	isCurriculum: isCurriculum,
 				session : Ti.App.Properties.getString('session')
 			};
-		 
+		 	console.log(param);
 			API.callByPost({url:"deleteElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
-				if(res.status == "success"){ 
-					var post_element_model = Alloy.createCollection('post_element');  
-					post_element_model.deletePostElement(result.source);  
+				if(res.status == "success"){  
+					postElementModel.deletePostElement(result.source);  
 					COMMON.resultPopUp("Delete Element", "Record successfully deleted");  
 					refreshElement();
 				}else{

@@ -113,9 +113,10 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');
             },
-            updateElement : function(id, element){
+            updateElement : function(id, element,caption){
             	var collection = this; 
-                var sql = "UPDATE " + collection.config.adapter.collection_name + " SET element='"+element+"' WHERE id="+ id; 
+                var sql = "UPDATE " + collection.config.adapter.collection_name + " SET element='"+element+"', caption='"+caption+"' WHERE id="+ id; 
+              
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 db.execute(sql);
             	db.close();

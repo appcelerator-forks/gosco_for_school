@@ -5,7 +5,7 @@ var searchKey = "";
 init();
 
 function init(){
-	showList();
+	//showList();
 	syncData();
 }
 
@@ -22,9 +22,7 @@ function syncData(){
 			var curriculumModel = Alloy.createCollection('curriculum'); 
 			var arr = res.data;  
 			curriculumModel.saveArray(arr); 
-			if(arr.length > 0){
-				showList();  
-			}
+			
 			
 		}else{
 			$.win.close();
@@ -32,6 +30,9 @@ function syncData(){
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+		showList();  
+	}, function(){
+		showList();  
 	});
 }
 
