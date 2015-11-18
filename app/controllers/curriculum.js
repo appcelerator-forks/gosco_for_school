@@ -38,9 +38,10 @@ function syncData(){
 
 function showList(){ 
  
- 	var curTable = $.UI.create('TableView',{
-		classes : ['wfill','hsize' , 'padding' ], 
+ 	var curTable = Ti.UI.createTableView({ 
 		backgroundColor: "#ffffff",
+		width: Ti.UI.FILL,
+		height: Ti.UI.SIZE,
 		bottom:5,
 		top:0 
 	}); 

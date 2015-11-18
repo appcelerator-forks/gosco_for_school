@@ -46,9 +46,14 @@ function showList(){
 	postDetails = postModel.getRecordsById(id);
 	details     = postElementModel.getListByPost(id);
 	
-	$.win.title = postDetails.title;
+	var title = postDetails.title;
+	if(title != "" &&  title != null){
+		title = title.replace("&quot;", "'"); 
+	}
+				
+	$.win.title = title;
 	var titleLabel = $.UI.create('Label',{
-		text: postDetails.title,
+		text: title,
 		classes : ["news_title","themeColor"]
 	});
 	$.myContentView.add(titleLabel);

@@ -90,11 +90,16 @@ function showList(){
 				backgroundColor : "#ffffff", 
 			});
 			
+			var title = entry.title;
+			if(title.trim() != "" &&  title.trim() != null){
+				title = title.replace("&quot;", "'"); 
+			}
+			
 			var label1 = $.UI.create('Label',{
 				classes :['h6','hsize' ,'themeColor', 'padding-left','bold' ],  
 				width: "90%",
 				source :entry.id,
-				text: textLimit(entry.title,80)
+				text: textLimit(title,80)
 			});
 			 
 			var label2 = $.UI.create('Label',{

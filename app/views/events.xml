@@ -15,8 +15,8 @@
 		<View class="vert wfill hsize" top="5">
 			<Label class="padding whiteColor h5">Available events</Label> 
 		</View> 
-		<ScrollView id="list" backgroundColor="#ffffff" class="vert wfill hfill"  top= "50" bottom="60" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" scrollingEnabled="false" />
-		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
+		<ScrollView id="list" backgroundColor="#ffffff" class="vert wfill hfill"  top= "50" bottom="60" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
+		<View id="toolbar" > 
 	    	<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
 	    		<Label class="h6 font_dark_grey center">Refresh</Label>

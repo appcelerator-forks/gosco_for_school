@@ -37,6 +37,7 @@ function do_login(){
 			Ti.App.Properties.setString('session', res.data[0].session);
 			Ti.App.Properties.setString('u_id', res.data[0].id);
 			Ti.App.Properties.setString('roles', res.data[0].role);
+			Ti.App.Properties.setString('fullname', res.data[0].fullname);
 			$.password.value = "";
 			
 			//get admin/teacher school

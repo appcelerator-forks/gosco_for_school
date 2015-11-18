@@ -23,7 +23,7 @@
 		    	<ScrollView id="list" backgroundColor="#ffffff"  class="wfill hsize vert" scrollType="vertical" top= "10" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />
 			</View>  
 		</ScrollView>	
-		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
+		<View id="toolbar"> 
 	    	<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
 	    		<Label class="h6 font_dark_grey center">Refresh</Label>

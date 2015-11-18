@@ -50,7 +50,7 @@ function save(){
 		COMMON.resultPopUp("Error","Please fill in staff email");
 		return false;
 	}else if(validateEmail(email) != "1"){
-		common.createAlert("Error", "Please fill in an valid email");
+		COMMON.createAlert("Error", "Please fill in an valid email");
 		return false;	
 	}
 	 

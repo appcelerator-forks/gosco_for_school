@@ -251,7 +251,14 @@ overrode the settings with other TSS, XML, or JS settings:
 '.themeBg' : {
 	backgroundColor: "#10844D"
 },
-
+"#toolbar" : {
+	bottom:0,
+	height:60,
+	width: Ti.UI.FILL ,
+	backgroundColor : "#F2FDEB", 
+	layout : "horizontal", 
+	zIndex : 12
+},
 "#activityIndicator[platform=ios]" : { 
 	 top:30,
 	 left:30,

@@ -19,11 +19,7 @@ function init(){
 	if(id != ""){
 		postDetails = postModel.getRecordsById(id); 
 		formType	= postDetails.type;
-		if(postDetails.type == 2){
-			$.win.title = "Award Form";
-			$.postDetailsBtn.title = "Award Details";
-		}
-		
+		 
 		if(postDetails.type == 2){
 			$.win.title = "Award Form";
 			$.postDetailsBtn.title = "Award Details";
@@ -33,8 +29,14 @@ function init(){
 		if(isCurriculum != ""){
 			$.win.title = "Curriculum Announcement Form";
 			$.postDetailsBtn.title = "Curriculum Posted Details";
+			$.tvrPublicGlobal.height= 0;
 		}
-		$.title.value   = postDetails.title;
+		
+		var title = postDetails.title;
+		if(title.trim() != "" &&  title.trim() != null){
+			title = title.replace("&quot;", "'"); 
+		}
+		$.title.value   = title;
 		//$.message.value = postDetails.message;
 		
 		$.publish_date.text = timeFormat(postDetails.publish_date);
@@ -42,7 +44,9 @@ function init(){
 		if(postDetails.status == 1){ 
 			$.statusSwitch.value = true;
 		}
-		if(postDetails.e_id == ""){ 
+		
+		 
+		if(postDetails.e_id == "" || postDetails.e_id == "null" || postDetails.e_id == null){ 
 			$.publishGlobal.value = true;
 		}
 		
@@ -52,6 +56,13 @@ function init(){
 			$.postDetailsBtn.title = "Award Details";
 			$.tvrPublicGlobal.height= 0;
 		}
+		
+		if(isCurriculum != ""){
+			$.win.title = "Curriculum Announcement Form";
+			$.postDetailsBtn.title = "Curriculum Posted Details";
+			$.tvrPublicGlobal.height= 0;
+		}
+		
 		$.postDetailsBtn.visible =false;
 	}
 	

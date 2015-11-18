@@ -96,10 +96,13 @@ exports.definition = {
 						 
 	                	//add new 1 
 						var element = ele.element;
-						element = element.replace(/["']/g, "&quot;"); 
+						if(element.trim() != "" &&  element.trim() != null){
+							element = element.replace(/["']/g, "&quot;"); 
+						}
+						
 						
 						var caption = ele.caption || "";
-						if(caption != "" &&  caption != null){
+						if(caption.trim() != "" &&  caption.trim() != null){
 							caption = caption.replace(/["']/g, "&quot;"); 
 						}
 						
@@ -114,9 +117,17 @@ exports.definition = {
 	            collection.trigger('sync');
             },
             updateElement : function(id, element,caption){
-            	var collection = this; 
+            	var collection = this;  
+				if(element.trim() != "" &&  element.trim() != null){
+					element = element.replace(/["']/g, "&quot;"); 
+				}
+				
+				 
+				if(caption.trim() != "" &&  caption.trim() != null){
+					caption = caption.replace(/["']/g, "&quot;"); 
+				}
                 var sql = "UPDATE " + collection.config.adapter.collection_name + " SET element='"+element+"', caption='"+caption+"' WHERE id="+ id; 
-              
+              //console.log(sql);
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 db.execute(sql);
             	db.close();

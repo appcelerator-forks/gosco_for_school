@@ -12,11 +12,11 @@
 		</View>  
 		<SearchBar barColor="#FFFFFF" top="0" zIndex="99" tintColor="#10844D" id="searchItem" showCancel="true" height="0" visible="false"  hintText="Search Announcement/Post" />
 		
-		<View class="vert wfill hsize" top="10">
+		<View class="vert wfill hsize" top="5">
 			<Label class="padding whiteColor h5">Latest announcement/post</Label> 
 		</View>
     	<ScrollView id="announcementSv" class="vert hfill wfill"  backgroundColor="#ffffff"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" bottom="60"  top= "50" />
-		<View id="toolbar" bottom="0" height="60" width="Ti.UI.FILL" backgroundColor="#ffffff" layout="horizontal" zIndex="12"> 
+		<View id="toolbar"> 
 	    	<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
 	    		<Label class="h6 font_dark_grey center">Refresh</Label>

@@ -19,30 +19,27 @@ function init(){
 	
 	setTimeout(function(){
 		syncData();
-	},2000); 
+	},500); 
 	if(Ti.App.Properties.getString('roles') == "teacher"){
 		COMMON.removeAllChildren($.addView);
 	}
 }
 
-function syncData(){
-	console.log("announcement syncData");
+function syncData(){ 
 	var param = { 
 		"e_id"	  : Ti.App.Properties.getString('e_id'),
 		"session" : Ti.App.Properties.getString('session')
 	};
 	API.callByPost({url:"getSchoolPost", params: param}, function(responseText){
-		COMMON.hideLoading();
+		
 		var res = JSON.parse(responseText); 
 		if(res.status == "success"){ 
-			var postData = res.data; 
-			console.log(postData);
+			var postData = res.data;  
 			 if(postData != ""){ 
 			 	 var post = res.data.post;   
 				 postModel.addPost(post); 
 				 var post_element_model = Alloy.createCollection('post_element');  
-				 post_element_model.addElement(post);  
-				 console.log("updated");
+				 post_element_model.addElement(post);   
 			 } 
 			COMMON.removeAllChildren($.announcementSv);
 			post_counter = 0;
@@ -63,7 +60,7 @@ function syncData(){
 
 function showList(){
 	var latestPost = postModel.getPostByEducation( Ti.App.Properties.getString('e_id'),1,searchKey);  
-	COMMON.hideLoading();
+	//COMMON.hideLoading();
  	//COMMON.removeAllChildren($.announcementSv);
 	if(latestPost.length > 0){ 
 		
@@ -87,13 +84,18 @@ function showList(){
 					source :entry.id,
 					selectedBackgroundColor : "#ffffff", 
 				});
-				console.log("announcement title :"+entry.title);
+				
+				var title = entry.title;
+				if(title.trim() != "" &&  title.trim() != null){
+					title = title.replace("&quot;", "'"); 
+				}
+				 
 				var label1 = $.UI.create('Label',{
 					classes :['h5','hsize' ,'themeColor', 'padding-left' ], 
 					top:12,
 					width: "80%",
 					source :entry.id,
-					text: entry.title
+					text: title
 				});
 				 
 				var label2 = $.UI.create('Label',{
@@ -129,6 +131,7 @@ function showList(){
 		} 
 		
 		post_counter += 10; 
+		COMMON.hideLoading();
 	} 
 }
 

@@ -33,8 +33,8 @@ exports.definition = {
 				if(searchKey != ""){
 					search = " AND (title LIKE'%"+searchKey +"%' OR message LIKE'%"+searchKey +"%' ) "; 
 				}
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE status !='3' AND type ='"+postType+"' AND (e_id='"+e_id+"' OR (e_id IS NULL AND published_by='"+Ti.App.Properties.getString('u_id')+"')) " +search +" ORDER BY publish_date DESC ";
-                //console.log(sql);
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE status !='3' AND type ='"+postType+"' AND (e_id='"+e_id+"' OR published_by='"+Ti.App.Properties.getString('fullname')+"') " +search +" ORDER BY publish_date DESC ";
+                
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);
@@ -59,7 +59,7 @@ exports.definition = {
 					res.next();
 					count++;
 				} 
-			 	//console.log(listArr);
+			 	 
 				res.close();
                 db.close();
                 collection.trigger('sync');

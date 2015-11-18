@@ -11,12 +11,7 @@ function init(){
 }
 
 function showList(){
-	var curTable = $.UI.create('TableView',{
-		classes : ['wfill','hsize' , 'padding' ], 
-		backgroundColor: "#ffffff",
-		bottom:5,
-		top:0 
-	}); 
+ 
 	COMMON.hideLoading();
 	var data = []; 		
 	details = userModel.getUserByEducation(Ti.App.Properties.getString('e_id'), searchKey);

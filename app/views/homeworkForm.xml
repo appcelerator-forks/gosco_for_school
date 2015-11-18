@@ -12,7 +12,7 @@
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View>   
 		<Label class="padding whiteColor h5" top="10">Please fill in homework details</Label>
-		<ScrollView class="wfill hsize vert" top="40">
+		<ScrollView class="wfill hsize vert" top="40" contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE"  scrollType="vertical">
 			<View id="table" height="Ti.UI.SIZE"  backgroundColor="#ffffff" layout="vertical" scrollable="false">
 					<View id="tvrClass"  height="Ti.UI.SIZE"   selectedBackgroundColor="#ffffff">
 						<View  height="45" width="Ti.UI.FILL" class="right-align horz" >
