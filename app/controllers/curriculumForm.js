@@ -65,7 +65,7 @@ function save(){
 			 
 			Ti.App.fireEvent('refreshCurriculumPost');  
 			if(id == ""){
-				COMMON.resultPopUp("Create success","Successfully create curriculum!");
+				COMMON.resultPopUp("Create success","Successfully created curriculum!");
 			}else{
 				COMMON.resultPopUp("Update success","Successfully update this curriculum!");
 			}

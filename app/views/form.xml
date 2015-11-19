@@ -1,5 +1,5 @@
 <Alloy>
-	<Window title="Post Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+	<Window title="Create Notice" backgroundImage="/images/home_background.jpg" id="win"  > 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 	 
 		<LeftNavButton platform="ios">

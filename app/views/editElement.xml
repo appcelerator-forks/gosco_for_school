@@ -1,12 +1,12 @@
 <Alloy>  
-	<Window title="Edit Details" id="win" fullscreen="true"> 
+	<Window title="Edit Notice" id="win" fullscreen="true"> 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		<View platform="ios" top="0" height="50" backgroundColor="#F4F4F4"> 
 			<View left="0" zIndex="9" width="20%" onClick="closeWindow">
 				<ImageView left='10'  width="25" height="25" image="/images/cross.png" />
 			</View> 
 			<View >
-				<Label id="titleLbl"  class='hsize themeColor' textAlign="center">Edit Element</Label>
+				<Label id="titleLbl"  class='hsize themeColor' textAlign="center">Edit Notice</Label>
 		   </View>
 		</View>
 		<View layout="vertical" id="loadingBar" height="0" width="120" borderRadius="15" backgroundColor="#2E2E2E" >

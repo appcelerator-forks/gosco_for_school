@@ -81,9 +81,9 @@ function save(){
 		if(res.status == "success"){   
 			Ti.App.fireEvent('refreshPost');  
 			if(id == ""){
-				COMMON.resultPopUp("Create success","Successfully create event!");
+				COMMON.resultPopUp("Create success","Event is Successfully created!");
 			}else{
-				COMMON.resultPopUp("Update success","Successfully update this event!");
+				COMMON.resultPopUp("Update success","Event is Successfully updated!");
 			}
 			 
 		}else{

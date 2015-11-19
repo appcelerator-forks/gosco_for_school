@@ -102,7 +102,7 @@ function showList(){
 		});
 			
 		var lbl1 = $.UI.create('Label',{
-				text: 'Please click "+" to add announcement or photo ' , 
+				text: 'Please click "+" to add paragraph or photo ' , 
 				classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
 		});
 		view1.add(lbl1);
@@ -119,14 +119,7 @@ function editElement(e){
 	}
 	var win = Alloy.createController('editElement',{id: res.source, p_id: id,isCurriculum : isCurriculum}).getView();
 	openModal(win);
-}
- 
-
-function closeWindow(){ 
-	Ti.App.removeEventListener('refreshElement', refreshElement); 
-	$.win.close();
-}
-
+} 
 
 function deleteElement(e){
 	var elbl = JSON.stringify(e.source); 
@@ -191,8 +184,15 @@ $.add.addEventListener('click', function(){
 });
 
 function refreshElement(){  
+	console.log("REFRESH ELEMENT");
 	COMMON.removeAllChildren($.myContentView);
 	showList();	
+}
+
+function closeWindow(){ 
+	console.log("REMOVE REFRESH ELEMENT");
+	Ti.App.removeEventListener('refreshElement', refreshElement); 
+	$.win.close();
 }
 
 $.refresh.addEventListener('click', refreshElement);

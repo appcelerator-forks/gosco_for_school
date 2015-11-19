@@ -17,6 +17,7 @@ function init(){
 	}
 	
 	if(id != ""){
+		$.win.title = "Edit Notice";
 		postDetails = postModel.getRecordsById(id); 
 		formType	= postDetails.type;
 		 
@@ -26,9 +27,8 @@ function init(){
 			$.tvrPublicGlobal.height= 0;
 		}
 		
-		if(isCurriculum != ""){
-			$.win.title = "Curriculum Announcement Form";
-			$.postDetailsBtn.title = "Curriculum Posted Details";
+		if(isCurriculum != ""){ 
+			$.postDetailsBtn.title = "Notice Details";
 			$.tvrPublicGlobal.height= 0;
 		}
 		
@@ -51,6 +51,7 @@ function init(){
 		}
 		
 	}else{
+		$.saveBtn.title ="Create";
 		if(formType== 2){
 			$.win.title = "Award Form";
 			$.postDetailsBtn.title = "Award Details";
@@ -58,8 +59,8 @@ function init(){
 		}
 		
 		if(isCurriculum != ""){
-			$.win.title = "Curriculum Announcement Form";
-			$.postDetailsBtn.title = "Curriculum Posted Details";
+			$.win.title = "Create Notice";
+			$.postDetailsBtn.title = "Notice Details";
 			$.tvrPublicGlobal.height= 0;
 		}
 		
@@ -208,7 +209,12 @@ function changeDate(e){
 }
 
 function closeWindow(){
-	Ti.App.fireEvent('refreshPost');  
+	if(isCurriculum != ""){
+	 	Ti.App.fireEvent('refreshCurriculumPost');  
+	}else{
+		Ti.App.fireEvent('refreshPost');  
+	}
+	
 	$.win.close();
 }
 

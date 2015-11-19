@@ -22,6 +22,8 @@ function init(){
 	}
 	 
 	if(eleType != ""){ 
+		
+		$.saveBtn.title = "Create";
 		newList();
 	}else{ 
 		showList();
@@ -253,7 +255,8 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  
 					postElementModel.addElement(res.data);  
-					COMMON.resultPopUp("Saved", "Changes are saved"); 
+					COMMON.resultPopUp("Saved", "Photo is uploaded"); 
+					closeWindow();
 					$.saveBtn.visible = false;
 				}else{
 					$.win.close();
@@ -274,8 +277,15 @@ function save(){
 			API.callByPost({url:"addElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  
-					postElementModel.addElement(res.data);  
-					COMMON.resultPopUp("Saved", "Records are added"); 
+					postElementModel.addElement(res.data);
+					/**if(eleType == "1"){
+						COMMON.resultPopUp("Saved", "Sub title are added"); 
+					} else if(eleType == "2"){
+						COMMON.resultPopUp("Saved", "Paragraph is added"); 
+					} else{
+						COMMON.resultPopUp("Saved", "Photo is added"); 
+					} **/
+					closeWindow();
 					$.saveBtn.visible = false;
 				}else{
 					$.win.close();
@@ -316,7 +326,8 @@ function save(){
 			if(res.status == "success"){   
 			
 				postElementModel.updateElement(res.data.id,res.data.element,res.data.caption);  
-				COMMON.resultPopUp("Saved", "Records successfully updated"); 
+				//COMMON.resultPopUp("Saved", "Records successfully updated"); 
+				closeWindow();
 			}else{
 				$.win.close();
 				COMMON.hideLoading();
