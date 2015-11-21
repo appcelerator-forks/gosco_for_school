@@ -62,8 +62,7 @@ function init(){
 			$.win.title = "Create Notice";
 			$.postDetailsBtn.title = "Notice Details";
 			$.tvrPublicGlobal.height= 0;
-		}
-		
+		} 
 		$.postDetailsBtn.visible =false;
 	}
 	
@@ -83,7 +82,17 @@ function save(){
 	}else{
 		status = 1;
 	}
-	 
+	
+	if(postDetails.title == ""){
+		COMMON.resultPopUp("Error", "Please fill in title"); 
+		return false;
+	}
+	
+	if(postDetails.publish_date == ""){
+		COMMON.resultPopUp("Error", "Please fill in publish date"); 
+		return false;
+	}
+	
 	if((id == "") || (title != postDetails.title) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
 		if(isCurriculum != ""){
@@ -109,7 +118,12 @@ function save(){
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					COMMON.resultPopUp("Saved", "Curriculum post successfully updated"); 
+					if(id= ""){
+						COMMON.resultPopUp("Saved", "Content successfully created"); 
+					}else{
+						COMMON.resultPopUp("Saved", "Changes are made."); 
+					}
+					
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
@@ -147,7 +161,12 @@ function save(){
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					COMMON.resultPopUp("Saved", "Information successfully updated"); 
+					if(id= ""){
+						COMMON.resultPopUp("Saved", "Content successfully created"); 
+					}else{
+						COMMON.resultPopUp("Saved", "Changes are made."); 
+					}
+					
 				}else{
 					$.win.close();
 					COMMON.hideLoading();

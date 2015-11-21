@@ -19,7 +19,7 @@ function init(){
 
 function showList(){
 	details = postElementModel.getListByPost(id);  
-	console.log(details);
+	 
 	if(details.length > 0){
 		 
 		var count =1;
@@ -82,6 +82,15 @@ function showList(){
 				});
 			 	  
 				view0.add(element3); 
+				
+				var elementCaption = $.UI.create('Label',{
+					text: textLimit(entry.caption,120),
+					classes: ['hsize','wfill','padding','h6'],
+					source :entry.id,
+				}); 
+				  
+				view0.add(elementCaption);
+				
 				if(details.length != count){ 
 					var viewLine = $.UI.create('View',{
 						classes :['gray-line','padding-top']
@@ -143,7 +152,7 @@ function deleteElement(e){
 			 	isCurriculum: isCurriculum,
 				session : Ti.App.Properties.getString('session')
 			};
-		 	console.log(param);
+		 	 
 			API.callByPost({url:"deleteElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  
@@ -184,13 +193,12 @@ $.add.addEventListener('click', function(){
 });
 
 function refreshElement(){  
-	console.log("REFRESH ELEMENT");
+	 
 	COMMON.removeAllChildren($.myContentView);
 	showList();	
 }
 
-function closeWindow(){ 
-	console.log("REMOVE REFRESH ELEMENT");
+function closeWindow(){  
 	Ti.App.removeEventListener('refreshElement', refreshElement); 
 	$.win.close();
 }
