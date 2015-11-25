@@ -20,15 +20,7 @@ exports.showLoading = function(){
 	mainView.loadingBar.opacity = 1;
 	mainView.loadingBar.zIndex = 100;
 	mainView.loadingBar.height = 120;
-	 
-	if(Ti.Platform.osname == "android"){
-	//	mainView.loadingBar.top =  (DPUnitsToPixels(Ti.Platform.displayCaps.platformHeight) / 2) -50; 
-		mainView.activityIndicator.style = Ti.UI.ActivityIndicatorStyle.BIG;
-		//mainView.activityIndicator.top = 0; 
-	}else if (Ti.Platform.name === 'iPhone OS'){
-		//mainView.loadingBar.top = (Ti.Platform.displayCaps.platformHeight / 2) -50; 
-		mainView.activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.BIG;
-	}  
+	mainView.activityIndicator.style = Ti.UI.ActivityIndicatorStyle.BIG;
 };
 
 exports.displayHTMLArticle = function(msg){

@@ -274,6 +274,7 @@ function save(){
 				isCurriculum: isCurriculum,
 				session : Ti.App.Properties.getString('session')
 			};
+			 
 			API.callByPost({url:"addElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  

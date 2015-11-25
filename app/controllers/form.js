@@ -44,7 +44,6 @@ function init(){
 		if(postDetails.status == 1){ 
 			$.statusSwitch.value = true;
 		}
-		
 		 
 		if(postDetails.e_id == "" || postDetails.e_id == "null" || postDetails.e_id == null){ 
 			$.publishGlobal.value = true;
@@ -83,16 +82,16 @@ function save(){
 		status = 1;
 	}
 	
-	if(postDetails.title == ""){
+	if(title == ""){
 		COMMON.resultPopUp("Error", "Please fill in title"); 
 		return false;
 	}
 	
-	if(postDetails.publish_date == ""){
+	if(publish_date == ""){
 		COMMON.resultPopUp("Error", "Please fill in publish date"); 
 		return false;
 	}
-	
+ 
 	if((id == "") || (title != postDetails.title) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
 		if(isCurriculum != ""){
@@ -118,7 +117,7 @@ function save(){
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					if(id= ""){
+					if(id == ""){
 						COMMON.resultPopUp("Saved", "Content successfully created"); 
 					}else{
 						COMMON.resultPopUp("Saved", "Changes are made."); 
@@ -146,11 +145,12 @@ function save(){
 				message : "",//message,
 				type  : formType,
 				publish_date  : publish_date,
+				published_from_education  : Ti.App.Properties.getString('e_id'),
 				expired_date  : expired_date,
 				status        : status,
 				session : Ti.App.Properties.getString('session')
 			}; 
-			 
+			 console.log(param);
 			API.callByPost({url:"updatePost", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
@@ -161,7 +161,7 @@ function save(){
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					if(id= ""){
+					if(id == ""){
 						COMMON.resultPopUp("Saved", "Content successfully created"); 
 					}else{
 						COMMON.resultPopUp("Saved", "Changes are made."); 
@@ -174,10 +174,8 @@ function save(){
 					COMMON.resultPopUp("Session Expired", res.data); 
 				}
 			});
-		}
-		
-	} 
-	
+		} 
+	}  
 }
 
 function goToDetails(){ 
@@ -238,6 +236,34 @@ function closeWindow(){
 }
 
 function hideDatePicker(){
+	//publish date
+	var dpp = $.datePublishPicker.value;
+	var dppDay = dpp.getDate();
+	var dppMonth = dpp.getMonth() + 1;
+	var dppYear = dpp.getFullYear(); 
+	
+	var today = new Date();
+	today = today.setDate(today.getDate() - 1); 
+	if(dpp < today){
+		COMMON.resultPopUp("Fail", "You cannot select past date"); 
+		return false; 
+	}  
+				    
+	$.publish_date.text = dppDay +"/"+ dppMonth+"/"+ dppYear;
+	
+	//expire date
+	var dep = $.dateExpiredPicker.value;
+	var depDay = dep.getDate();
+	var depMonth = dep.getMonth() + 1;
+	var depYear = dep.getFullYear(); 
+	  
+	if(dep < today){
+		COMMON.resultPopUp("Fail", "You cannot select past date"); 
+		return false; 
+	}  
+				    
+	$.expired_date.text = depDay +"/"+ depMonth+"/"+ depYear;
+	
 	$.dateExpiredPicker.visible = false;
 	$.datePublishPicker.visible = false;
 	$.dateToolbar.visible = false;
@@ -284,6 +310,19 @@ function showPublishPicker(){
 			}
 		});
 	}else{   
+		var pd = curDate.substr(0, 10); 
+		if(id != ""){
+			pd =  postDetails.publish_date;
+		}
+		var res_pd = pd.split('-'); 
+		if(res_pd[1] == "08"){
+			res_pd[1] = "8";
+		}
+		if(res_pd[1] == "09"){
+			res_pd[1] = "9";
+		}
+		
+		$.datePublishPicker.value = new Date(res_pd[0],parseInt(res_pd[1])-1,res_pd[2]);
 		$.dateExpiredPicker.visible = false;
 		$.datePublishPicker.visible = true;
 		$.selectorView.height = Ti.UI.SIZE;
