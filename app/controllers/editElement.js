@@ -22,7 +22,6 @@ function init(){
 	}
 	 
 	if(eleType != ""){ 
-		
 		$.saveBtn.title = "Create";
 		newList();
 	}else{ 

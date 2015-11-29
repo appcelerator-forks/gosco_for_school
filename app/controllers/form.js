@@ -91,7 +91,7 @@ function save(){
 		COMMON.resultPopUp("Error", "Please fill in publish date"); 
 		return false;
 	}
- 
+ 	COMMON.showLoading();
 	if((id == "") || (title != postDetails.title) || (publish_date != postDetails.publish_date) || 
 	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
 		if(isCurriculum != ""){
@@ -111,18 +111,15 @@ function save(){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					//Ti.App.fireEvent('refreshPostList');   
+					//Ti.App.fireEvent('refreshPostList');  
+					 
 					if(id == ""){
 						id = res.data[0]['id'];
+						console.log("id2: "+id); 
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					if(id == ""){
-						COMMON.resultPopUp("Saved", "Content successfully created"); 
-					}else{
-						COMMON.resultPopUp("Saved", "Changes are made."); 
-					}
-					
+					 
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
@@ -150,23 +147,19 @@ function save(){
 				status        : status,
 				session : Ti.App.Properties.getString('session')
 			}; 
-			 console.log(param);
+			 
 			API.callByPost({url:"updatePost", params: param}, function(responseText){
-				var res = JSON.parse(responseText);  
+				var res = JSON.parse(responseText);   
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
 					//Ti.App.fireEvent('refreshPostList');   
 					if(id == ""){
 						id = res.data[0]['id'];
+						COMMON.hideLoading();
 						goToDetails();
 					}
 					$.saveBtn.visible = false;
-					if(id == ""){
-						COMMON.resultPopUp("Saved", "Content successfully created"); 
-					}else{
-						COMMON.resultPopUp("Saved", "Changes are made."); 
-					}
-					
+					 
 				}else{
 					$.win.close();
 					COMMON.hideLoading();
@@ -178,7 +171,7 @@ function save(){
 	}  
 }
 
-function goToDetails(){ 
+function goToDetails(){  
 	Alloy.Globals.Navigator.open('formElement',{id: id, isCurriculum : isCurriculum});  
 }
 

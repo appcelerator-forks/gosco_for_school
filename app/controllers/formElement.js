@@ -111,7 +111,7 @@ function showList(){
 		});
 			
 		var lbl1 = $.UI.create('Label',{
-				text: 'Please click "+" to add paragraph or photo ' , 
+				text: 'Please click "+" to add sub title, paragraph or photo ' , 
 				classes: ['hsize','vert','padding-top', 'padding', 'themeColor'],
 		});
 		view1.add(lbl1);

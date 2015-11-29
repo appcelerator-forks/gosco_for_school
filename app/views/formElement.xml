@@ -1,5 +1,5 @@
 <Alloy>
-	<Window title="Edit Form" backgroundImage="/images/home_background.jpg" id="win"  > 
+	<Window title="Edit Notice" backgroundImage="/images/home_background.jpg" id="win"  > 
 		<ActionBar platform="android" displayHomeAsUp="true" onHomeIconItemSelected="closeWindow" />
 		 
 		<LeftNavButton platform="ios">

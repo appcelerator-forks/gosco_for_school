@@ -5,8 +5,11 @@ var searchKey = "";
 init();
 
 function init(){
-	showList();
-	syncData();
+	COMMON.showLoading();
+	setTimeout(function(){
+		syncData();
+	},800);
+	
 	
 	if(Ti.App.Properties.getString('roles') == "teacher"){
 		COMMON.removeAllChildren($.addView);
@@ -19,7 +22,7 @@ function syncData(){
 		"session" : Ti.App.Properties.getString('session')
 	};
 	API.callByPost({url:"getSchoolPost", params: param}, function(responseText){
-		COMMON.hideLoading();
+		
 		var res = JSON.parse(responseText); 
 		if(res.status == "success"){ 
 			var postData = res.data; 
@@ -28,14 +31,16 @@ function syncData(){
 				 postModel.addPost(post); 
 				 var post_element_model = Alloy.createCollection('post_element');  
 				 post_element_model.addElement(post);  
-				 showList();  
+				  
 			 } 
-			
+			showList();
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+	}, function(){
+		showList();
 	});
 	
 }

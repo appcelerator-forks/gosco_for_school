@@ -11,7 +11,7 @@
 			<ActivityIndicator id="activityIndicator" />
 			<Label top="5" class="center" text="Loading" color="#ffffff" />
 		</View> 
-		<ScrollView class="hfill vert">
+		<ScrollView class="hfill vert" scrollType="vertical">
 			<View class="horz wfill" height="80">
 				<View width="50" height="50" borderRadius="25"  backgroundColor="#f5f5f5" left="10"  top="20">
 					<ImageView width="50" height="50" image="/images/avatar.jpg" borderRadius="25" id="thumbPreview" />
