@@ -21,12 +21,9 @@ function syncData(){
 		if(res.status == "success"){ 
 			var curriculumModel = Alloy.createCollection('curriculum'); 
 			var arr = res.data;  
-			curriculumModel.saveArray(arr); 
-			
-			
+			curriculumModel.saveArray(arr);  
 		}else{
-			$.win.close();
-			COMMON.hideLoading();
+			$.win.close(); 
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}

@@ -5,8 +5,7 @@ var searchKey = "";
 var details;
 init();
 
-function init(){
-	showList();
+function init(){ 
 	syncData();
 }
 
@@ -14,7 +13,7 @@ function showList(){
  
 	COMMON.hideLoading();
 	var data = []; 		
-	details = userModel.getUserByEducation(Ti.App.Properties.getString('e_id'), searchKey);
+	details = userModel.getUserByEducation(Ti.App.Properties.getString('e_id'), searchKey); 
  	COMMON.removeAllChildren($.list);
 	if(details.length > 0){ 
 		var count = 0;
@@ -116,14 +115,16 @@ function syncData(){
 			 if(record.length > 0){  
 			 	userModel.resetStaff();
 				userModel.saveArray(record);   
-				showList();  
+				
 			 } 
-			
+			showList();  
 		}else{
 			$.win.close();
 			Alloy.Globals.Navigator.open("login");
 			COMMON.resultPopUp("Session Expired", res.data); 
 		}
+	}, function(){
+		showList();  
 	});
 }
  

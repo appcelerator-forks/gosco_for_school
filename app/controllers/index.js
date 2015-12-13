@@ -69,8 +69,11 @@ function init(){
 		 	var arr = res.data; 
 		    educationModel.saveArray(arr); 
 			checker.updateModule(1,"education", COMMON.now());
-		} 
-		launchPage();
+			launchPage();
+		} else{ 
+			Alloy.Globals.Navigator.open("login"); 
+		}
+		
 	}, function(){
 		launchPage();
 	}); 

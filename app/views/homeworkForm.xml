@@ -35,7 +35,7 @@
 					<View id="tvrUsername"  height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
 						<View class="vert" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Remark" top="12" width="Ti.UI.FILL" class="title_Label padding-left themeColor"  />  
-							<TextArea  horizontalWrap="true" id="remark" class="padding left-align h5 font_dark_grey" width="100%"   hintText="Please fill in title" value=""  borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
+							<TextArea  horizontalWrap="true" id="remark" class="padding left-align h5 font_dark_grey wfill"   hintText="Please fill in title" value=""  borderColor="#ffffff" backgroundColor="#ffffff"  height="150"  suppressReturn="false" >
 								<KeyboardToolbar platform="ios">
 									<Toolbar>
 										<Items> 
@@ -67,7 +67,7 @@
 				<Button onClick="save" id="saveBtn" class="button" title="Create Homework" top="10"></Button> 
 			</ScrollView>
 			
-			<Toolbar platform="ios" bottom="200" extendBackground="true" borderTop="true" borderBottom="false" id="dateToolbar" visible="false">
+			<Toolbar platform="ios" bottom="200" class="wfill" borderTop="true" borderBottom="false" id="dateToolbar" visible="false">
 				<Items>  
 					<Button onClick="hideDatePicker" title="DONE" style="Titanium.UI.iPhone.SystemButtonStyle.DONE"   />
 				</Items>

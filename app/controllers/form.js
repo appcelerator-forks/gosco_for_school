@@ -115,10 +115,14 @@ function save(){
 					 
 					if(id == ""){
 						id = res.data[0]['id'];
-						console.log("id2: "+id); 
+						 
 						goToDetails();
+						$.saveBtn.visible = false;
+					}else{
+						COMMON.resultPopUp("Success", "Changes are made"); 
+						COMMON.hideLoading();
 					}
-					$.saveBtn.visible = false;
+					
 					 
 				}else{
 					$.win.close();
@@ -150,6 +154,7 @@ function save(){
 			 
 			API.callByPost({url:"updatePost", params: param}, function(responseText){
 				var res = JSON.parse(responseText);   
+				 
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
 					//Ti.App.fireEvent('refreshPostList');   
@@ -157,8 +162,12 @@ function save(){
 						id = res.data[0]['id'];
 						COMMON.hideLoading();
 						goToDetails();
+						$.saveBtn.visible = false;
+					}else{
+						COMMON.resultPopUp("Success", "Changes are made"); 
+						COMMON.hideLoading();
 					}
-					$.saveBtn.visible = false;
+					
 					 
 				}else{
 					$.win.close();
@@ -219,11 +228,7 @@ function changeDate(e){
 }
 
 function closeWindow(){
-	if(isCurriculum != ""){
-	 	Ti.App.fireEvent('refreshCurriculumPost');  
-	}else{
-		Ti.App.fireEvent('refreshPost');  
-	}
+	Ti.App.fireEvent('refreshPost');  
 	
 	$.win.close();
 }

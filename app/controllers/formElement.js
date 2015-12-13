@@ -1,5 +1,5 @@
 var args = arguments[0] || {};
- 
+var ImageLoader = require('imageLoader');  
 var isCurriculum = args.isCurriculum || "";
 var id = args.id || "";
 var details;
@@ -80,7 +80,7 @@ function showList(){
 					source :entry.id,
 					classes: ['wsize','vert']
 				});
-			 	  
+			 	ImageLoader.LoadRemoteImage(element3,entry.element);    
 				view0.add(element3); 
 				
 				var elementCaption = $.UI.create('Label',{
@@ -192,10 +192,52 @@ $.add.addEventListener('click', function(){
 	
 });
 
-function refreshElement(){  
+function syncData(){
+	var checker = Alloy.createCollection('updateChecker'); 
+	var isUpdate = checker.getCheckerById(2, id);
+	var last_updated ="";
 	 
+	if(isUpdate != "" ){
+		last_updated = isUpdate.updated;
+	} 
+	var param = { 
+		"c_id"	  : id,
+		"session" : Ti.App.Properties.getString('session'),
+		"last_updated" : last_updated
+	};
+	COMMON.showLoading();
+	 
+	API.callByPost({url:"getCurriculumPost", params: param}, function(responseText){
+		
+		var res = JSON.parse(responseText);  
+		if(res.status == "success"){  
+			var postData = res.data;  
+			if(postData != ""){ 
+				var post = res.data.post;   
+				curriculumPostModel.addPost(post);  
+				curriculumPostElementModel.addElement(post);   
+				 
+			}  
+			checker.updateModule(2,"curriculumPost", COMMON.now(), id);
+			COMMON.hideLoading();
+		}else{
+			$.win.close();
+			COMMON.hideLoading();
+			Alloy.Globals.Navigator.open("login");
+			COMMON.resultPopUp("Session Expired", res.data); 
+		}
+		
+		showList(); 
+	}, function(){
+		// on error
+		showList(); 
+	});
+}
+
+function refreshElement(){  
+	 console.log("trigger refreshElement!");
 	COMMON.removeAllChildren($.myContentView);
-	showList();	
+	syncData();	
 }
 
 function closeWindow(){  

@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "id": "INTEGER",
+		    "id": "INTEGER PRIMARY KEY",
 		    "post_id" : "INTEGER",
 		    "type": "TEXT",
 		    "element": "TEXT",  
@@ -10,7 +10,8 @@ exports.definition = {
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "curriculumPost_element"
+			collection_name: "curriculumPost_element",
+			idAttribute: "id"
 		}
 	},
 	extendModel: function(Model) {
@@ -26,7 +27,7 @@ exports.definition = {
 			getRecordsById: function(id){ 
                 var collection = this;
                 var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE id ="+id;
-                
+               
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
                 	db.file.setRemoteBackup(false);

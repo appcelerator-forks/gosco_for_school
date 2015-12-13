@@ -144,8 +144,7 @@ function syncData(){
 	});
 }
 
-function closeWindow(){
-	Ti.App.removeEventListener('refreshCurriculumPost', init); 
+function closeWindow(){ 
 	$.win.close();
 }
 
@@ -232,5 +231,14 @@ $.edit.addEventListener('click', function(){
 	Alloy.Globals.Navigator.open('curriculumForm',{id: id});
 });
 
+$.win.addEventListener('close',function(){
+	console.log("close");
+	curriculumModel = null;
+	curriculumPostModel = null;
+	curriculumPostElementModel = null;
+	photoLoad = null;
+	searchKey = null;
+	Ti.App.removeEventListener('refreshCurriculumPost', init); 
+});
 Ti.App.addEventListener('refreshCurriculumPost', init); 
  

@@ -3,6 +3,7 @@ var id = args.id || "";
 var isCurriculum = args.isCurriculum || "";
 var postDetails;
 var details;
+var ImageLoader = require('imageLoader');  
 COMMON.construct($); 
 
 init();
@@ -108,16 +109,17 @@ function showList(){
 				backgroundColor: "#ffffff", 
 			}); 
 			var dynaImage = Ti.UI.createImageView({
-				image: entry.element,
+				image: "", 
 				width : Ti.UI.FILL,
-				defaultImage :  "/images/default.png"
-			});
+				//defaultImage :  "/images/default.png"
+			}); 
+			
 			imageVw.add(dynaImage);
+			ImageLoader.LoadRemoteImage(dynaImage,entry.element);  
 			$.myContentView.add(imageVw); 
 			
 			//image event
-			 imageVw.addEventListener('click', function(e) {
-		     
+			 imageVw.addEventListener('click', function(e) { 
 				var win = Alloy.createController("imageDetails",{element_id:entry.id, isCurriculum: isCurriculum}).getView(); 
 			  	openModal(win);  
 		    });

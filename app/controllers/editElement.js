@@ -253,6 +253,11 @@ function save(){
 			API.callByPostImage({url:"addElementUrl", params: param}, function(responseText){
 				var res = JSON.parse(responseText);  
 				if(res.status == "success"){  
+					if(isCurriculum == "1"){ 
+					 	postElementModel = Alloy.createCollection('curriculumPost_element');  
+					}else{ 
+						postElementModel = Alloy.createCollection('post_element');  
+					}
 					postElementModel.addElement(res.data);  
 					COMMON.resultPopUp("Saved", "Photo is uploaded"); 
 					closeWindow();
