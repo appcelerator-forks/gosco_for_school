@@ -75,7 +75,16 @@ exports.callByPost = function(e, onload, onerror){
 	};	
 };
  
- 
+exports.loadRemoteImage = function (obj,url) {
+	var xhr = Titanium.Network.createHTTPClient();
+
+	xhr.onload = function() { 
+	 obj.image=this.responseData; 
+	}; 
+	xhr.open('GET',url); 
+	xhr.send();
+};
+
 exports.getDomain = function(){
 	return "http://"+API_DOMAIN+"/";	
 };

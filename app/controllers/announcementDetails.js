@@ -2,8 +2,7 @@ var args = arguments[0] || {};
 var id = args.id || "";
 var isCurriculum = args.isCurriculum || "";
 var postDetails;
-var details;
-var ImageLoader = require('imageLoader');  
+var details; 
 COMMON.construct($); 
 
 init();
@@ -115,7 +114,7 @@ function showList(){
 			}); 
 			
 			imageVw.add(dynaImage);
-			ImageLoader.LoadRemoteImage(dynaImage,entry.element);  
+			API.loadRemoteImage(dynaImage,entry.element);  
 			$.myContentView.add(imageVw); 
 			
 			//image event

@@ -1,7 +1,7 @@
 var args = arguments[0] || {};
 var type = args.type;
 var id = args.id;
-var position = args.position;   
+var position = args.position;    
 var attachmentModel;
 if(type == "homework"){
 	attachmentModel = Alloy.createCollection('homeworkAttachment'); 
@@ -11,6 +11,7 @@ if(type == "homework"){
 init(); 
 
 function init(){
+	$.win.orientationModes = [ Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT,Ti.UI.PORTRAIT,Ti.UI.UPSIDE_PORTRAIT ];
 	if(type == "homework"){
 		var items  = attachmentModel.getRecordByHomework(id);
 	}else{
@@ -27,12 +28,12 @@ function init(){
 		//	attachmentImg = items[i].img_thumb;
 		} 
 		adImage = Ti.UI.createImageView({
-			image: attachmentImg,
-			defaultImage :  "/images/loading_image.png",
+			image: "",
+			//defaultImage :  "/images/loading_image.png",
 			width:"100%",
 			top: 50,
 		});
-		
+		API.loadRemoteImage(adImage,attachmentImg);  
 		var scrollView = Ti.UI.createScrollView({
 			contentWidth: 'auto',
 		  	contentHeight: Ti.UI.SIZE,
@@ -40,6 +41,7 @@ function init(){
 		    minZoomScale: 1,
 		    zoomScale: 1,
 		  	height: Ti.UI.FILL,
+		  	scrollType : "vertical",
 		  	width: '100%'
 		});
 		 

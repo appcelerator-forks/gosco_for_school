@@ -61,6 +61,7 @@ function init(){
 	}
 	var param = { 
 		"last_updated" : last_updated, 
+		"session"	   : Ti.App.Properties.getString('session') || ""
 	};
 	API.callByPost({url:"getSchoolList", params: param}, function(responseText){
 		var res = JSON.parse(responseText); 

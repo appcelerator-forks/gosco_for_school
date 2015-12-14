@@ -1,5 +1,4 @@
-var args = arguments[0] || {};
-var ImageLoader = require('imageLoader');    
+var args = arguments[0] || {}; 
 var isCurriculum = args.isCurriculum || "";
 var element_id = args.element_id  || ""; 
 if(isCurriculum == "1"){  
@@ -30,7 +29,7 @@ function showList(){
 		height: Ti.UI.SIZE 
 	});
  
-	ImageLoader.LoadRemoteImage(adImage,viewImage.element);  
+	API.loadRemoteImage(adImage,viewImage.element);  
 	$.imageDetailsView.add(adImage);
 	
 }

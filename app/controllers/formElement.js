@@ -1,5 +1,4 @@
-var args = arguments[0] || {};
-var ImageLoader = require('imageLoader');  
+var args = arguments[0] || {}; 
 var isCurriculum = args.isCurriculum || "";
 var id = args.id || "";
 var details;
@@ -80,7 +79,7 @@ function showList(){
 					source :entry.id,
 					classes: ['wsize','vert']
 				});
-			 	ImageLoader.LoadRemoteImage(element3,entry.element);    
+			 	API.loadRemoteImage(element3,entry.element);    
 				view0.add(element3); 
 				
 				var elementCaption = $.UI.create('Label',{
