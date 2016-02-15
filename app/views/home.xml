@@ -35,7 +35,7 @@
 			 
 			 <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="curriculum" >
 			 	<ImageView left="10" class="hsize" top="5" image="/images/koku.png" width="40" mod="curriculum" /> 
-			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="curriculum" >Curriculum</Label>
+			 	<Label left="10" class="hsize wfill font_dark_grey padding left h4 " mod="curriculum" >Co-Curriculum</Label>
 			 </View> 
 			 
 			  <View class="wfill hsize horz box padding grey-background" height="50" onClick="navWindow" mod="award" >
