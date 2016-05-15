@@ -201,6 +201,43 @@ function changeStatus(e){
 	 
 } 
 
+function deletePost(){
+	var dialog = Ti.UI.createAlertDialog({
+	    cancel: 0,
+	    buttonNames: ['Cancel','Confirm'],
+	    message: 'Are you sure want to delete?',
+	    title: 'Delete Post'
+	});
+	dialog.addEventListener('click', function(e){  
+		if (e.index === e.source.cancel){
+	      //Do nothing
+	    }
+	    if (e.index === 1){
+	    	//Delete post 
+			var param = {
+				id    : id, 
+				session : Ti.App.Properties.getString('session')
+			}; 
+			   	 
+			API.callByPost({url:"deletePostUrl", params: param}, function(responseText){
+				var res = JSON.parse(responseText);   
+				if(res.status == "success"){   
+					postModel.addPost(res.data);  
+					console.log(res.data);
+					//Ti.App.fireEvent('refreshPostList');   
+					  
+					COMMON.resultPopUp("Success", "Post deleted"); 
+					COMMON.hideLoading();
+					closeWindow();
+				}else{
+					COMMON.resultPopUp("Error", "Post unable to delete. Please try again later"); 
+				}
+			});
+	    }
+	});
+	dialog.show(); 
+}
+
 function changeDate(e){ 
 	  
 	var pickerdate = e.value; 
@@ -229,7 +266,8 @@ function changeDate(e){
 
 function closeWindow(){
 	Ti.App.fireEvent('refreshPost');  
-	
+	Ti.App.removeEventListener('closeWindow', closeWindow); 
+	Ti.App.fireEvent('closeFormWindow'); 
 	$.win.close();
 }
 
@@ -376,3 +414,5 @@ function showExpiredPicker(){
 	
 	hideKeyboard();
 }
+
+Ti.App.addEventListener('closeWindow', closeWindow); 

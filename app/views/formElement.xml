@@ -16,13 +16,15 @@
 		<ScrollView id="myContentView" class="wfill hfill vert" top="10" bottom="60"  contentWidth="Ti.UI.FILL" contentHeight="Ti.UI.SIZE" />	
 			<!--<Button onClick="save" class="button" title="Save" top="10"></Button> -->
 		<View id="toolbar"> 
-	    	<View width="25%" height="60" class="vert">
+	    	
+			<View width="25%" height="60" class="vert">
+				<ImageView id="home" height="30" top="10" image="/images/announcement.png" />
+	    		<Label class="h6 font_dark_grey center">Home</Label>
+			</View>
+			<View width="25%" height="60" class="vert">
 	    		<ImageView id="refresh" height="30" top="10" image="/images/icon_refresh.png" />
 	    		<Label class="h6 font_dark_grey center">Refresh</Label>
 	    	</View>
-			<View width="25%" height="60">
-				<!--<ImageView id="favorite" height="Ti.UI.FILL" image="/images/icon-favorites.png" />-->
-			</View>
 	        <View width="25%" height="60" class="vert">
 	         
 	        </View>

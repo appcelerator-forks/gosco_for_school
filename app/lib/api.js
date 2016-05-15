@@ -34,6 +34,7 @@ var updateSchoolUrl     = "http://"+API_DOMAIN+"/api/editSchoolInformation?user=
 var addElementUrl		= "http://"+API_DOMAIN+"/api/addElement?user="+USER+"&key="+KEY+"&auth";
 var updateElementUrl    = "http://"+API_DOMAIN+"/api/updateElement?user="+USER+"&key="+KEY+"&auth";
 var deleteElementUrl    = "http://"+API_DOMAIN+"/api/deleteElement?user="+USER+"&key="+KEY+"&auth";
+var deletePostUrl    	= "http://"+API_DOMAIN+"/api/deletePost?user="+USER+"&key="+KEY+"&auth";
 var deleteAttachmentUrl = "http://"+API_DOMAIN+"/api/deleteAttachment?user="+USER+"&key="+KEY+"&auth";
 var addUpdateEventUrl   = "http://"+API_DOMAIN+"/api/updateEvent?user="+USER+"&key="+KEY+"&auth"; 
 var updateCurriculumPost = "http://"+API_DOMAIN+"/api/updateCurriculumPost?user="+USER+"&key="+KEY+"&auth"; 

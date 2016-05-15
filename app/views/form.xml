@@ -76,8 +76,11 @@
 					</View> 
 				</View> 
 				<View class="wfill hsize horz">
-					<Button onClick="goToDetails" class="button" width="55%" id="postDetailsBtn" title="Posted Details" top="10"></Button> 
-					<Button onClick="save" class="button" width="30%" id="saveBtn" title="Save" top="10"></Button>  
+					<Button onClick="goToDetails" class="button" width="90%" id="postDetailsBtn" title="Posted Details" top="10"></Button> 
+					<Button onClick="deletePost" class="button" width="40%" id="postDeleteBtn" title="Delete"   top="10"></Button> 
+					
+					
+					<Button onClick="save" class="button" width="45%" id="saveBtn" title="Save" top="10"></Button>  
 				</View> 
 			</ScrollView>
 			

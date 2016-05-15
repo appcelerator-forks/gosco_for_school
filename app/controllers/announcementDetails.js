@@ -17,8 +17,31 @@ function init(){
 	}
 	
 	if(Ti.App.Properties.getString('roles') != "teacher"){
+		
+	}
+	 
+	showList(); 
+}
+
+function showList(){
+	postDetails = postModel.getRecordsById(id);
+	details     = postElementModel.getListByPost(id);
+	//rightMenu
+	var roles = Ti.App.Properties.getString('roles');
+	var u_id  = Ti.App.Properties.getString('u_id');
+	//console.log(postDetails);
+	if(OS_IOS){
+		//if((roles == "headmaster") || postDetails.published_role == roles){
+		if((roles == "headmaster") || postDetails.published_uid == u_id){
+			$.rightMenu.show();
+		}else{
+			$.rightMenu.hide();
+		}
+	}
+	
+	if(OS_ANDROID){
 		//
-		if(OS_ANDROID){
+		if((roles == "headmaster") ||  postDetails.published_uid == u_id){
 			var activity = $.win.activity;
 
 			activity.onCreateOptionsMenu = function(e){
@@ -32,19 +55,8 @@ function init(){
 			   editPost();
 			  });
 			};
-		}else{
-			$.rightMenu.visble = false;
-		}
-		
-
+		} 
 	}
-	 
-	showList(); 
-}
-
-function showList(){
-	postDetails = postModel.getRecordsById(id);
-	details     = postElementModel.getListByPost(id);
 	
 	var title = postDetails.title;
 	if(title != "" &&  title != null){
@@ -63,7 +75,7 @@ function showList(){
 		layout: "vertical",  
 	});
 	authorDateView.add($.UI.create('Label',{
-		text:postDetails.published_by + " @ "+ monthFormat(postDetails.publish_date),
+		text:postDetails.publisher_position + " @ "+ monthFormat(postDetails.publish_date),
 		textAlign: "right", 
 		right: 10,
 		classes : ['font_small','font_light_grey']
@@ -206,7 +218,9 @@ function editPost(){
 } 
 
 function closeWindow(){
+	Ti.App.fireEvent('refreshPostList');  
 	Ti.App.removeEventListener('refreshPost', refreshPost); 
+	Ti.App.removeEventListener('closeFormWindow', closeWindow); 
 	$.win.close();
 }
 
@@ -215,4 +229,5 @@ function refreshPost(){
 	showList();	
 }
 
+Ti.App.addEventListener('closeFormWindow', closeWindow); 
 Ti.App.addEventListener('refreshPost', refreshPost); 

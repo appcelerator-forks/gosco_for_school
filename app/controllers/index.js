@@ -1,4 +1,5 @@
 var userModel = Alloy.createCollection('user');   
+var postModel = Alloy.createCollection('post');   
 /**
  * Global Navigation Handler
  */
@@ -50,7 +51,9 @@ function init(){
 	
 	userModel.addColumn("status", "TEXT"); 
 	userModel.addColumn("e_id", "TEXT"); 
-	
+	postModel.addColumn("published_role", "TEXT"); 
+	postModel.addColumn("publisher_position", "TEXT"); 
+	postModel.addColumn("published_uid", "TEXT"); 
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById(1);
 	var last_updated ="";

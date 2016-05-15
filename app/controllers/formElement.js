@@ -171,6 +171,11 @@ function deleteElement(e){
 	dialog.show();  
 }
 
+$.home.addEventListener('click', function(){
+	$.win.close();
+	Ti.App.fireEvent('closeWindow');  
+});
+
 $.add.addEventListener('click', function(){
 	var cancelBtn  = Alloy.Globals.ElementType.length -1;
 	var dialog = Ti.UI.createOptionDialog({

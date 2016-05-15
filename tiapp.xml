@@ -3,9 +3,9 @@
     <url>http://</url>
     <id>com.geonn.goscoTeacher</id>
     <name>Gosco For School</name>
-    <version>1.0</version>
+    <version>1.0.2</version>
     <publisher>Gosco</publisher>
-    <description>undefined</description>
+    <description>Gosco for School</description>
     <copyright>2015 by geomilano</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
@@ -39,7 +39,7 @@
         </plist>
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
-        <manifest android:versionCode="1" android:versionName="1.0.0">
+        <manifest android:versionCode="3" android:versionName="1.0.3">
             <application android:debuggable="false" android:theme="@style/Theme.Gosco">
                 <meta-data
                     android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCB_mRDVKoRKpN7i6JpgfpU8vnKRbr86CU"/>
@@ -49,7 +49,7 @@
                     <data android:mimeType="image/*" android:scheme="http"/>
                 </intent-filter>
             </application>
-            <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23"/>
+            <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23"/>
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -74,7 +74,7 @@
         <target device="mobileweb">false</target>
         <target device="windows">false</target>
     </deployment-targets>
-    <sdk-version>5.1.0.GA</sdk-version>
+    <sdk-version>5.2.2.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

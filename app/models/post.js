@@ -8,6 +8,9 @@ exports.definition = {
 		    "e_id": "TEXT",
 		    "status": "TEXT",
 		    "published_by": "TEXT",
+		    "published_uid" : "TEXT",
+		    "published_role": "TEXT",
+		    "publisher_position" : "TEXT",
 		    "publish_date": "TEXT",
 		    "expired_date": "TEXT",
 		    "images": "TEXT"
@@ -27,6 +30,25 @@ exports.definition = {
 	},
 	extendCollection: function(Collection) {
 		_.extend(Collection.prototype, {
+			addColumn : function( newFieldName, colSpec) {
+				var collection = this;
+				var db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+                	db.file.setRemoteBackup(false);
+                }
+				var fieldExists = false;
+				resultSet = db.execute('PRAGMA TABLE_INFO(' + collection.config.adapter.collection_name + ')');
+				while (resultSet.isValidRow()) {
+					if(resultSet.field(1)==newFieldName) {
+						fieldExists = true;
+					}
+					resultSet.next();
+				}  
+			 	if(!fieldExists) { 
+					db.execute('ALTER TABLE ' + collection.config.adapter.collection_name + ' ADD COLUMN '+newFieldName + ' ' + colSpec);
+				}
+				db.close();
+			}, 
 			getPostByEducation : function(e_id,postType ,searchKey){
 				var collection = this;
 				var search = ""; 
@@ -52,6 +74,9 @@ exports.definition = {
 						e_id: res.fieldByName('e_id'),
 					    status: res.fieldByName('status'),
 					    published_by: res.fieldByName('published_by'),
+					    published_uid: res.fieldByName('published_uid'),
+					    published_role: res.fieldByName('published_role'),
+					    publisher_position: res.fieldByName('publisher_position'),
 						publish_date: res.fieldByName('publish_date'),
 					    expired_date: res.fieldByName('expired_date'),
 					    images: res.fieldByName('images'),
@@ -85,6 +110,9 @@ exports.definition = {
 						e_id: res.fieldByName('e_id'),
 					    status: res.fieldByName('status'),
 					    published_by: res.fieldByName('published_by'),
+					    published_uid: res.fieldByName('published_uid'),
+					    published_role: res.fieldByName('published_role'),
+					    publisher_position: res.fieldByName('publisher_position'),
 						publish_date: res.fieldByName('publish_date'),
 					    expired_date: res.fieldByName('expired_date'),
 					    images: res.fieldByName('images'),
@@ -101,7 +129,7 @@ exports.definition = {
 			 
 			getRecordsById: function(id){ 
                 var collection = this;
-                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE id ='"+id+"' AND status !='3' ";
+                var sql = "SELECT * FROM " + collection.config.adapter.collection_name +" WHERE id ='"+id+"'   ";
                 
                 db = Ti.Database.open(collection.config.adapter.db_name);
                 if(Ti.Platform.osname != "android"){
@@ -119,6 +147,9 @@ exports.definition = {
 					    type: res.fieldByName('type'),
 					    status: res.fieldByName('status'),
 					    published_by: res.fieldByName('published_by'),
+					    published_uid: res.fieldByName('published_uid'),
+					    published_role: res.fieldByName('published_role'),
+					    publisher_position: res.fieldByName('publisher_position'),
 						publish_date: res.fieldByName('publish_date'),
 					    expired_date: res.fieldByName('expired_date'),
 					    images: res.fieldByName('images'),
@@ -150,6 +181,9 @@ exports.definition = {
 						description: res.fieldByName('description'),  
 					    status: res.fieldByName('status'),
 					    published_by: res.fieldByName('published_by'),
+					    published_uid: res.fieldByName('published_uid'),
+					    published_role: res.fieldByName('published_role'),
+					    publisher_position: res.fieldByName('publisher_position'),
 						publish_date: res.fieldByName('publish_date'),
 					    expired_date: res.fieldByName('expired_date'),
 					    images: res.fieldByName('images'),
@@ -186,7 +220,7 @@ exports.definition = {
 						message = message.replace(/["']/g, "&quot;"); 
 					}
 					
-		       		sql_query = "INSERT INTO "+ collection.config.adapter.collection_name + "(id, title, message,e_id, type, status,published_by,publish_date, expired_date, images) VALUES ('"+entry.id+"', '"+title+"', '"+message+"', '"+entry.e_id+"', '"+entry.type+"', '"+entry.status+"', '"+entry.published_by+"', '"+entry.publish_date+"', '"+entry.expired_date+"', '"+entry.images+"')";
+		       		sql_query = "INSERT INTO "+ collection.config.adapter.collection_name + "(id, title, message,e_id, type, status,published_by,publisher_position,published_uid, published_role,publish_date, expired_date, images) VALUES ('"+entry.id+"', '"+title+"', '"+message+"', '"+entry.e_id+"', '"+entry.type+"', '"+entry.status+"', '"+entry.published_by+"', '"+entry.publisher_position+"', '"+entry.publisher_uid+"', '"+entry.published_roles+"', '"+entry.publish_date+"', '"+entry.expired_date+"', '"+entry.images+"')";
 					 //console.log(sql_query);
 					db.execute(sql_query);
 				});

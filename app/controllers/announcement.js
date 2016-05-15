@@ -62,6 +62,7 @@ function showList(){
 	var latestPost = postModel.getPostByEducation( Ti.App.Properties.getString('e_id'),1,searchKey);  
 	//COMMON.hideLoading();
  	//COMMON.removeAllChildren($.announcementSv);
+ 	console.log(latestPost);
 	if(latestPost.length > 0){ 
 		
 		loadLimit = latestPost.length;
@@ -102,7 +103,7 @@ function showList(){
 					classes :['h6', 'hsize','wfill','font_light_grey', 'padding-left','padding-bottom' ], 
 					top:5,
 					source :entry.id,
-					text: entry.published_by + " at "+ timeFormat(entry.publish_date)
+					text: entry.publisher_position + " at "+ timeFormat(entry.publish_date)
 				});
 				
 				var imgView1 = $.UI.create('ImageView',{
@@ -153,6 +154,7 @@ function goDetails(e){
 
 
 function closeWindow(){ 
+	Ti.App.removeEventListener('refreshPostList', refreshPostList); 
 	$.win.close();
 }
 
@@ -226,4 +228,4 @@ function refreshPostList(){
 }
 
 Ti.App.addEventListener('postlayout', refreshPostList); 
-//Ti.App.addEventListener('refreshPostList', refreshPostList); 
+Ti.App.addEventListener('refreshPostList', refreshPostList); 
