@@ -51,7 +51,7 @@ var APILoadingList = [
 **** API FUNCTION*****
 **********************/ 
 exports.callByPostImage = function(e, onload, getParam){
-	var url =  eval(e.url);
+	var url =  eval(e.url); 
 	var _result = contactServerByPostImage(url, e.params || {});   
 	_result.onload = function(e) {   
 		onload && onload(this.responseText); 

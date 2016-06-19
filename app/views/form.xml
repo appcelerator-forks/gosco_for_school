@@ -61,6 +61,13 @@
 						</View>
 					</View>   
 					<View class="gray-line" />
+					<View id="tvrPublicGlobal" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff">
+						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
+							<Label text="e-Info" top="12" width="75%" class="title_Label padding-left themeColor"  />  
+							<Switch id="isEInfo" value="false" class="right-align hsize" right="5" top="10" bottom="10" />   
+						</View>
+					</View> 
+					<View class="gray-line" />
 					<View id="tvrPublishDate" height="Ti.UI.SIZE" layout="vertical" selectedBackgroundColor="#ffffff"  onClick="showPublishPicker">
 						<View  layout="horizontal" height="Ti.UI.SIZE" width="Ti.UI.FILL" textAlign="right" >
 							<Label text="Publish Date"   top="12" width="60%" class="title_Label padding themeColor"  /> 

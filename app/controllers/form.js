@@ -41,10 +41,12 @@ function init(){
 		
 		$.publish_date.text = timeFormat(postDetails.publish_date);
 		$.expired_date.text = timeFormat(postDetails.expired_date); 
-		if(postDetails.status == 1){ 
+		if(postDetails.status == 1 || postDetails.status == 4){ 
 			$.statusSwitch.value = true;
 		}
-		 
+		if( postDetails.status == 4){ 
+			$.isEInfo.value = true;
+		} 
 		if(postDetails.e_id == "" || postDetails.e_id == "null" || postDetails.e_id == null){ 
 			$.publishGlobal.value = true;
 		}
@@ -73,13 +75,18 @@ function save(){
 	//var message = $.message.value;
 	var status = $.statusSwitch.value;
 	var publishGlobal = $.publishGlobal.value;
+	var isEInfo = $.isEInfo.value;
 	var publish_date = convertToDBDateFormat($.publish_date.text);
 	var expired_date = convertToDBDateFormat($.expired_date.text);
 	
 	if(status == false){
 		status = 2;
 	}else{
-		status = 1;
+		if(isEInfo == true){
+			status = 4;
+		}else{
+			status = 1;
+		} 
 	}
 	
 	if(title == ""){
@@ -91,9 +98,10 @@ function save(){
 		COMMON.resultPopUp("Error", "Please fill in publish date"); 
 		return false;
 	}
- 	COMMON.showLoading();
+ 	 
 	if((id == "") || (title != postDetails.title) || (publish_date != postDetails.publish_date) || 
-	(expired_date != postDetails.expired_date) || (status != postDetails.status)){
+	(expired_date != postDetails.expired_date) || (status != postDetails.status) ){
+		COMMON.showLoading(); 
 		if(isCurriculum != ""){
 			var param = {
 				id    : id,
@@ -119,10 +127,11 @@ function save(){
 						goToDetails();
 						$.saveBtn.visible = false;
 					}else{
+						 
+						postDetails = postModel.getRecordsById(id); 
 						COMMON.resultPopUp("Success", "Changes are made"); 
 						COMMON.hideLoading();
-					}
-					
+					} 
 					 
 				}else{
 					$.win.close();
@@ -132,6 +141,7 @@ function save(){
 				}
 			});
 		}else{
+			 
 			var eid = Ti.App.Properties.getString('e_id');
 			if(formType == 1){
 				if(publishGlobal == true){
@@ -151,9 +161,10 @@ function save(){
 				status        : status,
 				session : Ti.App.Properties.getString('session')
 			}; 
+			// console.log(param);
 			 
 			API.callByPost({url:"updatePost", params: param}, function(responseText){
-				var res = JSON.parse(responseText);   
+				var res = JSON.parse(responseText);  
 				 
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
@@ -164,6 +175,8 @@ function save(){
 						goToDetails();
 						$.saveBtn.visible = false;
 					}else{
+						 
+						postDetails = postModel.getRecordsById(id); 
 						COMMON.resultPopUp("Success", "Changes are made"); 
 						COMMON.hideLoading();
 					}
@@ -223,7 +236,7 @@ function deletePost(){
 				var res = JSON.parse(responseText);   
 				if(res.status == "success"){   
 					postModel.addPost(res.data);  
-					console.log(res.data);
+					//console.log(res.data);
 					//Ti.App.fireEvent('refreshPostList');   
 					  
 					COMMON.resultPopUp("Success", "Post deleted"); 
